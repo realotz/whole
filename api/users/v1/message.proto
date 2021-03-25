@@ -1,0 +1,66 @@
+syntax = "proto3";
+
+package news.v1;
+
+import "google/api/annotations.proto";
+
+option go_package = "github.com/realotz/whole/api/news/v1;v1";
+option java_multiple_files = true;
+option java_package = "dev.kratos.api.news.v1";
+option java_outer_classname = "MessageProtoV1";
+
+service MessageService {
+  rpc List (MessageListOption) returns (MessageList)  {
+    option (google.api.http) = {
+      get: "/news/message",
+    };
+  }
+  rpc Get (MessageGetOption) returns (Message)  {
+    option (google.api.http) = {
+      get: "/news/message/{id}",
+    };
+  }
+  rpc Create (MessageGetOption) returns (Message)  {
+    option (google.api.http) = {
+      post: "/news/message",
+    };
+  }
+  rpc Update (MessageUpdateOption) returns (Message)  {
+    option (google.api.http) = {
+      put: "/news/message",
+    };
+  }
+  rpc Delete (MessageDeleteOption) returns (Message)  {
+    option (google.api.http) = {
+      delete: "/news/message/{id}",
+    };
+  }
+}
+
+message MessageListOption {
+  string name = 1;
+}
+
+message MessageGetOption {
+  string id = 1;
+}
+
+message MessageUpdateOption {
+  string name = 1;
+}
+
+message MessageCreateOption {
+  string name = 1;
+}
+
+message MessageDeleteOption {
+  string id = 1;
+}
+
+message MessageList {
+  string message = 1;
+}
+
+message Message{
+
+}
