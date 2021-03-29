@@ -26,7 +26,9 @@ func (ar *fileRepo) ListFile(ctx context.Context) ([]*biz.File, error) {
 	}
 	rv := make([]*biz.File, 0)
 	for _, p := range ps {
-		rv = append(rv, &biz.File{})
+		rv = append(rv, &biz.File{
+			ID: p.ID,
+		})
 	}
 	return rv, nil
 }
@@ -36,7 +38,9 @@ func (ar *fileRepo) GetFile(ctx context.Context, id int64) (*biz.File, error) {
 	if err != nil {
 		return nil, err
 	}
-	return &biz.File{}, nil
+	return &biz.File{
+		ID: p.ID,
+	}, nil
 }
 
 func (ar *fileRepo) CreateFile(ctx context.Context, file *biz.File) error {

@@ -7,8 +7,8 @@ import (
 	"github.com/go-redis/redis/v8"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/google/wire"
-	"github.com/realotz/whole/internal/apps/systems/data/ent"
-	"github.com/realotz/whole/internal/apps/systems/data/ent/migrate"
+	"github.com/realotz/whole/internal/apps/cms/data/ent"
+	"github.com/realotz/whole/internal/apps/cms/data/ent/migrate"
 	"github.com/realotz/whole/internal/conf"
 )
 
@@ -20,7 +20,7 @@ type Data struct {
 
 var ProviderSet = wire.NewSet(
 	NewData,
-	NewFileRepo,
+	NewCategoryRepo,
 )
 
 // NewData .
@@ -31,7 +31,7 @@ func NewData(c *conf.Data, logger log.Logger) (*Data, error) {
 		c.Database.Source,
 	)
 	if err != nil {
-		log.Errorf("failed opening connection to sqlite: %v", err)
+		log.Errorf("failed opening connection to mysql: %v", err)
 		return nil, err
 	}
 	// Run the auto migration tool.

@@ -42,7 +42,7 @@ message MessageListOption {
 }
 
 message MessageGetOption {
-  string id = 1;
+  int64 id = 1;
 }
 
 message MessageUpdateOption {
@@ -54,7 +54,7 @@ message MessageCreateOption {
 }
 
 message MessageDeleteOption {
-  string id = 1;
+  int64 id = 1;
 }
 
 message MessageList {

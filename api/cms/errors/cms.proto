@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package articles.errors;
+
+import "kratos/api/annotations.proto";
+
+option go_package = "github.com/realotz/whole/api/articles/errors;errors";
+option java_multiple_files = true;
+option java_package = "com.github.realotz.whole.articles.errors";
+option objc_class_prefix = "ArticlesErrors";
+
+enum Articles {
+    option (kratos.api.errors) = true;
+    MissingName = 0;
+}

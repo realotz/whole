@@ -32,14 +32,14 @@ func initApp(confServer *conf.Server, confData *conf.Data, logger log.Logger) (*
 	categoryRepo := data.NewCategoryRepo(dataData, logger)
 	categoryUsecase := biz.NewCategoryUsecase(categoryRepo, logger)
 	categoryServiceServer := service.NewCategoryServiceService(categoryUsecase)
-	messageServiceServer := service2.NewMessageServiceService()
+	messageServiceServer := service2.NewMessageService()
 	data4, err := data2.NewData(confData, logger)
 	if err != nil {
 		return nil, err
 	}
 	memberRepo := data2.NewMemberRepo(data4, logger)
 	memberUsecase := biz2.NewMemberUsecase(memberRepo, logger)
-	memberServiceServer := service2.NewMemberServiceService(memberUsecase)
+	memberServiceServer := service2.NewMemberService(memberUsecase)
 	data5, err := data3.NewData(confData, logger)
 	if err != nil {
 		return nil, err

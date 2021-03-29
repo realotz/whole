@@ -1,38 +1,38 @@
 syntax = "proto3";
 
-package articles.v1;
+package cms.v1;
 
 import "google/api/annotations.proto";
 
-option go_package = "github.com/realotz/whole/api/articles/v1;v1";
+option go_package = "github.com/realotz/whole/api/cms/v1;v1";
 option java_multiple_files = true;
-option java_package = "dev.kratos.api.articles.v1";
+option java_package = "dev.kratos.api.cms.v1";
 option java_outer_classname = "CategoryProtoV1";
 
 service CategoryService {
   rpc List (CategoryListOption) returns (CategoryList)  {
         option (google.api.http) = {
-            get: "/articles/category",
+            get: "/cms/category",
         };
     }
   rpc Get (CategoryGetOption) returns (Category)  {
     option (google.api.http) = {
-      get: "/articles/category/{id}",
+      get: "/cms/category/{id}",
     };
   }
   rpc Create (CategoryGetOption) returns (Category)  {
     option (google.api.http) = {
-      post: "/articles/category",
+      post: "/cms/category",
     };
   }
   rpc Update (CategoryUpdateOption) returns (Category)  {
     option (google.api.http) = {
-      put: "/articles/category",
+      put: "/cms/category",
     };
   }
   rpc Delete (CategoryDeleteOption) returns (Category)  {
     option (google.api.http) = {
-      delete: "/articles/category/{id}",
+      delete: "/cms/category/{id}",
     };
   }
 }

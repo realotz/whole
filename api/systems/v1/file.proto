@@ -7,60 +7,60 @@ import "google/api/annotations.proto";
 option go_package = "github.com/realotz/whole/api/systems/v1;v1";
 option java_multiple_files = true;
 option java_package = "dev.kratos.api.systems.v1";
-option java_outer_classname = "CategoryProtoV1";
+option java_outer_classname = "FileProtoV1";
 
-service CategoryService {
-  rpc List (CategoryListOption) returns (CategoryList)  {
-        option (google.api.http) = {
-            get: "/systems/category",
-        };
-    }
-  rpc Get (CategoryGetOption) returns (Category)  {
+service FileService {
+  rpc List (FileListOption) returns (FileList)  {
     option (google.api.http) = {
-      get: "/systems/category/{id}",
+      get: "/systems/file",
     };
   }
-  rpc Create (CategoryGetOption) returns (Category)  {
+  rpc Get (FileGetOption) returns (File)  {
     option (google.api.http) = {
-      post: "/systems/category",
+      get: "/systems/file/{id}",
     };
   }
-  rpc Update (CategoryUpdateOption) returns (Category)  {
+  rpc Create (FileGetOption) returns (File)  {
     option (google.api.http) = {
-      put: "/systems/category",
+      post: "/systems/file",
     };
   }
-  rpc Delete (CategoryDeleteOption) returns (Category)  {
+  rpc Update (FileUpdateOption) returns (File)  {
     option (google.api.http) = {
-      delete: "/systems/category/{id}",
+      put: "/systems/file",
+    };
+  }
+  rpc Delete (FileDeleteOption) returns (File)  {
+    option (google.api.http) = {
+      delete: "/systems/file/{id}",
     };
   }
 }
 
-message CategoryListOption {
+message FileListOption {
   string name = 1;
 }
 
-message CategoryGetOption {
+message FileGetOption {
   string id = 1;
 }
 
-message CategoryUpdateOption {
+message FileUpdateOption {
   string name = 1;
 }
 
-message CategoryCreateOption {
+message FileCreateOption {
   string name = 1;
 }
 
-message CategoryDeleteOption {
+message FileDeleteOption {
   string id = 1;
 }
 
-message CategoryList {
+message FileList {
   string message = 1;
 }
 
-message Category{
+message File{
 
 }

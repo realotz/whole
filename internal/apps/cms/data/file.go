@@ -3,55 +3,55 @@ package data
 import (
 	"context"
 	"github.com/go-kratos/kratos/v2/log"
-	"github.com/realotz/whole/internal/apps/systems/biz"
+	"github.com/realotz/whole/internal/apps/cms/biz"
 )
 
-type fileRepo struct {
+type categoryRepo struct {
 	data *Data
 	log  *log.Helper
 }
 
-// NewFileRepo .
-func NewFileRepo(data *Data, logger log.Logger) biz.FileRepo {
-	return &fileRepo{
+// NewCategoryRepo .
+func NewCategoryRepo(data *Data, logger log.Logger) biz.CategoryRepo {
+	return &categoryRepo{
 		data: data,
-		log:  log.NewHelper("file_repo", logger),
+		log:  log.NewHelper("category_repo", logger),
 	}
 }
 
-func (ar *fileRepo) ListFile(ctx context.Context) ([]*biz.File, error) {
-	ps, err := ar.data.db.File.Query().All(ctx)
+func (ar *categoryRepo) ListCategory(ctx context.Context) ([]*biz.Category, error) {
+	ps, err := ar.data.db.Category.Query().All(ctx)
 	if err != nil {
 		return nil, err
 	}
-	rv := make([]*biz.File, 0)
+	rv := make([]*biz.Category, 0)
 	for _, p := range ps {
-		rv = append(rv, &biz.File{
+		rv = append(rv, &biz.Category{
 			ID: p.ID,
 		})
 	}
 	return rv, nil
 }
 
-func (ar *fileRepo) GetFile(ctx context.Context, id int64) (*biz.File, error) {
-	p, err := ar.data.db.File.Get(ctx, id)
+func (ar *categoryRepo) GetCategory(ctx context.Context, id int64) (*biz.Category, error) {
+	p, err := ar.data.db.Category.Get(ctx, id)
 	if err != nil {
 		return nil, err
 	}
-	return &biz.File{
+	return &biz.Category{
 		ID: p.ID,
 	}, nil
 }
 
-func (ar *fileRepo) CreateFile(ctx context.Context, file *biz.File) error {
-	_, err := ar.data.db.File.
+func (ar *categoryRepo) CreateCategory(ctx context.Context, category *biz.Category) error {
+	_, err := ar.data.db.Category.
 		Create().
 		Save(ctx)
 	return err
 }
 
-func (ar *fileRepo) UpdateFile(ctx context.Context, id int64, file *biz.File) error {
-	p, err := ar.data.db.File.Get(ctx, id)
+func (ar *categoryRepo) UpdateCategory(ctx context.Context, id int64, category *biz.Category) error {
+	p, err := ar.data.db.Category.Get(ctx, id)
 	if err != nil {
 		return err
 	}
@@ -60,6 +60,6 @@ func (ar *fileRepo) UpdateFile(ctx context.Context, id int64, file *biz.File) er
 	return err
 }
 
-func (ar *fileRepo) DeleteFile(ctx context.Context, id int64) error {
-	return ar.data.db.File.DeleteOneID(id).Exec(ctx)
+func (ar *categoryRepo) DeleteCategory(ctx context.Context, id int64) error {
+	return ar.data.db.Category.DeleteOneID(id).Exec(ctx)
 }

@@ -6,45 +6,45 @@ import (
 	"time"
 )
 
-type File struct {
+type Category struct {
 	ID         int64     `json:"id,omitempty"`
 	CreateTime time.Time `json:"create_time,omitempty"`
 	UpdateTime time.Time `json:"update_time,omitempty"`
 }
 
-type FileRepo interface {
-	ListFile(ctx context.Context) ([]*File, error)
-	GetFile(ctx context.Context, id int64) (*File, error)
-	CreateFile(ctx context.Context, article *File) error
-	UpdateFile(ctx context.Context, id int64, article *File) error
-	DeleteFile(ctx context.Context, id int64) error
+type CategoryRepo interface {
+	ListCategory(ctx context.Context) ([]*Category, error)
+	GetCategory(ctx context.Context, id int64) (*Category, error)
+	CreateCategory(ctx context.Context, article *Category) error
+	UpdateCategory(ctx context.Context, id int64, article *Category) error
+	DeleteCategory(ctx context.Context, id int64) error
 }
 
-type FileUsecase struct {
-	repo FileRepo
+type CategoryUsecase struct {
+	repo CategoryRepo
 	log  *log.Helper
 }
 
-func NewFileUsecase(repo FileRepo, logger log.Logger) *FileUsecase {
-	return &FileUsecase{repo: repo, log: log.NewHelper("biz/file", logger)}
+func NewCategoryUsecase(repo CategoryRepo, logger log.Logger) *CategoryUsecase {
+	return &CategoryUsecase{repo: repo, log: log.NewHelper("biz/category", logger)}
 }
 
-func (uc *FileUsecase) List(ctx context.Context) (ps []*File, err error) {
-	return uc.repo.ListFile(ctx)
+func (uc *CategoryUsecase) List(ctx context.Context) (ps []*Category, err error) {
+	return uc.repo.ListCategory(ctx)
 }
 
-func (uc *FileUsecase) Get(ctx context.Context, id int64) (p *File, err error) {
-	return uc.repo.GetFile(ctx, id)
+func (uc *CategoryUsecase) Get(ctx context.Context, id int64) (p *Category, err error) {
+	return uc.repo.GetCategory(ctx, id)
 }
 
-func (uc *FileUsecase) Create(ctx context.Context, article *File) error {
-	return uc.repo.CreateFile(ctx, article)
+func (uc *CategoryUsecase) Create(ctx context.Context, article *Category) error {
+	return uc.repo.CreateCategory(ctx, article)
 }
 
-func (uc *FileUsecase) Update(ctx context.Context, id int64, article *File) error {
-	return uc.repo.UpdateFile(ctx, id, article)
+func (uc *CategoryUsecase) Update(ctx context.Context, id int64, article *Category) error {
+	return uc.repo.UpdateCategory(ctx, id, article)
 }
 
-func (uc *FileUsecase) Delete(ctx context.Context, id int64) error {
-	return uc.repo.DeleteFile(ctx, id)
+func (uc *CategoryUsecase) Delete(ctx context.Context, id int64) error {
+	return uc.repo.DeleteCategory(ctx, id)
 }
