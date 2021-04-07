@@ -10,11 +10,11 @@ option java_package = "dev.kratos.api.cms.v1";
 option java_outer_classname = "CategoryProtoV1";
 
 service CategoryService {
-  rpc List (CategoryListOption) returns (CategoryList)  {
-        option (google.api.http) = {
-            get: "/cms/category",
-        };
-    }
+  rpc List (CategoryListOption) returns (CategoryList){
+      option (google.api.http) = {
+          get: "/cms/category",
+      };
+  }
   rpc Get (CategoryGetOption) returns (Category)  {
     option (google.api.http) = {
       get: "/cms/category/{id}",

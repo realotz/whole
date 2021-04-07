@@ -1,0 +1,307 @@
+components:
+  schemas:
+    GoogleProtobufTimestamp:
+      properties:
+        nanos:
+          description: Non-negative fractions of a second at nanosecond resolution. Negative second values with fractions must still have non-negative nanos values that count forward in time. Must be from 0 to 999,999,999 inclusive.
+          format: int32
+          type: integer
+        seconds:
+          description: Represents seconds of UTC time since Unix epoch 1970-01-01T00:00:00Z. Must be from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59Z inclusive.
+          format: int64
+          type: integer
+      type: object
+    UsersV1Employee:
+      properties:
+        account:
+          description: 账户
+          type: string
+        avatar:
+          description: 头像
+          type: string
+        birthday:
+          $ref: '#/components/schemas/GoogleProtobufTimestamp'
+        create_time:
+          $ref: '#/components/schemas/GoogleProtobufTimestamp'
+        email:
+          description: 邮箱
+          type: string
+        id:
+          format: int64
+          type: integer
+        id_card:
+          description: 身份证
+          type: string
+        last_ip:
+          description: 最后登录ip
+          type: string
+        last_time:
+          $ref: '#/components/schemas/GoogleProtobufTimestamp'
+        mobile:
+          description: 手机
+          type: string
+        name:
+          description: 姓名
+          type: string
+        nick_name:
+          description: 昵称
+          type: string
+        role:
+          description: 角色
+          type: string
+        sex:
+          description: 性别
+          type: string
+        update_time:
+          $ref: '#/components/schemas/GoogleProtobufTimestamp'
+        uuid:
+          type: string
+      type: object
+    UsersV1EmployeeDeleteOption:
+      properties:
+        id:
+          format: int64
+          type: integer
+      type: object
+    UsersV1EmployeeList:
+      properties:
+        list:
+          items:
+            $ref: '#/components/schemas/UsersV1Employee'
+          type: array
+      type: object
+    UsersV1EmployeeLogin:
+      properties:
+        account:
+          description: 账户
+          type: string
+        captcha:
+          description: 验证码
+          type: string
+        code:
+          description: 短信、邮箱 验证码
+          type: string
+        password:
+          description: 密码
+          type: string
+      type: object
+    UsersV1EmployeeLoginRes:
+      properties:
+        employee:
+          $ref: '#/components/schemas/UsersV1Employee'
+        expiration_time:
+          description: 过期时间 字符串时间戳
+          format: int64
+          type: integer
+        role:
+          description: 角色
+          type: string
+        token:
+          description: jwt token
+          type: string
+      type: object
+    UsersV1EmployeeOption:
+      properties:
+        account:
+          description: 账户
+          type: string
+        avatar:
+          description: 头像
+          type: string
+        birthday:
+          $ref: '#/components/schemas/GoogleProtobufTimestamp'
+        email:
+          description: 邮箱
+          type: string
+        id:
+          description: id
+          format: int64
+          type: integer
+        id_card:
+          description: 身份证
+          type: string
+        mobile:
+          description: 手机
+          type: string
+        name:
+          description: 姓名
+          type: string
+        nick_name:
+          description: 昵称
+          type: string
+        password:
+          description: 密码
+          type: string
+        role:
+          description: 角色
+          type: string
+        sex:
+          description: 性别
+          type: string
+      type: object
+    UsersV1NullReply:
+      type: object
+    UsersV1NullReq:
+      type: object
+info:
+  description: users.v1
+  title: users.v1
+  version: "1"
+openapi: 3.0.0
+paths:
+  /users/employee:
+    description: 更新一个账户
+    put:
+      description: 更新一个账户
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UsersV1EmployeeOption'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsersV1Employee'
+          description: ok
+      summary: 更新一个账户
+      tags:
+      - users.v1.EmployeeService
+    summary: Update
+  /users/employee/{id}:
+    delete:
+      description: 删除一个账户
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsersV1NullReply'
+          description: ok
+      summary: 删除一个账户
+      tags:
+      - users.v1.EmployeeService
+    description: 删除一个账户
+    summary: Delete
+  /users/employee/captcha:
+    description: 发送短信/邮箱验证码
+    get:
+      description: 发送短信/邮箱验证码
+      parameters:
+      - description: 接收对象 email
+        in: query
+        name: to
+        schema:
+          type: string
+      - description: 本地验证码
+        in: query
+        name: captcha
+        schema:
+          type: string
+      - description: 极验预留
+        in: query
+        name: challenge
+        schema:
+          type: string
+      - description: 极验预留
+        in: query
+        name: tk
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsersV1NullReply'
+          description: ok
+      summary: 发送短信/邮箱验证码
+      tags:
+      - users.v1.EmployeeService
+    summary: Captcha
+  /users/employee/info:
+    description: 当前登录用户信息
+    get:
+      description: 当前登录用户信息
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsersV1Employee'
+          description: ok
+      summary: 当前登录用户信息
+      tags:
+      - users.v1.EmployeeService
+    summary: UserInfo
+  /users/employee/login:
+    description: 常规账户登录接口
+    post:
+      description: 常规账户登录接口
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UsersV1EmployeeLogin'
+        description: 用户登录
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsersV1EmployeeLoginRes'
+          description: ok
+      summary: 常规账户登录接口
+      tags:
+      - users.v1.EmployeeService
+    summary: Login
+  /users/employee/login-code:
+    description: 验证码登录
+    post:
+      description: 验证码登录
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UsersV1EmployeeLogin'
+        description: 用户登录
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsersV1EmployeeLoginRes'
+          description: ok
+      summary: 验证码登录
+      tags:
+      - users.v1.EmployeeService
+    summary: LoginForCode
+  /users/employee/logout:
+    description: 登出
+    post:
+      description: 登出
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UsersV1NullReq'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsersV1NullReply'
+          description: ok
+      summary: 登出
+      tags:
+      - users.v1.EmployeeService
+    summary: Logout
+tags:
+- description: 账户服务
+  name: users.v1.EmployeeService
+

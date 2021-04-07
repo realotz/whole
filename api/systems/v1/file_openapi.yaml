@@ -1,0 +1,63 @@
+components:
+  schemas:
+    SystemsV1File:
+      type: object
+    SystemsV1FileDeleteOption:
+      properties:
+        id:
+          type: string
+      type: object
+    SystemsV1FileGetOption:
+      properties:
+        id:
+          type: string
+      type: object
+    SystemsV1FileList:
+      properties:
+        message:
+          type: string
+      type: object
+    SystemsV1FileUpdateOption:
+      properties:
+        name:
+          type: string
+      type: object
+info:
+  description: systems.v1
+  title: systems.v1
+  version: "1"
+openapi: 3.0.0
+paths:
+  /systems/file:
+    put:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SystemsV1FileUpdateOption'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SystemsV1File'
+          description: ok
+      tags:
+      - systems.v1.FileService
+    summary: Update
+  /systems/file/{id}:
+    delete:
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SystemsV1File'
+          description: ok
+      tags:
+      - systems.v1.FileService
+    summary: Delete
+tags:
+- name: systems.v1.FileService
+

@@ -9,30 +9,36 @@ option java_multiple_files = true;
 option java_package = "dev.kratos.api.news.v1";
 option java_outer_classname = "MessageProtoV1";
 
+//消息服务
 service MessageService {
+  // 消息列表
   rpc List (MessageListOption) returns (MessageList)  {
     option (google.api.http) = {
-      get: "/news/message",
+      get: "/users/message",
     };
   }
+  //消息详情
   rpc Get (MessageGetOption) returns (Message)  {
     option (google.api.http) = {
-      get: "/news/message/{id}",
+      get: "/users/message/{id}",
     };
   }
-  rpc Create (MessageGetOption) returns (Message)  {
+  //标记已都
+  rpc Read (MessageGetOption) returns (Message)  {
     option (google.api.http) = {
-      post: "/news/message",
+      get: "/users/message/read/{id}",
     };
   }
-  rpc Update (MessageUpdateOption) returns (Message)  {
+  // 发送一个消息
+  rpc Send (MessageGetOption) returns (Message)  {
     option (google.api.http) = {
-      put: "/news/message",
+      post: "/users/message",
     };
   }
+  // 删除消息
   rpc Delete (MessageDeleteOption) returns (Message)  {
     option (google.api.http) = {
-      delete: "/news/message/{id}",
+      delete: "/users/message/{id}",
     };
   }
 }

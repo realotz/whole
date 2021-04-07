@@ -1,0 +1,63 @@
+components:
+  schemas:
+    CmsV1Category:
+      type: object
+    CmsV1CategoryDeleteOption:
+      properties:
+        id:
+          type: string
+      type: object
+    CmsV1CategoryGetOption:
+      properties:
+        id:
+          type: string
+      type: object
+    CmsV1CategoryList:
+      properties:
+        message:
+          type: string
+      type: object
+    CmsV1CategoryUpdateOption:
+      properties:
+        name:
+          type: string
+      type: object
+info:
+  description: cms.v1
+  title: cms.v1
+  version: "1"
+openapi: 3.0.0
+paths:
+  /cms/category:
+    put:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CmsV1CategoryUpdateOption'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CmsV1Category'
+          description: ok
+      tags:
+      - cms.v1.CategoryService
+    summary: Update
+  /cms/category/{id}:
+    delete:
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CmsV1Category'
+          description: ok
+      tags:
+      - cms.v1.CategoryService
+    summary: Delete
+tags:
+- name: cms.v1.CategoryService
+

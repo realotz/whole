@@ -1,0 +1,87 @@
+components:
+  schemas:
+    NewsV1Message:
+      type: object
+    NewsV1MessageDeleteOption:
+      properties:
+        id:
+          format: int64
+          type: integer
+      type: object
+    NewsV1MessageGetOption:
+      properties:
+        id:
+          format: int64
+          type: integer
+      type: object
+    NewsV1MessageList:
+      properties:
+        message:
+          type: string
+      type: object
+info:
+  description: news.v1
+  title: news.v1
+  version: "1"
+openapi: 3.0.0
+paths:
+  /users/message:
+    description: 发送一个消息
+    post:
+      description: 发送一个消息
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewsV1MessageGetOption'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NewsV1Message'
+          description: ok
+      summary: 发送一个消息
+      tags:
+      - news.v1.MessageService
+    summary: Send
+  /users/message/{id}:
+    delete:
+      description: 删除消息
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NewsV1Message'
+          description: ok
+      summary: 删除消息
+      tags:
+      - news.v1.MessageService
+    description: 删除消息
+    summary: Delete
+  /users/message/read/{id}:
+    description: 标记已都
+    get:
+      description: 标记已都
+      parameters:
+      - in: query
+        name: id
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NewsV1Message'
+          description: ok
+      summary: 标记已都
+      tags:
+      - news.v1.MessageService
+    summary: Read
+tags:
+- description: 消息服务
+  name: news.v1.MessageService
+

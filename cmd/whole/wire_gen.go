@@ -8,23 +8,30 @@ package main
 import (
 	"github.com/go-kratos/kratos/v2"
 	"github.com/go-kratos/kratos/v2/log"
-	"github.com/realotz/whole/internal/apps/cms/biz"
-	"github.com/realotz/whole/internal/apps/cms/data"
-	"github.com/realotz/whole/internal/apps/cms/service"
-	biz3 "github.com/realotz/whole/internal/apps/systems/biz"
-	data3 "github.com/realotz/whole/internal/apps/systems/data"
-	service3 "github.com/realotz/whole/internal/apps/systems/service"
-	biz2 "github.com/realotz/whole/internal/apps/users/biz"
-	data2 "github.com/realotz/whole/internal/apps/users/data"
-	service2 "github.com/realotz/whole/internal/apps/users/service"
 	"github.com/realotz/whole/internal/conf"
 	"github.com/realotz/whole/internal/server"
+	"github.com/realotz/whole/internal/services"
+	"github.com/realotz/whole/internal/services/cms"
+	"github.com/realotz/whole/internal/services/cms/biz"
+	"github.com/realotz/whole/internal/services/cms/data"
+	"github.com/realotz/whole/internal/services/cms/service"
+	"github.com/realotz/whole/internal/services/systems"
+	biz2 "github.com/realotz/whole/internal/services/systems/biz"
+	data2 "github.com/realotz/whole/internal/services/systems/data"
+	service2 "github.com/realotz/whole/internal/services/systems/service"
+	"github.com/realotz/whole/internal/services/users"
+	biz3 "github.com/realotz/whole/internal/services/users/biz"
+	data3 "github.com/realotz/whole/internal/services/users/data"
+	service3 "github.com/realotz/whole/internal/services/users/service"
 )
 
 // Injectors from wire.go:
 
 // initApp init kratos application.
 func initApp(confServer *conf.Server, confData *conf.Data, logger log.Logger) (*kratos.App, error) {
+	httpServer := server.NewHTTPServer(confServer)
+	middleware := server.NewMiddleware()
+	grpcServer := server.NewGRPCServer(confServer, middleware)
 	dataData, err := data.NewData(confData, logger)
 	if err != nil {
 		return nil, err
@@ -32,23 +39,32 @@ func initApp(confServer *conf.Server, confData *conf.Data, logger log.Logger) (*
 	categoryRepo := data.NewCategoryRepo(dataData, logger)
 	categoryUsecase := biz.NewCategoryUsecase(categoryRepo, logger)
 	categoryServiceServer := service.NewCategoryServiceService(categoryUsecase)
-	messageServiceServer := service2.NewMessageService()
+	cmsCms := cms.NewCmsApp(httpServer, grpcServer, middleware, categoryServiceServer)
 	data4, err := data2.NewData(confData, logger)
 	if err != nil {
 		return nil, err
 	}
-	memberRepo := data2.NewMemberRepo(data4, logger)
-	memberUsecase := biz2.NewMemberUsecase(memberRepo, logger)
-	memberServiceServer := service2.NewMemberService(memberUsecase)
-	data5, err := data3.NewData(confData, logger)
+	fileRepo := data2.NewFileRepo(data4, logger)
+	fileUsecase := biz2.NewFileUsecase(fileRepo, logger)
+	fileServiceServer := service2.NewFileServiceService(fileUsecase)
+	systemsSystems := systems.NewSystemsApp(httpServer, grpcServer, middleware, fileServiceServer)
+	token, err := users.NewAuthToken(confData)
 	if err != nil {
 		return nil, err
 	}
-	fileRepo := data3.NewFileRepo(data5, logger)
-	fileUsecase := biz3.NewFileUsecase(fileRepo, logger)
-	fileServiceServer := service3.NewFileServiceService(fileUsecase)
-	httpServer := server.NewHTTPServer(confServer, categoryServiceServer, messageServiceServer, memberServiceServer, fileServiceServer)
-	grpcServer := server.NewGRPCServer(confServer, categoryServiceServer, messageServiceServer, memberServiceServer, fileServiceServer)
-	app := newApp(logger, httpServer, grpcServer)
-	return app, nil
+	data5, err := data3.NewData(confData, logger, token)
+	if err != nil {
+		return nil, err
+	}
+	employeeRepo := data3.NewEmployeeRepo(data5, logger)
+	employeeUsecase := biz3.NewEmployeeUsecase(employeeRepo, logger)
+	employeeServiceServer := service3.NewEmployeeService(employeeUsecase)
+	messageServiceServer := service3.NewMessageService()
+	customerRepo := data3.NewCustomerRepo(data5, logger)
+	customerUsecase := biz3.NewCustomerUsecase(customerRepo, logger)
+	customerServiceServer := service3.NewCustomerService(customerUsecase)
+	usersUsers := users.NewUsersApp(httpServer, grpcServer, middleware, employeeServiceServer, messageServiceServer, customerServiceServer)
+	app := services.NewApps(cmsCms, systemsSystems, usersUsers)
+	kratosApp := newApp(logger, app)
+	return kratosApp, nil
 }
