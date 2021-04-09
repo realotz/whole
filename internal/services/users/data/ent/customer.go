@@ -36,9 +36,6 @@ type Customer struct {
 	// Name holds the value of the "name" field.
 	// 名称
 	Name string `json:"name,omitempty"`
-	// Role holds the value of the "role" field.
-	// 角色
-	Role string `json:"role,omitempty"`
 	// NickName holds the value of the "nick_name" field.
 	// 昵称
 	NickName string `json:"nick_name,omitempty"`
@@ -96,7 +93,7 @@ func (*Customer) scanValues(columns []string) ([]interface{}, error) {
 		switch columns[i] {
 		case customer.FieldID:
 			values[i] = &sql.NullInt64{}
-		case customer.FieldSex, customer.FieldAccount, customer.FieldAvatar, customer.FieldName, customer.FieldRole, customer.FieldNickName, customer.FieldEmail, customer.FieldMobile, customer.FieldIDCard, customer.FieldPassword, customer.FieldSalt, customer.FieldLastIP:
+		case customer.FieldSex, customer.FieldAccount, customer.FieldAvatar, customer.FieldName, customer.FieldNickName, customer.FieldEmail, customer.FieldMobile, customer.FieldIDCard, customer.FieldPassword, customer.FieldSalt, customer.FieldLastIP:
 			values[i] = &sql.NullString{}
 		case customer.FieldCreateTime, customer.FieldUpdateTime, customer.FieldBirthday, customer.FieldLastTime:
 			values[i] = &sql.NullTime{}
@@ -164,12 +161,6 @@ func (c *Customer) assignValues(columns []string, values []interface{}) error {
 				return fmt.Errorf("unexpected type %T for field name", values[i])
 			} else if value.Valid {
 				c.Name = value.String
-			}
-		case customer.FieldRole:
-			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field role", values[i])
-			} else if value.Valid {
-				c.Role = value.String
 			}
 		case customer.FieldNickName:
 			if value, ok := values[i].(*sql.NullString); !ok {
@@ -272,8 +263,6 @@ func (c *Customer) String() string {
 	builder.WriteString(c.Avatar)
 	builder.WriteString(", name=")
 	builder.WriteString(c.Name)
-	builder.WriteString(", role=")
-	builder.WriteString(c.Role)
 	builder.WriteString(", nick_name=")
 	builder.WriteString(c.NickName)
 	builder.WriteString(", email=")

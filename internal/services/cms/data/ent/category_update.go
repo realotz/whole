@@ -26,10 +26,38 @@ func (cu *CategoryUpdate) Where(ps ...predicate.Category) *CategoryUpdate {
 	return cu
 }
 
+// SetName sets the "name" field.
+func (cu *CategoryUpdate) SetName(s string) *CategoryUpdate {
+	cu.mutation.SetName(s)
+	return cu
+}
+
+// SetNillableName sets the "name" field if the given value is not nil.
+func (cu *CategoryUpdate) SetNillableName(s *string) *CategoryUpdate {
+	if s != nil {
+		cu.SetName(*s)
+	}
+	return cu
+}
+
+// ClearName clears the value of the "name" field.
+func (cu *CategoryUpdate) ClearName() *CategoryUpdate {
+	cu.mutation.ClearName()
+	return cu
+}
+
 // SetPid sets the "pid" field.
 func (cu *CategoryUpdate) SetPid(i int64) *CategoryUpdate {
 	cu.mutation.ResetPid()
 	cu.mutation.SetPid(i)
+	return cu
+}
+
+// SetNillablePid sets the "pid" field if the given value is not nil.
+func (cu *CategoryUpdate) SetNillablePid(i *int64) *CategoryUpdate {
+	if i != nil {
+		cu.SetPid(*i)
+	}
 	return cu
 }
 
@@ -39,9 +67,49 @@ func (cu *CategoryUpdate) AddPid(i int64) *CategoryUpdate {
 	return cu
 }
 
-// SetName sets the "name" field.
-func (cu *CategoryUpdate) SetName(s string) *CategoryUpdate {
-	cu.mutation.SetName(s)
+// ClearPid clears the value of the "pid" field.
+func (cu *CategoryUpdate) ClearPid() *CategoryUpdate {
+	cu.mutation.ClearPid()
+	return cu
+}
+
+// SetIcon sets the "icon" field.
+func (cu *CategoryUpdate) SetIcon(s string) *CategoryUpdate {
+	cu.mutation.SetIcon(s)
+	return cu
+}
+
+// SetNillableIcon sets the "icon" field if the given value is not nil.
+func (cu *CategoryUpdate) SetNillableIcon(s *string) *CategoryUpdate {
+	if s != nil {
+		cu.SetIcon(*s)
+	}
+	return cu
+}
+
+// ClearIcon clears the value of the "icon" field.
+func (cu *CategoryUpdate) ClearIcon() *CategoryUpdate {
+	cu.mutation.ClearIcon()
+	return cu
+}
+
+// SetDesc sets the "desc" field.
+func (cu *CategoryUpdate) SetDesc(s string) *CategoryUpdate {
+	cu.mutation.SetDesc(s)
+	return cu
+}
+
+// SetNillableDesc sets the "desc" field if the given value is not nil.
+func (cu *CategoryUpdate) SetNillableDesc(s *string) *CategoryUpdate {
+	if s != nil {
+		cu.SetDesc(*s)
+	}
+	return cu
+}
+
+// ClearDesc clears the value of the "desc" field.
+func (cu *CategoryUpdate) ClearDesc() *CategoryUpdate {
+	cu.mutation.ClearDesc()
 	return cu
 }
 
@@ -135,6 +203,19 @@ func (cu *CategoryUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Column: category.FieldUpdateTime,
 		})
 	}
+	if value, ok := cu.mutation.Name(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: category.FieldName,
+		})
+	}
+	if cu.mutation.NameCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Column: category.FieldName,
+		})
+	}
 	if value, ok := cu.mutation.Pid(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeInt64,
@@ -149,11 +230,36 @@ func (cu *CategoryUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Column: category.FieldPid,
 		})
 	}
-	if value, ok := cu.mutation.Name(); ok {
+	if cu.mutation.PidCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt64,
+			Column: category.FieldPid,
+		})
+	}
+	if value, ok := cu.mutation.Icon(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
-			Column: category.FieldName,
+			Column: category.FieldIcon,
+		})
+	}
+	if cu.mutation.IconCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Column: category.FieldIcon,
+		})
+	}
+	if value, ok := cu.mutation.Desc(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: category.FieldDesc,
+		})
+	}
+	if cu.mutation.DescCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Column: category.FieldDesc,
 		})
 	}
 	if n, err = sqlgraph.UpdateNodes(ctx, cu.driver, _spec); err != nil {
@@ -174,10 +280,38 @@ type CategoryUpdateOne struct {
 	mutation *CategoryMutation
 }
 
+// SetName sets the "name" field.
+func (cuo *CategoryUpdateOne) SetName(s string) *CategoryUpdateOne {
+	cuo.mutation.SetName(s)
+	return cuo
+}
+
+// SetNillableName sets the "name" field if the given value is not nil.
+func (cuo *CategoryUpdateOne) SetNillableName(s *string) *CategoryUpdateOne {
+	if s != nil {
+		cuo.SetName(*s)
+	}
+	return cuo
+}
+
+// ClearName clears the value of the "name" field.
+func (cuo *CategoryUpdateOne) ClearName() *CategoryUpdateOne {
+	cuo.mutation.ClearName()
+	return cuo
+}
+
 // SetPid sets the "pid" field.
 func (cuo *CategoryUpdateOne) SetPid(i int64) *CategoryUpdateOne {
 	cuo.mutation.ResetPid()
 	cuo.mutation.SetPid(i)
+	return cuo
+}
+
+// SetNillablePid sets the "pid" field if the given value is not nil.
+func (cuo *CategoryUpdateOne) SetNillablePid(i *int64) *CategoryUpdateOne {
+	if i != nil {
+		cuo.SetPid(*i)
+	}
 	return cuo
 }
 
@@ -187,9 +321,49 @@ func (cuo *CategoryUpdateOne) AddPid(i int64) *CategoryUpdateOne {
 	return cuo
 }
 
-// SetName sets the "name" field.
-func (cuo *CategoryUpdateOne) SetName(s string) *CategoryUpdateOne {
-	cuo.mutation.SetName(s)
+// ClearPid clears the value of the "pid" field.
+func (cuo *CategoryUpdateOne) ClearPid() *CategoryUpdateOne {
+	cuo.mutation.ClearPid()
+	return cuo
+}
+
+// SetIcon sets the "icon" field.
+func (cuo *CategoryUpdateOne) SetIcon(s string) *CategoryUpdateOne {
+	cuo.mutation.SetIcon(s)
+	return cuo
+}
+
+// SetNillableIcon sets the "icon" field if the given value is not nil.
+func (cuo *CategoryUpdateOne) SetNillableIcon(s *string) *CategoryUpdateOne {
+	if s != nil {
+		cuo.SetIcon(*s)
+	}
+	return cuo
+}
+
+// ClearIcon clears the value of the "icon" field.
+func (cuo *CategoryUpdateOne) ClearIcon() *CategoryUpdateOne {
+	cuo.mutation.ClearIcon()
+	return cuo
+}
+
+// SetDesc sets the "desc" field.
+func (cuo *CategoryUpdateOne) SetDesc(s string) *CategoryUpdateOne {
+	cuo.mutation.SetDesc(s)
+	return cuo
+}
+
+// SetNillableDesc sets the "desc" field if the given value is not nil.
+func (cuo *CategoryUpdateOne) SetNillableDesc(s *string) *CategoryUpdateOne {
+	if s != nil {
+		cuo.SetDesc(*s)
+	}
+	return cuo
+}
+
+// ClearDesc clears the value of the "desc" field.
+func (cuo *CategoryUpdateOne) ClearDesc() *CategoryUpdateOne {
+	cuo.mutation.ClearDesc()
 	return cuo
 }
 
@@ -288,6 +462,19 @@ func (cuo *CategoryUpdateOne) sqlSave(ctx context.Context) (_node *Category, err
 			Column: category.FieldUpdateTime,
 		})
 	}
+	if value, ok := cuo.mutation.Name(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: category.FieldName,
+		})
+	}
+	if cuo.mutation.NameCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Column: category.FieldName,
+		})
+	}
 	if value, ok := cuo.mutation.Pid(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeInt64,
@@ -302,11 +489,36 @@ func (cuo *CategoryUpdateOne) sqlSave(ctx context.Context) (_node *Category, err
 			Column: category.FieldPid,
 		})
 	}
-	if value, ok := cuo.mutation.Name(); ok {
+	if cuo.mutation.PidCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeInt64,
+			Column: category.FieldPid,
+		})
+	}
+	if value, ok := cuo.mutation.Icon(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
-			Column: category.FieldName,
+			Column: category.FieldIcon,
+		})
+	}
+	if cuo.mutation.IconCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Column: category.FieldIcon,
+		})
+	}
+	if value, ok := cuo.mutation.Desc(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: category.FieldDesc,
+		})
+	}
+	if cuo.mutation.DescCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Column: category.FieldDesc,
 		})
 	}
 	_node = &Category{config: cuo.config}

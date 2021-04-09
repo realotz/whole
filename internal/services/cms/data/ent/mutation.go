@@ -34,9 +34,11 @@ type CategoryMutation struct {
 	id            *int64
 	create_time   *time.Time
 	update_time   *time.Time
+	name          *string
 	pid           *int64
 	addpid        *int64
-	name          *string
+	icon          *string
+	desc          *string
 	clearedFields map[string]struct{}
 	done          bool
 	oldValue      func(context.Context) (*Category, error)
@@ -200,6 +202,55 @@ func (m *CategoryMutation) ResetUpdateTime() {
 	m.update_time = nil
 }
 
+// SetName sets the "name" field.
+func (m *CategoryMutation) SetName(s string) {
+	m.name = &s
+}
+
+// Name returns the value of the "name" field in the mutation.
+func (m *CategoryMutation) Name() (r string, exists bool) {
+	v := m.name
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldName returns the old "name" field's value of the Category entity.
+// If the Category object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *CategoryMutation) OldName(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldName is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldName requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldName: %w", err)
+	}
+	return oldValue.Name, nil
+}
+
+// ClearName clears the value of the "name" field.
+func (m *CategoryMutation) ClearName() {
+	m.name = nil
+	m.clearedFields[category.FieldName] = struct{}{}
+}
+
+// NameCleared returns if the "name" field was cleared in this mutation.
+func (m *CategoryMutation) NameCleared() bool {
+	_, ok := m.clearedFields[category.FieldName]
+	return ok
+}
+
+// ResetName resets all changes to the "name" field.
+func (m *CategoryMutation) ResetName() {
+	m.name = nil
+	delete(m.clearedFields, category.FieldName)
+}
+
 // SetPid sets the "pid" field.
 func (m *CategoryMutation) SetPid(i int64) {
 	m.pid = &i
@@ -250,46 +301,122 @@ func (m *CategoryMutation) AddedPid() (r int64, exists bool) {
 	return *v, true
 }
 
+// ClearPid clears the value of the "pid" field.
+func (m *CategoryMutation) ClearPid() {
+	m.pid = nil
+	m.addpid = nil
+	m.clearedFields[category.FieldPid] = struct{}{}
+}
+
+// PidCleared returns if the "pid" field was cleared in this mutation.
+func (m *CategoryMutation) PidCleared() bool {
+	_, ok := m.clearedFields[category.FieldPid]
+	return ok
+}
+
 // ResetPid resets all changes to the "pid" field.
 func (m *CategoryMutation) ResetPid() {
 	m.pid = nil
 	m.addpid = nil
+	delete(m.clearedFields, category.FieldPid)
 }
 
-// SetName sets the "name" field.
-func (m *CategoryMutation) SetName(s string) {
-	m.name = &s
+// SetIcon sets the "icon" field.
+func (m *CategoryMutation) SetIcon(s string) {
+	m.icon = &s
 }
 
-// Name returns the value of the "name" field in the mutation.
-func (m *CategoryMutation) Name() (r string, exists bool) {
-	v := m.name
+// Icon returns the value of the "icon" field in the mutation.
+func (m *CategoryMutation) Icon() (r string, exists bool) {
+	v := m.icon
 	if v == nil {
 		return
 	}
 	return *v, true
 }
 
-// OldName returns the old "name" field's value of the Category entity.
+// OldIcon returns the old "icon" field's value of the Category entity.
 // If the Category object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *CategoryMutation) OldName(ctx context.Context) (v string, err error) {
+func (m *CategoryMutation) OldIcon(ctx context.Context) (v string, err error) {
 	if !m.op.Is(OpUpdateOne) {
-		return v, fmt.Errorf("OldName is only allowed on UpdateOne operations")
+		return v, fmt.Errorf("OldIcon is only allowed on UpdateOne operations")
 	}
 	if m.id == nil || m.oldValue == nil {
-		return v, fmt.Errorf("OldName requires an ID field in the mutation")
+		return v, fmt.Errorf("OldIcon requires an ID field in the mutation")
 	}
 	oldValue, err := m.oldValue(ctx)
 	if err != nil {
-		return v, fmt.Errorf("querying old value for OldName: %w", err)
+		return v, fmt.Errorf("querying old value for OldIcon: %w", err)
 	}
-	return oldValue.Name, nil
+	return oldValue.Icon, nil
 }
 
-// ResetName resets all changes to the "name" field.
-func (m *CategoryMutation) ResetName() {
-	m.name = nil
+// ClearIcon clears the value of the "icon" field.
+func (m *CategoryMutation) ClearIcon() {
+	m.icon = nil
+	m.clearedFields[category.FieldIcon] = struct{}{}
+}
+
+// IconCleared returns if the "icon" field was cleared in this mutation.
+func (m *CategoryMutation) IconCleared() bool {
+	_, ok := m.clearedFields[category.FieldIcon]
+	return ok
+}
+
+// ResetIcon resets all changes to the "icon" field.
+func (m *CategoryMutation) ResetIcon() {
+	m.icon = nil
+	delete(m.clearedFields, category.FieldIcon)
+}
+
+// SetDesc sets the "desc" field.
+func (m *CategoryMutation) SetDesc(s string) {
+	m.desc = &s
+}
+
+// Desc returns the value of the "desc" field in the mutation.
+func (m *CategoryMutation) Desc() (r string, exists bool) {
+	v := m.desc
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldDesc returns the old "desc" field's value of the Category entity.
+// If the Category object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *CategoryMutation) OldDesc(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldDesc is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldDesc requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldDesc: %w", err)
+	}
+	return oldValue.Desc, nil
+}
+
+// ClearDesc clears the value of the "desc" field.
+func (m *CategoryMutation) ClearDesc() {
+	m.desc = nil
+	m.clearedFields[category.FieldDesc] = struct{}{}
+}
+
+// DescCleared returns if the "desc" field was cleared in this mutation.
+func (m *CategoryMutation) DescCleared() bool {
+	_, ok := m.clearedFields[category.FieldDesc]
+	return ok
+}
+
+// ResetDesc resets all changes to the "desc" field.
+func (m *CategoryMutation) ResetDesc() {
+	m.desc = nil
+	delete(m.clearedFields, category.FieldDesc)
 }
 
 // Op returns the operation name.
@@ -306,18 +433,24 @@ func (m *CategoryMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *CategoryMutation) Fields() []string {
-	fields := make([]string, 0, 4)
+	fields := make([]string, 0, 6)
 	if m.create_time != nil {
 		fields = append(fields, category.FieldCreateTime)
 	}
 	if m.update_time != nil {
 		fields = append(fields, category.FieldUpdateTime)
 	}
+	if m.name != nil {
+		fields = append(fields, category.FieldName)
+	}
 	if m.pid != nil {
 		fields = append(fields, category.FieldPid)
 	}
-	if m.name != nil {
-		fields = append(fields, category.FieldName)
+	if m.icon != nil {
+		fields = append(fields, category.FieldIcon)
+	}
+	if m.desc != nil {
+		fields = append(fields, category.FieldDesc)
 	}
 	return fields
 }
@@ -331,10 +464,14 @@ func (m *CategoryMutation) Field(name string) (ent.Value, bool) {
 		return m.CreateTime()
 	case category.FieldUpdateTime:
 		return m.UpdateTime()
-	case category.FieldPid:
-		return m.Pid()
 	case category.FieldName:
 		return m.Name()
+	case category.FieldPid:
+		return m.Pid()
+	case category.FieldIcon:
+		return m.Icon()
+	case category.FieldDesc:
+		return m.Desc()
 	}
 	return nil, false
 }
@@ -348,10 +485,14 @@ func (m *CategoryMutation) OldField(ctx context.Context, name string) (ent.Value
 		return m.OldCreateTime(ctx)
 	case category.FieldUpdateTime:
 		return m.OldUpdateTime(ctx)
-	case category.FieldPid:
-		return m.OldPid(ctx)
 	case category.FieldName:
 		return m.OldName(ctx)
+	case category.FieldPid:
+		return m.OldPid(ctx)
+	case category.FieldIcon:
+		return m.OldIcon(ctx)
+	case category.FieldDesc:
+		return m.OldDesc(ctx)
 	}
 	return nil, fmt.Errorf("unknown Category field %s", name)
 }
@@ -375,6 +516,13 @@ func (m *CategoryMutation) SetField(name string, value ent.Value) error {
 		}
 		m.SetUpdateTime(v)
 		return nil
+	case category.FieldName:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetName(v)
+		return nil
 	case category.FieldPid:
 		v, ok := value.(int64)
 		if !ok {
@@ -382,12 +530,19 @@ func (m *CategoryMutation) SetField(name string, value ent.Value) error {
 		}
 		m.SetPid(v)
 		return nil
-	case category.FieldName:
+	case category.FieldIcon:
 		v, ok := value.(string)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
-		m.SetName(v)
+		m.SetIcon(v)
+		return nil
+	case category.FieldDesc:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetDesc(v)
 		return nil
 	}
 	return fmt.Errorf("unknown Category field %s", name)
@@ -433,7 +588,20 @@ func (m *CategoryMutation) AddField(name string, value ent.Value) error {
 // ClearedFields returns all nullable fields that were cleared during this
 // mutation.
 func (m *CategoryMutation) ClearedFields() []string {
-	return nil
+	var fields []string
+	if m.FieldCleared(category.FieldName) {
+		fields = append(fields, category.FieldName)
+	}
+	if m.FieldCleared(category.FieldPid) {
+		fields = append(fields, category.FieldPid)
+	}
+	if m.FieldCleared(category.FieldIcon) {
+		fields = append(fields, category.FieldIcon)
+	}
+	if m.FieldCleared(category.FieldDesc) {
+		fields = append(fields, category.FieldDesc)
+	}
+	return fields
 }
 
 // FieldCleared returns a boolean indicating if a field with the given name was
@@ -446,6 +614,20 @@ func (m *CategoryMutation) FieldCleared(name string) bool {
 // ClearField clears the value of the field with the given name. It returns an
 // error if the field is not defined in the schema.
 func (m *CategoryMutation) ClearField(name string) error {
+	switch name {
+	case category.FieldName:
+		m.ClearName()
+		return nil
+	case category.FieldPid:
+		m.ClearPid()
+		return nil
+	case category.FieldIcon:
+		m.ClearIcon()
+		return nil
+	case category.FieldDesc:
+		m.ClearDesc()
+		return nil
+	}
 	return fmt.Errorf("unknown Category nullable field %s", name)
 }
 
@@ -459,11 +641,17 @@ func (m *CategoryMutation) ResetField(name string) error {
 	case category.FieldUpdateTime:
 		m.ResetUpdateTime()
 		return nil
+	case category.FieldName:
+		m.ResetName()
+		return nil
 	case category.FieldPid:
 		m.ResetPid()
 		return nil
-	case category.FieldName:
-		m.ResetName()
+	case category.FieldIcon:
+		m.ResetIcon()
+		return nil
+	case category.FieldDesc:
+		m.ResetDesc()
 		return nil
 	}
 	return fmt.Errorf("unknown Category field %s", name)

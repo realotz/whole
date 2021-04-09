@@ -106,6 +106,13 @@ func UpdateTime(v time.Time) predicate.Category {
 	})
 }
 
+// Name applies equality check predicate on the "name" field. It's identical to NameEQ.
+func Name(v string) predicate.Category {
+	return predicate.Category(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldName), v))
+	})
+}
+
 // Pid applies equality check predicate on the "pid" field. It's identical to PidEQ.
 func Pid(v int64) predicate.Category {
 	return predicate.Category(func(s *sql.Selector) {
@@ -113,10 +120,17 @@ func Pid(v int64) predicate.Category {
 	})
 }
 
-// Name applies equality check predicate on the "name" field. It's identical to NameEQ.
-func Name(v string) predicate.Category {
+// Icon applies equality check predicate on the "icon" field. It's identical to IconEQ.
+func Icon(v string) predicate.Category {
 	return predicate.Category(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldName), v))
+		s.Where(sql.EQ(s.C(FieldIcon), v))
+	})
+}
+
+// Desc applies equality check predicate on the "desc" field. It's identical to DescEQ.
+func Desc(v string) predicate.Category {
+	return predicate.Category(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldDesc), v))
 	})
 }
 
@@ -272,82 +286,6 @@ func UpdateTimeLTE(v time.Time) predicate.Category {
 	})
 }
 
-// PidEQ applies the EQ predicate on the "pid" field.
-func PidEQ(v int64) predicate.Category {
-	return predicate.Category(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldPid), v))
-	})
-}
-
-// PidNEQ applies the NEQ predicate on the "pid" field.
-func PidNEQ(v int64) predicate.Category {
-	return predicate.Category(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldPid), v))
-	})
-}
-
-// PidIn applies the In predicate on the "pid" field.
-func PidIn(vs ...int64) predicate.Category {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.Category(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.In(s.C(FieldPid), v...))
-	})
-}
-
-// PidNotIn applies the NotIn predicate on the "pid" field.
-func PidNotIn(vs ...int64) predicate.Category {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.Category(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.NotIn(s.C(FieldPid), v...))
-	})
-}
-
-// PidGT applies the GT predicate on the "pid" field.
-func PidGT(v int64) predicate.Category {
-	return predicate.Category(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldPid), v))
-	})
-}
-
-// PidGTE applies the GTE predicate on the "pid" field.
-func PidGTE(v int64) predicate.Category {
-	return predicate.Category(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldPid), v))
-	})
-}
-
-// PidLT applies the LT predicate on the "pid" field.
-func PidLT(v int64) predicate.Category {
-	return predicate.Category(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldPid), v))
-	})
-}
-
-// PidLTE applies the LTE predicate on the "pid" field.
-func PidLTE(v int64) predicate.Category {
-	return predicate.Category(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldPid), v))
-	})
-}
-
 // NameEQ applies the EQ predicate on the "name" field.
 func NameEQ(v string) predicate.Category {
 	return predicate.Category(func(s *sql.Selector) {
@@ -445,6 +383,20 @@ func NameHasSuffix(v string) predicate.Category {
 	})
 }
 
+// NameIsNil applies the IsNil predicate on the "name" field.
+func NameIsNil() predicate.Category {
+	return predicate.Category(func(s *sql.Selector) {
+		s.Where(sql.IsNull(s.C(FieldName)))
+	})
+}
+
+// NameNotNil applies the NotNil predicate on the "name" field.
+func NameNotNil() predicate.Category {
+	return predicate.Category(func(s *sql.Selector) {
+		s.Where(sql.NotNull(s.C(FieldName)))
+	})
+}
+
 // NameEqualFold applies the EqualFold predicate on the "name" field.
 func NameEqualFold(v string) predicate.Category {
 	return predicate.Category(func(s *sql.Selector) {
@@ -456,6 +408,346 @@ func NameEqualFold(v string) predicate.Category {
 func NameContainsFold(v string) predicate.Category {
 	return predicate.Category(func(s *sql.Selector) {
 		s.Where(sql.ContainsFold(s.C(FieldName), v))
+	})
+}
+
+// PidEQ applies the EQ predicate on the "pid" field.
+func PidEQ(v int64) predicate.Category {
+	return predicate.Category(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldPid), v))
+	})
+}
+
+// PidNEQ applies the NEQ predicate on the "pid" field.
+func PidNEQ(v int64) predicate.Category {
+	return predicate.Category(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldPid), v))
+	})
+}
+
+// PidIn applies the In predicate on the "pid" field.
+func PidIn(vs ...int64) predicate.Category {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Category(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.In(s.C(FieldPid), v...))
+	})
+}
+
+// PidNotIn applies the NotIn predicate on the "pid" field.
+func PidNotIn(vs ...int64) predicate.Category {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Category(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.NotIn(s.C(FieldPid), v...))
+	})
+}
+
+// PidGT applies the GT predicate on the "pid" field.
+func PidGT(v int64) predicate.Category {
+	return predicate.Category(func(s *sql.Selector) {
+		s.Where(sql.GT(s.C(FieldPid), v))
+	})
+}
+
+// PidGTE applies the GTE predicate on the "pid" field.
+func PidGTE(v int64) predicate.Category {
+	return predicate.Category(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldPid), v))
+	})
+}
+
+// PidLT applies the LT predicate on the "pid" field.
+func PidLT(v int64) predicate.Category {
+	return predicate.Category(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldPid), v))
+	})
+}
+
+// PidLTE applies the LTE predicate on the "pid" field.
+func PidLTE(v int64) predicate.Category {
+	return predicate.Category(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldPid), v))
+	})
+}
+
+// PidIsNil applies the IsNil predicate on the "pid" field.
+func PidIsNil() predicate.Category {
+	return predicate.Category(func(s *sql.Selector) {
+		s.Where(sql.IsNull(s.C(FieldPid)))
+	})
+}
+
+// PidNotNil applies the NotNil predicate on the "pid" field.
+func PidNotNil() predicate.Category {
+	return predicate.Category(func(s *sql.Selector) {
+		s.Where(sql.NotNull(s.C(FieldPid)))
+	})
+}
+
+// IconEQ applies the EQ predicate on the "icon" field.
+func IconEQ(v string) predicate.Category {
+	return predicate.Category(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldIcon), v))
+	})
+}
+
+// IconNEQ applies the NEQ predicate on the "icon" field.
+func IconNEQ(v string) predicate.Category {
+	return predicate.Category(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldIcon), v))
+	})
+}
+
+// IconIn applies the In predicate on the "icon" field.
+func IconIn(vs ...string) predicate.Category {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Category(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.In(s.C(FieldIcon), v...))
+	})
+}
+
+// IconNotIn applies the NotIn predicate on the "icon" field.
+func IconNotIn(vs ...string) predicate.Category {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Category(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.NotIn(s.C(FieldIcon), v...))
+	})
+}
+
+// IconGT applies the GT predicate on the "icon" field.
+func IconGT(v string) predicate.Category {
+	return predicate.Category(func(s *sql.Selector) {
+		s.Where(sql.GT(s.C(FieldIcon), v))
+	})
+}
+
+// IconGTE applies the GTE predicate on the "icon" field.
+func IconGTE(v string) predicate.Category {
+	return predicate.Category(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldIcon), v))
+	})
+}
+
+// IconLT applies the LT predicate on the "icon" field.
+func IconLT(v string) predicate.Category {
+	return predicate.Category(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldIcon), v))
+	})
+}
+
+// IconLTE applies the LTE predicate on the "icon" field.
+func IconLTE(v string) predicate.Category {
+	return predicate.Category(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldIcon), v))
+	})
+}
+
+// IconContains applies the Contains predicate on the "icon" field.
+func IconContains(v string) predicate.Category {
+	return predicate.Category(func(s *sql.Selector) {
+		s.Where(sql.Contains(s.C(FieldIcon), v))
+	})
+}
+
+// IconHasPrefix applies the HasPrefix predicate on the "icon" field.
+func IconHasPrefix(v string) predicate.Category {
+	return predicate.Category(func(s *sql.Selector) {
+		s.Where(sql.HasPrefix(s.C(FieldIcon), v))
+	})
+}
+
+// IconHasSuffix applies the HasSuffix predicate on the "icon" field.
+func IconHasSuffix(v string) predicate.Category {
+	return predicate.Category(func(s *sql.Selector) {
+		s.Where(sql.HasSuffix(s.C(FieldIcon), v))
+	})
+}
+
+// IconIsNil applies the IsNil predicate on the "icon" field.
+func IconIsNil() predicate.Category {
+	return predicate.Category(func(s *sql.Selector) {
+		s.Where(sql.IsNull(s.C(FieldIcon)))
+	})
+}
+
+// IconNotNil applies the NotNil predicate on the "icon" field.
+func IconNotNil() predicate.Category {
+	return predicate.Category(func(s *sql.Selector) {
+		s.Where(sql.NotNull(s.C(FieldIcon)))
+	})
+}
+
+// IconEqualFold applies the EqualFold predicate on the "icon" field.
+func IconEqualFold(v string) predicate.Category {
+	return predicate.Category(func(s *sql.Selector) {
+		s.Where(sql.EqualFold(s.C(FieldIcon), v))
+	})
+}
+
+// IconContainsFold applies the ContainsFold predicate on the "icon" field.
+func IconContainsFold(v string) predicate.Category {
+	return predicate.Category(func(s *sql.Selector) {
+		s.Where(sql.ContainsFold(s.C(FieldIcon), v))
+	})
+}
+
+// DescEQ applies the EQ predicate on the "desc" field.
+func DescEQ(v string) predicate.Category {
+	return predicate.Category(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldDesc), v))
+	})
+}
+
+// DescNEQ applies the NEQ predicate on the "desc" field.
+func DescNEQ(v string) predicate.Category {
+	return predicate.Category(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldDesc), v))
+	})
+}
+
+// DescIn applies the In predicate on the "desc" field.
+func DescIn(vs ...string) predicate.Category {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Category(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.In(s.C(FieldDesc), v...))
+	})
+}
+
+// DescNotIn applies the NotIn predicate on the "desc" field.
+func DescNotIn(vs ...string) predicate.Category {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Category(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.NotIn(s.C(FieldDesc), v...))
+	})
+}
+
+// DescGT applies the GT predicate on the "desc" field.
+func DescGT(v string) predicate.Category {
+	return predicate.Category(func(s *sql.Selector) {
+		s.Where(sql.GT(s.C(FieldDesc), v))
+	})
+}
+
+// DescGTE applies the GTE predicate on the "desc" field.
+func DescGTE(v string) predicate.Category {
+	return predicate.Category(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldDesc), v))
+	})
+}
+
+// DescLT applies the LT predicate on the "desc" field.
+func DescLT(v string) predicate.Category {
+	return predicate.Category(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldDesc), v))
+	})
+}
+
+// DescLTE applies the LTE predicate on the "desc" field.
+func DescLTE(v string) predicate.Category {
+	return predicate.Category(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldDesc), v))
+	})
+}
+
+// DescContains applies the Contains predicate on the "desc" field.
+func DescContains(v string) predicate.Category {
+	return predicate.Category(func(s *sql.Selector) {
+		s.Where(sql.Contains(s.C(FieldDesc), v))
+	})
+}
+
+// DescHasPrefix applies the HasPrefix predicate on the "desc" field.
+func DescHasPrefix(v string) predicate.Category {
+	return predicate.Category(func(s *sql.Selector) {
+		s.Where(sql.HasPrefix(s.C(FieldDesc), v))
+	})
+}
+
+// DescHasSuffix applies the HasSuffix predicate on the "desc" field.
+func DescHasSuffix(v string) predicate.Category {
+	return predicate.Category(func(s *sql.Selector) {
+		s.Where(sql.HasSuffix(s.C(FieldDesc), v))
+	})
+}
+
+// DescIsNil applies the IsNil predicate on the "desc" field.
+func DescIsNil() predicate.Category {
+	return predicate.Category(func(s *sql.Selector) {
+		s.Where(sql.IsNull(s.C(FieldDesc)))
+	})
+}
+
+// DescNotNil applies the NotNil predicate on the "desc" field.
+func DescNotNil() predicate.Category {
+	return predicate.Category(func(s *sql.Selector) {
+		s.Where(sql.NotNull(s.C(FieldDesc)))
+	})
+}
+
+// DescEqualFold applies the EqualFold predicate on the "desc" field.
+func DescEqualFold(v string) predicate.Category {
+	return predicate.Category(func(s *sql.Selector) {
+		s.Where(sql.EqualFold(s.C(FieldDesc), v))
+	})
+}
+
+// DescContainsFold applies the ContainsFold predicate on the "desc" field.
+func DescContainsFold(v string) predicate.Category {
+	return predicate.Category(func(s *sql.Selector) {
+		s.Where(sql.ContainsFold(s.C(FieldDesc), v))
 	})
 }
 

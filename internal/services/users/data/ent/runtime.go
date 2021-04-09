@@ -45,20 +45,16 @@ func init() {
 	customerDescName := customerFields[5].Descriptor()
 	// customer.DefaultName holds the default value on creation for the name field.
 	customer.DefaultName = customerDescName.Default.(string)
-	// customerDescRole is the schema descriptor for role field.
-	customerDescRole := customerFields[6].Descriptor()
-	// customer.DefaultRole holds the default value on creation for the role field.
-	customer.DefaultRole = customerDescRole.Default.(string)
 	// customerDescNickName is the schema descriptor for nick_name field.
-	customerDescNickName := customerFields[7].Descriptor()
+	customerDescNickName := customerFields[6].Descriptor()
 	// customer.DefaultNickName holds the default value on creation for the nick_name field.
 	customer.DefaultNickName = customerDescNickName.Default.(string)
 	// customerDescPassword is the schema descriptor for password field.
-	customerDescPassword := customerFields[12].Descriptor()
+	customerDescPassword := customerFields[11].Descriptor()
 	// customer.PasswordValidator is a validator for the "password" field. It is called by the builders before save.
 	customer.PasswordValidator = customerDescPassword.Validators[0].(func(string) error)
 	// customerDescSalt is the schema descriptor for salt field.
-	customerDescSalt := customerFields[13].Descriptor()
+	customerDescSalt := customerFields[12].Descriptor()
 	// customer.SaltValidator is a validator for the "salt" field. It is called by the builders before save.
 	customer.SaltValidator = customerDescSalt.Validators[0].(func(string) error)
 	employeeMixin := schema.Employee{}.Mixin()
@@ -88,20 +84,12 @@ func init() {
 	employeeDescName := employeeFields[5].Descriptor()
 	// employee.DefaultName holds the default value on creation for the name field.
 	employee.DefaultName = employeeDescName.Default.(string)
-	// employeeDescRole is the schema descriptor for role field.
-	employeeDescRole := employeeFields[6].Descriptor()
-	// employee.DefaultRole holds the default value on creation for the role field.
-	employee.DefaultRole = employeeDescRole.Default.(string)
-	// employeeDescNickName is the schema descriptor for nick_name field.
-	employeeDescNickName := employeeFields[7].Descriptor()
-	// employee.DefaultNickName holds the default value on creation for the nick_name field.
-	employee.DefaultNickName = employeeDescNickName.Default.(string)
 	// employeeDescPassword is the schema descriptor for password field.
-	employeeDescPassword := employeeFields[12].Descriptor()
+	employeeDescPassword := employeeFields[10].Descriptor()
 	// employee.PasswordValidator is a validator for the "password" field. It is called by the builders before save.
 	employee.PasswordValidator = employeeDescPassword.Validators[0].(func(string) error)
 	// employeeDescSalt is the schema descriptor for salt field.
-	employeeDescSalt := employeeFields[13].Descriptor()
+	employeeDescSalt := employeeFields[11].Descriptor()
 	// employee.SaltValidator is a validator for the "salt" field. It is called by the builders before save.
 	employee.SaltValidator = employeeDescSalt.Validators[0].(func(string) error)
 	permissionMixin := schema.Permission{}.Mixin()

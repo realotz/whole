@@ -9,21 +9,20 @@ import (
 	"fmt"
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/google/uuid"
+	pb "github.com/realotz/whole/api/users/v1"
 	"github.com/realotz/whole/pkg/utils"
 	"time"
 )
 
 type Customer struct {
-	Sex      string `json:"sex,omitempty"`
-	Name     string `json:"name,omitempty"`
-	Avatar   string `json:"avatar,omitempty"`
-	Role     string `json:"role,omitempty"`
-	Account  string `json:"account,omitempty"`
-	NickName string `json:"nick_name,omitempty"`
-	Email    string `json:"email,omitempty"`
-	Mobile   string `json:"mobile,omitempty"`
-	IDCard   string `json:"id_card,omitempty"`
-
+	Sex        string    `json:"sex,omitempty"`
+	Name       string    `json:"name,omitempty"`
+	Avatar     string    `json:"avatar,omitempty"`
+	Account    string    `json:"account,omitempty"`
+	NickName   string    `json:"nick_name,omitempty"`
+	Email      string    `json:"email,omitempty"`
+	Mobile     string    `json:"mobile,omitempty"`
+	IDCard     string    `json:"id_card,omitempty"`
 	ID         int64     `json:"id,omitempty"`
 	Password   string    `json:"-"`
 	Salt       string    `json:"-"`
@@ -36,11 +35,11 @@ type Customer struct {
 }
 
 type CustomerRepo interface {
-	ListCustomer(ctx context.Context) ([]*Customer, error)
+	ListCustomer(ctx context.Context, op *pb.CustomerListOption) ([]*Customer, error)
 	GetCustomer(ctx context.Context, id int64) (*Customer, error)
 	CreateCustomer(ctx context.Context, article *Customer) (*Customer, error)
 	UpdateCustomer(ctx context.Context, id int64, article *Customer) (*Customer, error)
-	DeleteCustomer(ctx context.Context, id int64) error
+	DeleteCustomer(ctx context.Context, id []int64) error
 	GetCustomerForAccounts(ctx context.Context, account string) ([]*Customer, error)
 	// 创建jwttoken
 	CreateToken(member *Customer, time int64) (string, error)
@@ -55,8 +54,8 @@ func NewCustomerUsecase(repo CustomerRepo, logger log.Logger) *CustomerUsecase {
 	return &CustomerUsecase{repo: repo, log: log.NewHelper("biz/member", logger)}
 }
 
-func (uc *CustomerUsecase) List(ctx context.Context) (ps []*Customer, err error) {
-	return uc.repo.ListCustomer(ctx)
+func (uc *CustomerUsecase) List(ctx context.Context, req *pb.CustomerListOption) (ps []*Customer, err error) {
+	return uc.repo.ListCustomer(ctx, req)
 }
 
 func (uc *CustomerUsecase) Get(ctx context.Context, id int64) (p *Customer, err error) {
@@ -84,8 +83,8 @@ func (uc *CustomerUsecase) Update(ctx context.Context, id int64, member *Custome
 }
 
 // 删除用户
-func (uc *CustomerUsecase) Delete(ctx context.Context, id int64) error {
-	return uc.repo.DeleteCustomer(ctx, id)
+func (uc *CustomerUsecase) Delete(ctx context.Context, ids []int64) error {
+	return uc.repo.DeleteCustomer(ctx, ids)
 }
 
 // 登录

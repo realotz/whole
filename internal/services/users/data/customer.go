@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/go-kratos/kratos/v2/log"
+	pb "github.com/realotz/whole/api/users/v1"
 	"github.com/realotz/whole/internal/services/users/biz"
 	"github.com/realotz/whole/internal/services/users/data/ent"
 	"github.com/realotz/whole/internal/services/users/data/ent/customer"
@@ -66,8 +67,46 @@ func (ar *customerRepo) GetCustomerForAccounts(ctx context.Context, account stri
 	return rv, nil
 }
 
-func (ar *customerRepo) ListCustomer(ctx context.Context) ([]*biz.Customer, error) {
-	ps, err := ar.data.db.Customer.Query().All(ctx)
+// 用户列表搜索
+func (ar *customerRepo) ListCustomer(ctx context.Context, op *pb.CustomerListOption) ([]*biz.Customer, error) {
+	query := ar.data.db.Customer.Query()
+	// 关键字搜索
+	if op.Keyword != "" {
+		query.Where(customer.Or(
+			customer.NameContains("%"+op.Keyword+"%"),
+			customer.EmailContains("%"+op.Keyword+"%"),
+			customer.MobileContains("%"+op.Keyword+"%"),
+			customer.IDCardContains("%"+op.Keyword+"%"),
+			customer.NickNameContains("%"+op.Keyword+"%"),
+		))
+	}
+	//性别查询
+	if op.Sex != "" {
+		if err := customer.SexValidator(customer.Sex(op.Sex)); err != nil {
+			return nil, err
+		}
+		query.Where(customer.SexEQ(customer.Sex(op.Sex)))
+	}
+	// 电子邮件
+	if op.Email != "" {
+		query.Where(customer.EmailEQ(op.Email))
+	}
+	// 手机号
+	if op.Mobile != "" {
+		query.Where(customer.MobileEQ(op.Mobile))
+	}
+	// 身份证
+	if op.IdCard != "" {
+		query.Where(customer.IDCardEQ(op.IdCard))
+	}
+	// 名字
+	if op.Name != "" {
+		query.Where(customer.Or(
+			customer.NameContains("%"+op.Name+"%"),
+			customer.NickNameContains("%"+op.Name+"%"),
+		))
+	}
+	ps, err := query.Order(ent.Desc("id")).All(ctx)
 	if err != nil {
 		return nil, err
 	}
@@ -78,6 +117,7 @@ func (ar *customerRepo) ListCustomer(ctx context.Context) ([]*biz.Customer, erro
 	return rv, nil
 }
 
+//根据id获取用户
 func (ar *customerRepo) GetCustomer(ctx context.Context, id int64) (*biz.Customer, error) {
 	p, err := ar.data.db.Customer.Get(ctx, id)
 	if err != nil {
@@ -103,12 +143,11 @@ func (ar *customerRepo) CreateCustomer(ctx context.Context, m *biz.Customer) (*b
 	}
 	p, err = modCreate.
 		SetAccount(m.Account).
-		SetName(m.NickName).
-		SetNickName(m.Name).
+		SetName(m.Name).
+		SetNickName(m.NickName).
 		SetAvatar(m.Avatar).
 		SetEmail(m.Email).
 		SetIDCard(m.IDCard).
-		SetRole(m.Role).
 		SetPassword(m.Password).
 		SetSalt(m.Salt).
 		Save(ctx)
@@ -130,9 +169,6 @@ func (ar *customerRepo) UpdateCustomer(ctx context.Context, id int64, m *biz.Cus
 	}
 	if m.Name != "" && m.Name != p.Name {
 		modUp.SetName(m.Name)
-	}
-	if m.Role != "" && m.Role != p.Role {
-		modUp.SetRole(m.Role)
 	}
 	if m.Account != "" && m.Account != p.Account {
 		modUp.SetAccount(m.Account)
@@ -171,6 +207,17 @@ func (ar *customerRepo) UpdateCustomer(ctx context.Context, id int64, m *biz.Cus
 	return entCustomer(*p).BizStruct(), err
 }
 
-func (ar *customerRepo) DeleteCustomer(ctx context.Context, id int64) error {
-	return ar.data.db.Customer.DeleteOneID(id).Exec(ctx)
+func (ar *customerRepo) DeleteCustomer(ctx context.Context, ids []int64) error {
+	tx, err := ar.data.db.Tx(ctx)
+	if err != nil {
+		return err
+	}
+	for _, id := range ids {
+		err = tx.Customer.DeleteOneID(id).Exec(ctx)
+		if err != nil {
+			_ = tx.Rollback()
+			return err
+		}
+	}
+	return tx.Commit()
 }

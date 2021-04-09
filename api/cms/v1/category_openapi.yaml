@@ -1,63 +1,203 @@
 components:
   schemas:
-    CmsV1Category:
-      type: object
-    CmsV1CategoryDeleteOption:
+    ApiCmsV1Category:
       properties:
+        create_time:
+          $ref: '#/components/schemas/GoogleProtobufTimestamp'
+        desc:
+          description: 分类简介
+          type: string
+        icon:
+          description: 分类图标
+          type: string
         id:
-          type: string
-      type: object
-    CmsV1CategoryGetOption:
-      properties:
-        id:
-          type: string
-      type: object
-    CmsV1CategoryList:
-      properties:
-        message:
-          type: string
-      type: object
-    CmsV1CategoryUpdateOption:
-      properties:
+          format: int64
+          type: integer
         name:
+          description: 分类名称
           type: string
+        pid:
+          description: 父级分类id
+          format: int64
+          type: integer
+        update_time:
+          $ref: '#/components/schemas/GoogleProtobufTimestamp'
+      type: object
+    ApiCmsV1CreateCategoryReply:
+      properties:
+        data:
+          $ref: '#/components/schemas/ApiCmsV1Category'
+      type: object
+    ApiCmsV1DeleteCategoryReply:
+      type: object
+    ApiCmsV1DeleteCategoryRequest:
+      properties:
+        ids:
+          items:
+            format: int64
+            type: integer
+          type: array
+      type: object
+    ApiCmsV1GetCategoryRequest:
+      properties:
+        id:
+          format: int64
+          type: integer
+      type: object
+    ApiCmsV1ListCategoryReply:
+      properties:
+        list:
+          items:
+            $ref: '#/components/schemas/ApiCmsV1Category'
+          type: array
+        page:
+          description: 页码
+          format: int32
+          type: integer
+        page_size:
+          description: 分页大小
+          format: int32
+          type: integer
+        total:
+          description: 数据总计
+          format: int64
+          type: integer
+      type: object
+    ApiCmsV1ListCategoryRequest:
+      type: object
+    ApiCmsV1UpdateCategoryReply:
+      properties:
+        data:
+          $ref: '#/components/schemas/ApiCmsV1Category'
+      type: object
+    GoogleProtobufTimestamp:
+      properties:
+        nanos:
+          description: Non-negative fractions of a second at nanosecond resolution. Negative second values with fractions must still have non-negative nanos values that count forward in time. Must be from 0 to 999,999,999 inclusive.
+          format: int32
+          type: integer
+        seconds:
+          description: Represents seconds of UTC time since Unix epoch 1970-01-01T00:00:00Z. Must be from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59Z inclusive.
+          format: int64
+          type: integer
       type: object
 info:
-  description: cms.v1
-  title: cms.v1
+  description: api.cms.v1
+  title: api.cms.v1
   version: "1"
 openapi: 3.0.0
 paths:
-  /cms/category:
-    put:
+  /api.cms.v1.CategoryService/CreateCategory:
+    description: 创建文章类目
+    post:
+      description: 创建文章类目
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CmsV1CategoryUpdateOption'
+              $ref: '#/components/schemas/ApiCmsV1Category'
+        description: 文章类目结构体(请在此处定义数据结构)
         required: true
       responses:
         "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CmsV1Category'
+                $ref: '#/components/schemas/ApiCmsV1CreateCategoryReply'
           description: ok
+      summary: 创建文章类目
       tags:
-      - cms.v1.CategoryService
-    summary: Update
-  /cms/category/{id}:
-    delete:
+      - api.cms.v1.CategoryService
+    summary: CreateCategory
+  /api.cms.v1.CategoryService/DeleteCategory:
+    description: 批量删除文章类目
+    post:
+      description: 批量删除文章类目
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApiCmsV1DeleteCategoryRequest'
+        description: 批量删除请求
+        required: true
       responses:
         "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CmsV1Category'
+                $ref: '#/components/schemas/ApiCmsV1DeleteCategoryReply'
           description: ok
+      summary: 批量删除文章类目
       tags:
-      - cms.v1.CategoryService
-    summary: Delete
+      - api.cms.v1.CategoryService
+    summary: DeleteCategory
+  /api.cms.v1.CategoryService/GetCategory:
+    description: 获取文章类目详情
+    post:
+      description: 获取文章类目详情
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApiCmsV1GetCategoryRequest'
+        description: 查询单个数据
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiCmsV1Category'
+          description: ok
+      summary: 获取文章类目详情
+      tags:
+      - api.cms.v1.CategoryService
+    summary: GetCategory
+  /api.cms.v1.CategoryService/ListCategory:
+    description: 查询文章类目列表
+    post:
+      description: 查询文章类目列表
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApiCmsV1ListCategoryRequest'
+        description: 列表查询条件
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiCmsV1ListCategoryReply'
+          description: ok
+      summary: 查询文章类目列表
+      tags:
+      - api.cms.v1.CategoryService
+    summary: ListCategory
+  /api.cms.v1.CategoryService/UpdateCategory:
+    description: 更新文章类目
+    post:
+      description: 更新文章类目
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApiCmsV1Category'
+        description: 文章类目结构体(请在此处定义数据结构)
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiCmsV1UpdateCategoryReply'
+          description: ok
+      summary: 更新文章类目
+      tags:
+      - api.cms.v1.CategoryService
+    summary: UpdateCategory
 tags:
-- name: cms.v1.CategoryService
+- description: 文章类目服务
+  name: api.cms.v1.CategoryService
 

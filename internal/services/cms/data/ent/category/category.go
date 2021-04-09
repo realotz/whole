@@ -15,10 +15,14 @@ const (
 	FieldCreateTime = "create_time"
 	// FieldUpdateTime holds the string denoting the update_time field in the database.
 	FieldUpdateTime = "update_time"
-	// FieldPid holds the string denoting the pid field in the database.
-	FieldPid = "pid"
 	// FieldName holds the string denoting the name field in the database.
 	FieldName = "name"
+	// FieldPid holds the string denoting the pid field in the database.
+	FieldPid = "pid"
+	// FieldIcon holds the string denoting the icon field in the database.
+	FieldIcon = "icon"
+	// FieldDesc holds the string denoting the desc field in the database.
+	FieldDesc = "desc"
 	// Table holds the table name of the category in the database.
 	Table = "categories"
 )
@@ -28,8 +32,10 @@ var Columns = []string{
 	FieldID,
 	FieldCreateTime,
 	FieldUpdateTime,
-	FieldPid,
 	FieldName,
+	FieldPid,
+	FieldIcon,
+	FieldDesc,
 }
 
 // ValidColumn reports if the column name is valid (part of the table columns).

@@ -95,26 +95,6 @@ func (cu *CustomerUpdate) ClearName() *CustomerUpdate {
 	return cu
 }
 
-// SetRole sets the "role" field.
-func (cu *CustomerUpdate) SetRole(s string) *CustomerUpdate {
-	cu.mutation.SetRole(s)
-	return cu
-}
-
-// SetNillableRole sets the "role" field if the given value is not nil.
-func (cu *CustomerUpdate) SetNillableRole(s *string) *CustomerUpdate {
-	if s != nil {
-		cu.SetRole(*s)
-	}
-	return cu
-}
-
-// ClearRole clears the value of the "role" field.
-func (cu *CustomerUpdate) ClearRole() *CustomerUpdate {
-	cu.mutation.ClearRole()
-	return cu
-}
-
 // SetNickName sets the "nick_name" field.
 func (cu *CustomerUpdate) SetNickName(s string) *CustomerUpdate {
 	cu.mutation.SetNickName(s)
@@ -457,19 +437,6 @@ func (cu *CustomerUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Column: customer.FieldName,
 		})
 	}
-	if value, ok := cu.mutation.Role(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: customer.FieldRole,
-		})
-	}
-	if cu.mutation.RoleCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: customer.FieldRole,
-		})
-	}
 	if value, ok := cu.mutation.NickName(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
@@ -704,26 +671,6 @@ func (cuo *CustomerUpdateOne) SetNillableName(s *string) *CustomerUpdateOne {
 // ClearName clears the value of the "name" field.
 func (cuo *CustomerUpdateOne) ClearName() *CustomerUpdateOne {
 	cuo.mutation.ClearName()
-	return cuo
-}
-
-// SetRole sets the "role" field.
-func (cuo *CustomerUpdateOne) SetRole(s string) *CustomerUpdateOne {
-	cuo.mutation.SetRole(s)
-	return cuo
-}
-
-// SetNillableRole sets the "role" field if the given value is not nil.
-func (cuo *CustomerUpdateOne) SetNillableRole(s *string) *CustomerUpdateOne {
-	if s != nil {
-		cuo.SetRole(*s)
-	}
-	return cuo
-}
-
-// ClearRole clears the value of the "role" field.
-func (cuo *CustomerUpdateOne) ClearRole() *CustomerUpdateOne {
-	cuo.mutation.ClearRole()
 	return cuo
 }
 
@@ -1072,19 +1019,6 @@ func (cuo *CustomerUpdateOne) sqlSave(ctx context.Context) (_node *Customer, err
 		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Column: customer.FieldName,
-		})
-	}
-	if value, ok := cuo.mutation.Role(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: customer.FieldRole,
-		})
-	}
-	if cuo.mutation.RoleCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: customer.FieldRole,
 		})
 	}
 	if value, ok := cuo.mutation.NickName(); ok {

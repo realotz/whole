@@ -7,7 +7,7 @@ import (
 
 // NewHTTPServer new a HTTP server.
 func NewHTTPServer(c *conf.Server) *http.Server {
-	var opts = []http.ServerOption{}
+	var opts = make([]http.ServerOption, 0)
 	if c.Http.Network != "" {
 		opts = append(opts, http.Network(c.Http.Network))
 	}

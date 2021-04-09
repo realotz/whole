@@ -59,9 +59,11 @@ components:
       type: object
     UsersV1EmployeeDeleteOption:
       properties:
-        id:
-          format: int64
-          type: integer
+        ids:
+          items:
+            format: int64
+            type: integer
+          type: array
       type: object
     UsersV1EmployeeList:
       properties:

@@ -61,7 +61,7 @@ func (s *CustomerService) Login(ctx context.Context, req *pb.CustomerLogin) (*pb
 
 //用户列表
 func (s *CustomerService) List(ctx context.Context, req *pb.CustomerListOption) (*pb.CustomerList, error) {
-	ms, err := s.member.List(ctx)
+	ms, err := s.member.List(ctx, req)
 	if err != nil {
 		return nil, err
 	}
@@ -86,7 +86,6 @@ func (s *CustomerService) Create(ctx context.Context, req *pb.CustomerOption) (*
 	m, err := s.member.Create(ctx, &biz.Customer{
 		Sex:      req.Sex,
 		Name:     req.Name,
-		Role:     req.Role,
 		Account:  req.Account,
 		Avatar:   req.Avatar,
 		NickName: req.NickName,
@@ -106,7 +105,6 @@ func (s *CustomerService) Update(ctx context.Context, req *pb.CustomerOption) (*
 	m, err := s.member.Update(ctx, req.Id, &biz.Customer{
 		Sex:      req.Sex,
 		Name:     req.Name,
-		Role:     req.Role,
 		Account:  req.Account,
 		NickName: req.NickName,
 		Email:    req.Email,
@@ -137,7 +135,6 @@ func (uc *CustomerService) protoMsg(m *biz.Customer) *pb.Customer {
 		Name:       m.Name,
 		Account:    m.Account,
 		NickName:   m.NickName,
-		Role:       m.Role,
 		Email:      m.Email,
 		Mobile:     m.Mobile,
 		IdCard:     m.IDCard,

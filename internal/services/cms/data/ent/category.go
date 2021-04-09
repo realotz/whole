@@ -20,12 +20,18 @@ type Category struct {
 	CreateTime time.Time `json:"create_time,omitempty"`
 	// UpdateTime holds the value of the "update_time" field.
 	UpdateTime time.Time `json:"update_time,omitempty"`
-	// Pid holds the value of the "pid" field.
-	// 父级分类id
-	Pid int64 `json:"pid,omitempty"`
 	// Name holds the value of the "name" field.
 	// 分类名称
 	Name string `json:"name,omitempty"`
+	// Pid holds the value of the "pid" field.
+	// 父级分类id
+	Pid int64 `json:"pid,omitempty"`
+	// Icon holds the value of the "icon" field.
+	// 分类图标
+	Icon string `json:"icon,omitempty"`
+	// Desc holds the value of the "desc" field.
+	// 分类简介
+	Desc string `json:"desc,omitempty"`
 }
 
 // scanValues returns the types for scanning values from sql.Rows.
@@ -35,7 +41,7 @@ func (*Category) scanValues(columns []string) ([]interface{}, error) {
 		switch columns[i] {
 		case category.FieldID, category.FieldPid:
 			values[i] = &sql.NullInt64{}
-		case category.FieldName:
+		case category.FieldName, category.FieldIcon, category.FieldDesc:
 			values[i] = &sql.NullString{}
 		case category.FieldCreateTime, category.FieldUpdateTime:
 			values[i] = &sql.NullTime{}
@@ -72,17 +78,29 @@ func (c *Category) assignValues(columns []string, values []interface{}) error {
 			} else if value.Valid {
 				c.UpdateTime = value.Time
 			}
+		case category.FieldName:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field name", values[i])
+			} else if value.Valid {
+				c.Name = value.String
+			}
 		case category.FieldPid:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field pid", values[i])
 			} else if value.Valid {
 				c.Pid = value.Int64
 			}
-		case category.FieldName:
+		case category.FieldIcon:
 			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field name", values[i])
+				return fmt.Errorf("unexpected type %T for field icon", values[i])
 			} else if value.Valid {
-				c.Name = value.String
+				c.Icon = value.String
+			}
+		case category.FieldDesc:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field desc", values[i])
+			} else if value.Valid {
+				c.Desc = value.String
 			}
 		}
 	}
@@ -116,10 +134,14 @@ func (c *Category) String() string {
 	builder.WriteString(c.CreateTime.Format(time.ANSIC))
 	builder.WriteString(", update_time=")
 	builder.WriteString(c.UpdateTime.Format(time.ANSIC))
-	builder.WriteString(", pid=")
-	builder.WriteString(fmt.Sprintf("%v", c.Pid))
 	builder.WriteString(", name=")
 	builder.WriteString(c.Name)
+	builder.WriteString(", pid=")
+	builder.WriteString(fmt.Sprintf("%v", c.Pid))
+	builder.WriteString(", icon=")
+	builder.WriteString(c.Icon)
+	builder.WriteString(", desc=")
+	builder.WriteString(c.Desc)
 	builder.WriteByte(')')
 	return builder.String()
 }

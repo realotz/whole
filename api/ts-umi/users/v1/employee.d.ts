@@ -6,16 +6,28 @@
 // is compatible with the kratos package it is being compiled against.
 
 declare namespace UsersV1 {
-	/** EmployeeListOption */
-	type EmployeeListOption = {
+	/** EmployeeGetOption */
+	type EmployeeGetOption = {
+		id?:number
+	}
+	/** EmployeeOption */
+	type EmployeeOption = {
 		name?:string
-		tag?:string
+		account?:string
+		nick_name?:string
+		role?:string
 		email?:string
 		mobile?:string
+		id_card?:string
+		password?:string
 		sex?:string
-		role?:string
-		type?:string
-		create_time?:string
+		birthday?:GoogleProtobuf.Timestamp
+		id?:number
+		avatar?:string
+	}
+	/** EmployeeDeleteOption */
+	type EmployeeDeleteOption = {
+		ids?:Array<number>
 	}
 	/** EmployeeList */
 	type EmployeeList = {
@@ -40,18 +52,12 @@ declare namespace UsersV1 {
 		update_time?:GoogleProtobuf.Timestamp
 		avatar?:string
 	}
-	/** NullReq */
-	type NullReq = {
-	}
-	/** NullReply */
-	type NullReply = {
-	}
-	/** CaptchaReq */
-	type CaptchaReq = {
-		to?:string
+	/** EmployeeLogin */
+	type EmployeeLogin = {
+		account?:string
+		password?:string
 		captcha?:string
-		challenge?:string
-		tk?:string
+		code?:string
 	}
 	/** EmployeeLoginRes */
 	type EmployeeLoginRes = {
@@ -60,35 +66,16 @@ declare namespace UsersV1 {
 		expiration_time?:number
 		employee?:UsersV1.Employee
 	}
-	/** EmployeeOption */
-	type EmployeeOption = {
+	/** EmployeeListOption */
+	type EmployeeListOption = {
 		name?:string
-		account?:string
-		nick_name?:string
-		role?:string
+		tag?:string
 		email?:string
 		mobile?:string
-		id_card?:string
-		password?:string
 		sex?:string
-		birthday?:GoogleProtobuf.Timestamp
-		id?:number
-		avatar?:string
-	}
-	/** EmployeeDeleteOption */
-	type EmployeeDeleteOption = {
-		id?:number
-	}
-	/** EmployeeLogin */
-	type EmployeeLogin = {
-		account?:string
-		password?:string
-		captcha?:string
-		code?:string
-	}
-	/** EmployeeGetOption */
-	type EmployeeGetOption = {
-		id?:number
+		role?:string
+		type?:string
+		create_time?:string
 	}
 }
 

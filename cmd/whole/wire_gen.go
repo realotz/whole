@@ -38,7 +38,7 @@ func initApp(confServer *conf.Server, confData *conf.Data, logger log.Logger) (*
 	}
 	categoryRepo := data.NewCategoryRepo(dataData, logger)
 	categoryUsecase := biz.NewCategoryUsecase(categoryRepo, logger)
-	categoryServiceServer := service.NewCategoryServiceService(categoryUsecase)
+	categoryServiceServer := service.NewCategoryService(categoryUsecase)
 	cmsCms := cms.NewCmsApp(httpServer, grpcServer, middleware, categoryServiceServer)
 	data4, err := data2.NewData(confData, logger)
 	if err != nil {

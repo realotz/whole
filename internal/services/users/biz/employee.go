@@ -14,15 +14,13 @@ import (
 )
 
 type Employee struct {
-	Sex      string `json:"sex,omitempty"`
-	Name     string `json:"name,omitempty"`
-	Avatar   string `json:"avatar,omitempty"`
-	Role     string `json:"role,omitempty"`
-	Account  string `json:"account,omitempty"`
-	NickName string `json:"nick_name,omitempty"`
-	Email    string `json:"email,omitempty"`
-	Mobile   string `json:"mobile,omitempty"`
-	IDCard   string `json:"id_card,omitempty"`
+	Sex     string `json:"sex,omitempty"`
+	Name    string `json:"name,omitempty"`
+	Avatar  string `json:"avatar,omitempty"`
+	Account string `json:"account,omitempty"`
+	Email   string `json:"email,omitempty"`
+	Mobile  string `json:"mobile,omitempty"`
+	IDCard  string `json:"id_card,omitempty"`
 
 	ID         int64     `json:"id,omitempty"`
 	Password   string    `json:"-"`
@@ -40,7 +38,7 @@ type EmployeeRepo interface {
 	GetEmployee(ctx context.Context, id int64) (*Employee, error)
 	CreateEmployee(ctx context.Context, article *Employee) (*Employee, error)
 	UpdateEmployee(ctx context.Context, id int64, article *Employee) (*Employee, error)
-	DeleteEmployee(ctx context.Context, id int64) error
+	DeleteEmployee(ctx context.Context, id []int64) error
 	GetEmployeeForAccounts(ctx context.Context, account string) ([]*Employee, error)
 	// 创建jwttoken
 	CreateToken(member *Employee, time int64) (string, error)
@@ -84,8 +82,8 @@ func (uc *EmployeeUsecase) Update(ctx context.Context, id int64, member *Employe
 }
 
 // 删除用户
-func (uc *EmployeeUsecase) Delete(ctx context.Context, id int64) error {
-	return uc.repo.DeleteEmployee(ctx, id)
+func (uc *EmployeeUsecase) Delete(ctx context.Context, ids []int64) error {
+	return uc.repo.DeleteEmployee(ctx, ids)
 }
 
 // 登录

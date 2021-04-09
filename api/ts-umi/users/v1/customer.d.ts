@@ -6,53 +6,9 @@
 // is compatible with the kratos package it is being compiled against.
 
 declare namespace UsersV1 {
-	/** CustomerLoginRes */
-	type CustomerLoginRes = {
-		token?:string
-		role?:string
-		expiration_time?:number
-		customer?:UsersV1.Customer
-	}
-	/** CustomerListOption */
-	type CustomerListOption = {
-		name?:string
-		tag?:string
-		email?:string
-		mobile?:string
-		sex?:string
-		role?:string
-		type?:string
-		create_time?:string
-	}
-	/** CustomerGetOption */
-	type CustomerGetOption = {
-		id?:number
-	}
-	/** CustomerOption */
-	type CustomerOption = {
-		name?:string
-		account?:string
-		nick_name?:string
-		role?:string
-		email?:string
-		mobile?:string
-		id_card?:string
-		password?:string
-		sex?:string
-		birthday?:GoogleProtobuf.Timestamp
-		id?:number
-		avatar?:string
-	}
-	/** CustomerLogin */
-	type CustomerLogin = {
-		account?:string
-		password?:string
-		captcha?:string
-		code?:string
-	}
 	/** CustomerDeleteOption */
 	type CustomerDeleteOption = {
-		id?:number
+		ids?:Array<number>
 	}
 	/** CustomerList */
 	type CustomerList = {
@@ -77,18 +33,49 @@ declare namespace UsersV1 {
 		update_time?:GoogleProtobuf.Timestamp
 		avatar?:string
 	}
-	/** NullReq */
-	type NullReq = {
-	}
-	/** NullReply */
-	type NullReply = {
-	}
-	/** CaptchaReq */
-	type CaptchaReq = {
-		to?:string
+	/** CustomerLogin */
+	type CustomerLogin = {
+		account?:string
+		password?:string
 		captcha?:string
-		challenge?:string
-		tk?:string
+		code?:string
+	}
+	/** CustomerLoginRes */
+	type CustomerLoginRes = {
+		token?:string
+		role?:string
+		expiration_time?:number
+		customer?:UsersV1.Customer
+	}
+	/** CustomerListOption */
+	type CustomerListOption = {
+		name?:string
+		tag?:string
+		email?:string
+		mobile?:string
+		sex?:string
+		id_card?:string
+		keyword?:string
+		create_time?:string
+	}
+	/** CustomerGetOption */
+	type CustomerGetOption = {
+		id?:number
+	}
+	/** CustomerOption */
+	type CustomerOption = {
+		name?:string
+		account?:string
+		nick_name?:string
+		role?:string
+		email?:string
+		mobile?:string
+		id_card?:string
+		password?:string
+		sex?:string
+		birthday?:GoogleProtobuf.Timestamp
+		id?:number
+		avatar?:string
 	}
 }
 

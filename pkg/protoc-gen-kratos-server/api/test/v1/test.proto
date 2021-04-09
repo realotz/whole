@@ -1,0 +1,96 @@
+syntax = "proto3";
+
+package api.test.v1;
+import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+option go_package = "github.com/realotz/whole/pkg/protoc-gen-kratos-server/api/test/v1;v1";
+option java_multiple_files = true;
+option java_package = "api.test.v1";
+
+// Test服务
+service TestService {
+	// 创建Test
+	rpc CreateTest (Test) returns (CreateTestReply);
+	// 更新Test
+	rpc UpdateTest (Test) returns (UpdateTestReply);
+	// 批量删除Test
+	rpc DeleteTest (DeleteTestRequest) returns (DeleteTestReply);
+	// 获取Test详情
+	rpc GetTest (GetTestRequest) returns (Test);
+	// 查询Test列表
+	rpc ListTest (ListTestOption) returns (ListTestReply);
+}
+
+//创建请求
+message CreateTestReply {
+	Test data=1;
+}
+
+//更新请求
+message UpdateTestReply {
+	Test data=1;
+}
+
+//批量删除请求
+message DeleteTestRequest {
+	repeated int64 ids = 1;
+}
+
+//删除结果
+message DeleteTestReply {}
+
+//查询单个数据
+message GetTestRequest {
+	int64 id = 1;
+}
+
+//列表查询条件
+message ListTestOption {
+
+}
+
+//列表查询返回
+message ListTestReply {
+	repeated Test list=1;
+	//数据总计
+	int64 total=2;
+	//页码
+	uint32 page=3;
+	//分页大小
+	uint32 page_size=4;
+}
+
+enum Sex {
+	//未知
+	UN=0;
+	//男
+	MAN=1;
+	//女
+	WOMAN=2;
+}
+
+// Test结构体(请在此处定义数据结构)
+message Test{
+	// id
+	int64 id = 1;
+	// 名称
+	string name=2;
+	// 简介
+	string desc=3;
+	// 性别
+	Sex sex=4;
+	// 测试字段
+	uint32 ui=5;
+	// 测试字段
+	int32 i3=6;
+	// 测试字段
+	sint32 si3=7;
+	// 测试字段
+	sfixed32 sf=8;
+	// 测试字段
+	float f=9;
+	// 测试时间字段
+	google.protobuf.Timestamp update_time=22;
+	// 测试时间字段
+	google.protobuf.Timestamp create_time=23;
+}

@@ -4,6 +4,7 @@ package users.v1;
 
 import "google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
+import "api/users/v1/user.proto";
 option go_package = "github.com/realotz/whole/api/users/v1;v1";
 option java_multiple_files = true;
 option java_package = "dev.kratos.api.users.v1";
@@ -24,19 +25,19 @@ service CustomerService {
     };
   }
   //登出
-  rpc Logout (NullReq) returns (NullReply)  {
+  rpc Logout (users.v1.NullReq) returns (users.v1.NullReply)  {
     option (google.api.http) = {
       post: "/users/customer/logout",
     };
   }
   //当前登录用户信息
-  rpc UserInfo (NullReq) returns (Customer)  {
+  rpc UserInfo (users.v1.NullReq) returns (Customer)  {
     option (google.api.http) = {
       get: "/users/customer/info",
     };
   }
   //发送短信/邮箱验证码
-  rpc Captcha(CaptchaReq)returns(NullReply){
+  rpc Captcha(users.v1.CaptchaReq)returns(users.v1.NullReply){
     option (google.api.http) = {
       get: "/users/customer/captcha",
     };
@@ -61,17 +62,6 @@ service CustomerService {
   }
 }
 
-//短信验证码
-message CaptchaReq{
-  //接收对象 email
-  string to=1;
-  //本地验证码
-  string captcha=2;
-  //极验预留
-  string challenge=3;
-  //极验预留
-  string tk=4;
-}
 
 //用户登录
 message CustomerLogin{
@@ -108,10 +98,10 @@ message CustomerListOption {
   string mobile = 4;
   //性别筛选
   string sex = 5;
-  //角色筛选
-  string role = 6;
-  //用户类型筛选
-  string type = 7;
+  //身份证号
+  string id_card=6;
+  //快速搜索
+  string keyword=7;
   //创建时间筛选
   string create_time = 8;
 }
@@ -148,7 +138,7 @@ message CustomerOption {
 }
 
 message CustomerDeleteOption {
-  int64 id = 1;
+  repeated int64 ids = 1;
 }
 
 message CustomerList {
@@ -189,5 +179,4 @@ message Customer{
   //头像
   string avatar=17;
 }
-message NullReq{}
-message NullReply{}
+

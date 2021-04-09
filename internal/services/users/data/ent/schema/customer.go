@@ -22,7 +22,6 @@ func (Customer) Fields() []ent.Field {
 		field.String("account").NotEmpty().Unique().Comment(" 账号"),
 		field.String("avatar").Optional().Comment(" avatar"),
 		field.String("name").Optional().Default("unknown").Comment("名称"),
-		field.String("role").Optional().Default("member").Comment("角色"),
 		field.String("nick_name").Optional().Default("unknown").Comment("昵称"),
 		field.String("email").Comment("邮箱"),
 		field.String("mobile").Optional().Comment("手机号"),

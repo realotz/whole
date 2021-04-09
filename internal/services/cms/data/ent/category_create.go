@@ -48,15 +48,59 @@ func (cc *CategoryCreate) SetNillableUpdateTime(t *time.Time) *CategoryCreate {
 	return cc
 }
 
+// SetName sets the "name" field.
+func (cc *CategoryCreate) SetName(s string) *CategoryCreate {
+	cc.mutation.SetName(s)
+	return cc
+}
+
+// SetNillableName sets the "name" field if the given value is not nil.
+func (cc *CategoryCreate) SetNillableName(s *string) *CategoryCreate {
+	if s != nil {
+		cc.SetName(*s)
+	}
+	return cc
+}
+
 // SetPid sets the "pid" field.
 func (cc *CategoryCreate) SetPid(i int64) *CategoryCreate {
 	cc.mutation.SetPid(i)
 	return cc
 }
 
-// SetName sets the "name" field.
-func (cc *CategoryCreate) SetName(s string) *CategoryCreate {
-	cc.mutation.SetName(s)
+// SetNillablePid sets the "pid" field if the given value is not nil.
+func (cc *CategoryCreate) SetNillablePid(i *int64) *CategoryCreate {
+	if i != nil {
+		cc.SetPid(*i)
+	}
+	return cc
+}
+
+// SetIcon sets the "icon" field.
+func (cc *CategoryCreate) SetIcon(s string) *CategoryCreate {
+	cc.mutation.SetIcon(s)
+	return cc
+}
+
+// SetNillableIcon sets the "icon" field if the given value is not nil.
+func (cc *CategoryCreate) SetNillableIcon(s *string) *CategoryCreate {
+	if s != nil {
+		cc.SetIcon(*s)
+	}
+	return cc
+}
+
+// SetDesc sets the "desc" field.
+func (cc *CategoryCreate) SetDesc(s string) *CategoryCreate {
+	cc.mutation.SetDesc(s)
+	return cc
+}
+
+// SetNillableDesc sets the "desc" field if the given value is not nil.
+func (cc *CategoryCreate) SetNillableDesc(s *string) *CategoryCreate {
+	if s != nil {
+		cc.SetDesc(*s)
+	}
 	return cc
 }
 
@@ -136,12 +180,6 @@ func (cc *CategoryCreate) check() error {
 	if _, ok := cc.mutation.UpdateTime(); !ok {
 		return &ValidationError{Name: "update_time", err: errors.New("ent: missing required field \"update_time\"")}
 	}
-	if _, ok := cc.mutation.Pid(); !ok {
-		return &ValidationError{Name: "pid", err: errors.New("ent: missing required field \"pid\"")}
-	}
-	if _, ok := cc.mutation.Name(); !ok {
-		return &ValidationError{Name: "name", err: errors.New("ent: missing required field \"name\"")}
-	}
 	return nil
 }
 
@@ -191,6 +229,14 @@ func (cc *CategoryCreate) createSpec() (*Category, *sqlgraph.CreateSpec) {
 		})
 		_node.UpdateTime = value
 	}
+	if value, ok := cc.mutation.Name(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: category.FieldName,
+		})
+		_node.Name = value
+	}
 	if value, ok := cc.mutation.Pid(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeInt64,
@@ -199,13 +245,21 @@ func (cc *CategoryCreate) createSpec() (*Category, *sqlgraph.CreateSpec) {
 		})
 		_node.Pid = value
 	}
-	if value, ok := cc.mutation.Name(); ok {
+	if value, ok := cc.mutation.Icon(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
-			Column: category.FieldName,
+			Column: category.FieldIcon,
 		})
-		_node.Name = value
+		_node.Icon = value
+	}
+	if value, ok := cc.mutation.Desc(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: category.FieldDesc,
+		})
+		_node.Desc = value
 	}
 	return _node, _spec
 }

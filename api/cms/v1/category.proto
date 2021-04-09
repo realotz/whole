@@ -1,66 +1,76 @@
 syntax = "proto3";
 
-package cms.v1;
-
+package api.cms.v1;
 import "google/api/annotations.proto";
-
+import "google/protobuf/timestamp.proto";
 option go_package = "github.com/realotz/whole/api/cms/v1;v1";
 option java_multiple_files = true;
-option java_package = "dev.kratos.api.cms.v1";
-option java_outer_classname = "CategoryProtoV1";
+option java_package = "api.cms.v1";
 
+// 文章类目服务
 service CategoryService {
-  rpc List (CategoryListOption) returns (CategoryList){
-      option (google.api.http) = {
-          get: "/cms/category",
-      };
-  }
-  rpc Get (CategoryGetOption) returns (Category)  {
-    option (google.api.http) = {
-      get: "/cms/category/{id}",
-    };
-  }
-  rpc Create (CategoryGetOption) returns (Category)  {
-    option (google.api.http) = {
-      post: "/cms/category",
-    };
-  }
-  rpc Update (CategoryUpdateOption) returns (Category)  {
-    option (google.api.http) = {
-      put: "/cms/category",
-    };
-  }
-  rpc Delete (CategoryDeleteOption) returns (Category)  {
-    option (google.api.http) = {
-      delete: "/cms/category/{id}",
-    };
-  }
+	// 创建文章类目
+	rpc CreateCategory (Category) returns (CreateCategoryReply);
+	// 更新文章类目
+	rpc UpdateCategory (Category) returns (UpdateCategoryReply);
+	// 批量删除文章类目
+	rpc DeleteCategory (DeleteCategoryRequest) returns (DeleteCategoryReply);
+	// 获取文章类目详情
+	rpc GetCategory (GetCategoryRequest) returns (Category);
+	// 查询文章类目列表
+	rpc ListCategory (ListCategoryRequest) returns (ListCategoryReply);
 }
 
-message CategoryListOption {
-  string name = 1;
+//创建请求
+message CreateCategoryReply {
+	Category data=1;
 }
 
-message CategoryGetOption {
-  string id = 1;
+//更新请求
+message UpdateCategoryReply {
+	Category data=1;
 }
 
-message CategoryUpdateOption {
-  string name = 1;
+//批量删除请求
+message DeleteCategoryRequest {
+	repeated int64 ids = 1;
 }
 
-message CategoryCreateOption {
-  string name = 1;
+//删除结果
+message DeleteCategoryReply {}
+
+//查询单个数据
+message GetCategoryRequest {
+	int64 id = 1;
 }
 
-message CategoryDeleteOption {
-  string id = 1;
+//列表查询条件
+message ListCategoryRequest {
+
 }
 
-message CategoryList {
-  string message = 1;
+//列表查询返回
+message ListCategoryReply {
+	repeated Category list=1;
+	//数据总计
+	int64 total=2;
+	//页码
+	uint32 page=3;
+	//分页大小
+	uint32 page_size=4;
 }
 
+// 文章类目结构体(请在此处定义数据结构)
 message Category{
-
+	int64  id = 1;
+	//分类名称
+	string name=2;
+	//父级分类id
+	int64 pid=3;
+	//分类图标
+	string icon=4;
+	//分类简介
+	string desc=5;
+	google.protobuf.Timestamp update_time=22;
+	google.protobuf.Timestamp create_time=23;
 }

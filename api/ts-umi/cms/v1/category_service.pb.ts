@@ -11,46 +11,46 @@ type Options = {
   [key: string]: any
 }
 
-/** List  /api */
-export async function List(params: CmsV1.CategoryListOption, options?: Options) {
-	return request<CmsV1.CategoryList>(APIService + '/cms/category', {
-    	method: 'GET',
-    	params: {...params},
-    	...(options || {}),
-	});
-}
-
-/** Get  /api */
-export async function Get(params: CmsV1.CategoryGetOption, options?: Options) {
-	return request<CmsV1.Category>(APIService + '/cms/category/{id}', {
-    	method: 'GET',
-    	params: {...params},
-    	...(options || {}),
-	});
-}
-
-/** Create  /api */
-export async function Create(params: CmsV1.CategoryGetOption, options?: Options) {
-	return request<CmsV1.Category>(APIService + '/cms/category', {
+/** CreateCategory  创建文章类目 /api */
+export async function CreateCategory(params: ApiCmsV1.Category, options?: Options) {
+	return request<ApiCmsV1.CreateCategoryReply>(APIService + '/api.cms.v1.CategoryService/CreateCategory', {
     	method: 'POST',
     	data: {...params},
     	...(options || {}),
 	});
 }
 
-/** Update  /api */
-export async function Update(params: CmsV1.CategoryUpdateOption, options?: Options) {
-	return request<CmsV1.Category>(APIService + '/cms/category', {
-    	method: 'PUT',
+/** UpdateCategory  更新文章类目 /api */
+export async function UpdateCategory(params: ApiCmsV1.Category, options?: Options) {
+	return request<ApiCmsV1.UpdateCategoryReply>(APIService + '/api.cms.v1.CategoryService/UpdateCategory', {
+    	method: 'POST',
     	data: {...params},
     	...(options || {}),
 	});
 }
 
-/** Delete  /api */
-export async function Delete(params: CmsV1.CategoryDeleteOption, options?: Options) {
-	return request<CmsV1.Category>(APIService + '/cms/category/{id}', {
-    	method: 'DELETE',
+/** DeleteCategory  批量删除文章类目 /api */
+export async function DeleteCategory(params: ApiCmsV1.DeleteCategoryRequest, options?: Options) {
+	return request<ApiCmsV1.DeleteCategoryReply>(APIService + '/api.cms.v1.CategoryService/DeleteCategory', {
+    	method: 'POST',
+    	data: {...params},
+    	...(options || {}),
+	});
+}
+
+/** GetCategory  获取文章类目详情 /api */
+export async function GetCategory(params: ApiCmsV1.GetCategoryRequest, options?: Options) {
+	return request<ApiCmsV1.Category>(APIService + '/api.cms.v1.CategoryService/GetCategory', {
+    	method: 'POST',
+    	data: {...params},
+    	...(options || {}),
+	});
+}
+
+/** ListCategory  查询文章类目列表 /api */
+export async function ListCategory(params: ApiCmsV1.ListCategoryRequest, options?: Options) {
+	return request<ApiCmsV1.ListCategoryReply>(APIService + '/api.cms.v1.CategoryService/ListCategory', {
+    	method: 'POST',
     	data: {...params},
     	...(options || {}),
 	});

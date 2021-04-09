@@ -13,8 +13,10 @@ var (
 		{Name: "id", Type: field.TypeInt64, Increment: true},
 		{Name: "create_time", Type: field.TypeTime},
 		{Name: "update_time", Type: field.TypeTime},
-		{Name: "pid", Type: field.TypeInt64},
-		{Name: "name", Type: field.TypeString},
+		{Name: "name", Type: field.TypeString, Nullable: true},
+		{Name: "pid", Type: field.TypeInt64, Nullable: true},
+		{Name: "icon", Type: field.TypeString, Nullable: true},
+		{Name: "desc", Type: field.TypeString, Nullable: true},
 	}
 	// CategoriesTable holds the schema information for the "categories" table.
 	CategoriesTable = &schema.Table{

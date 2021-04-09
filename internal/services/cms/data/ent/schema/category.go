@@ -6,27 +6,17 @@ import (
 	"entgo.io/ent/schema/mixin"
 )
 
-// Category holds the schema definition for the Category entity.
-type Category struct {
-	ent.Schema
-}
+type Category struct{ ent.Schema }
 
-// Fields of the Category.
+// todo 请检查数据格式，并且去除必要参数的Optional方法
 func (Category) Fields() []ent.Field {
 	return []ent.Field{
-		field.Int64("id"),
-		field.Int64("pid").Comment("父级分类id"),
-		field.String("name").Comment("分类名称"),
+		field.Int64("id").Comment(""),
+		field.String("name").Optional().Comment("分类名称"),
+		field.Int64("pid").Optional().Comment("父级分类id"),
+		field.String("icon").Optional().Comment("分类图标"),
+		field.String("desc").Optional().Comment("分类简介"),
 	}
 }
 
-func (Category) Mixin() []ent.Mixin {
-	return []ent.Mixin{
-		mixin.Time{},
-	}
-}
-
-// Edges of the Category.
-func (Category) Edges() []ent.Edge {
-	return nil
-}
+func (Category) Mixin() []ent.Mixin { return []ent.Mixin{mixin.Time{}} }

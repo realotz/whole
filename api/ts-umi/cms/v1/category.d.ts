@@ -5,33 +5,53 @@
 // This is a compile-time assertion to ensure that this generated file
 // is compatible with the kratos package it is being compiled against.
 
-declare namespace CmsV1 {
-	/** CategoryList */
-	type CategoryList = {
-		message?:string
+declare namespace ApiCmsV1 {
+	/** DeleteCategoryRequest */
+	type DeleteCategoryRequest = {
+		ids?:Array<number>
+	}
+	/** DeleteCategoryReply */
+	type DeleteCategoryReply = {
+	}
+	/** GetCategoryRequest */
+	type GetCategoryRequest = {
+		id?:number
+	}
+	/** ListCategoryRequest */
+	type ListCategoryRequest = {
+	}
+	/** ListCategoryReply */
+	type ListCategoryReply = {
+		list?:Array<ApiCmsV1.Category>
+		total?:number
+		page?:number
+		page_size?:number
 	}
 	/** Category */
 	type Category = {
-	}
-	/** CategoryListOption */
-	type CategoryListOption = {
+		id?:number
 		name?:string
+		pid?:number
+		icon?:string
+		desc?:string
+		update_time?:GoogleProtobuf.Timestamp
+		create_time?:GoogleProtobuf.Timestamp
 	}
-	/** CategoryGetOption */
-	type CategoryGetOption = {
-		id?:string
+	/** CreateCategoryReply */
+	type CreateCategoryReply = {
+		data?:ApiCmsV1.Category
 	}
-	/** CategoryUpdateOption */
-	type CategoryUpdateOption = {
-		name?:string
+	/** UpdateCategoryReply */
+	type UpdateCategoryReply = {
+		data?:ApiCmsV1.Category
 	}
-	/** CategoryCreateOption */
-	type CategoryCreateOption = {
-		name?:string
-	}
-	/** CategoryDeleteOption */
-	type CategoryDeleteOption = {
-		id?:string
+}
+
+declare namespace GoogleProtobuf {
+	/** Timestamp */
+	type Timestamp = {
+		seconds?:number
+		nanos?:number
 	}
 }
 

@@ -104,34 +104,6 @@ func (ec *EmployeeCreate) SetNillableName(s *string) *EmployeeCreate {
 	return ec
 }
 
-// SetRole sets the "role" field.
-func (ec *EmployeeCreate) SetRole(s string) *EmployeeCreate {
-	ec.mutation.SetRole(s)
-	return ec
-}
-
-// SetNillableRole sets the "role" field if the given value is not nil.
-func (ec *EmployeeCreate) SetNillableRole(s *string) *EmployeeCreate {
-	if s != nil {
-		ec.SetRole(*s)
-	}
-	return ec
-}
-
-// SetNickName sets the "nick_name" field.
-func (ec *EmployeeCreate) SetNickName(s string) *EmployeeCreate {
-	ec.mutation.SetNickName(s)
-	return ec
-}
-
-// SetNillableNickName sets the "nick_name" field if the given value is not nil.
-func (ec *EmployeeCreate) SetNillableNickName(s *string) *EmployeeCreate {
-	if s != nil {
-		ec.SetNickName(*s)
-	}
-	return ec
-}
-
 // SetEmail sets the "email" field.
 func (ec *EmployeeCreate) SetEmail(s string) *EmployeeCreate {
 	ec.mutation.SetEmail(s)
@@ -313,14 +285,6 @@ func (ec *EmployeeCreate) defaults() {
 		v := employee.DefaultName
 		ec.mutation.SetName(v)
 	}
-	if _, ok := ec.mutation.Role(); !ok {
-		v := employee.DefaultRole
-		ec.mutation.SetRole(v)
-	}
-	if _, ok := ec.mutation.NickName(); !ok {
-		v := employee.DefaultNickName
-		ec.mutation.SetNickName(v)
-	}
 }
 
 // check runs all checks and user-defined validators on the builder.
@@ -457,22 +421,6 @@ func (ec *EmployeeCreate) createSpec() (*Employee, *sqlgraph.CreateSpec) {
 			Column: employee.FieldName,
 		})
 		_node.Name = value
-	}
-	if value, ok := ec.mutation.Role(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: employee.FieldRole,
-		})
-		_node.Role = value
-	}
-	if value, ok := ec.mutation.NickName(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: employee.FieldNickName,
-		})
-		_node.NickName = value
 	}
 	if value, ok := ec.mutation.Email(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{

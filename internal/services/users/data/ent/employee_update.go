@@ -95,46 +95,6 @@ func (eu *EmployeeUpdate) ClearName() *EmployeeUpdate {
 	return eu
 }
 
-// SetRole sets the "role" field.
-func (eu *EmployeeUpdate) SetRole(s string) *EmployeeUpdate {
-	eu.mutation.SetRole(s)
-	return eu
-}
-
-// SetNillableRole sets the "role" field if the given value is not nil.
-func (eu *EmployeeUpdate) SetNillableRole(s *string) *EmployeeUpdate {
-	if s != nil {
-		eu.SetRole(*s)
-	}
-	return eu
-}
-
-// ClearRole clears the value of the "role" field.
-func (eu *EmployeeUpdate) ClearRole() *EmployeeUpdate {
-	eu.mutation.ClearRole()
-	return eu
-}
-
-// SetNickName sets the "nick_name" field.
-func (eu *EmployeeUpdate) SetNickName(s string) *EmployeeUpdate {
-	eu.mutation.SetNickName(s)
-	return eu
-}
-
-// SetNillableNickName sets the "nick_name" field if the given value is not nil.
-func (eu *EmployeeUpdate) SetNillableNickName(s *string) *EmployeeUpdate {
-	if s != nil {
-		eu.SetNickName(*s)
-	}
-	return eu
-}
-
-// ClearNickName clears the value of the "nick_name" field.
-func (eu *EmployeeUpdate) ClearNickName() *EmployeeUpdate {
-	eu.mutation.ClearNickName()
-	return eu
-}
-
 // SetEmail sets the "email" field.
 func (eu *EmployeeUpdate) SetEmail(s string) *EmployeeUpdate {
 	eu.mutation.SetEmail(s)
@@ -457,32 +417,6 @@ func (eu *EmployeeUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Column: employee.FieldName,
 		})
 	}
-	if value, ok := eu.mutation.Role(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: employee.FieldRole,
-		})
-	}
-	if eu.mutation.RoleCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: employee.FieldRole,
-		})
-	}
-	if value, ok := eu.mutation.NickName(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: employee.FieldNickName,
-		})
-	}
-	if eu.mutation.NickNameCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: employee.FieldNickName,
-		})
-	}
 	if value, ok := eu.mutation.Email(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
@@ -704,46 +638,6 @@ func (euo *EmployeeUpdateOne) SetNillableName(s *string) *EmployeeUpdateOne {
 // ClearName clears the value of the "name" field.
 func (euo *EmployeeUpdateOne) ClearName() *EmployeeUpdateOne {
 	euo.mutation.ClearName()
-	return euo
-}
-
-// SetRole sets the "role" field.
-func (euo *EmployeeUpdateOne) SetRole(s string) *EmployeeUpdateOne {
-	euo.mutation.SetRole(s)
-	return euo
-}
-
-// SetNillableRole sets the "role" field if the given value is not nil.
-func (euo *EmployeeUpdateOne) SetNillableRole(s *string) *EmployeeUpdateOne {
-	if s != nil {
-		euo.SetRole(*s)
-	}
-	return euo
-}
-
-// ClearRole clears the value of the "role" field.
-func (euo *EmployeeUpdateOne) ClearRole() *EmployeeUpdateOne {
-	euo.mutation.ClearRole()
-	return euo
-}
-
-// SetNickName sets the "nick_name" field.
-func (euo *EmployeeUpdateOne) SetNickName(s string) *EmployeeUpdateOne {
-	euo.mutation.SetNickName(s)
-	return euo
-}
-
-// SetNillableNickName sets the "nick_name" field if the given value is not nil.
-func (euo *EmployeeUpdateOne) SetNillableNickName(s *string) *EmployeeUpdateOne {
-	if s != nil {
-		euo.SetNickName(*s)
-	}
-	return euo
-}
-
-// ClearNickName clears the value of the "nick_name" field.
-func (euo *EmployeeUpdateOne) ClearNickName() *EmployeeUpdateOne {
-	euo.mutation.ClearNickName()
 	return euo
 }
 
@@ -1072,32 +966,6 @@ func (euo *EmployeeUpdateOne) sqlSave(ctx context.Context) (_node *Employee, err
 		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Column: employee.FieldName,
-		})
-	}
-	if value, ok := euo.mutation.Role(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: employee.FieldRole,
-		})
-	}
-	if euo.mutation.RoleCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: employee.FieldRole,
-		})
-	}
-	if value, ok := euo.mutation.NickName(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: employee.FieldNickName,
-		})
-	}
-	if euo.mutation.NickNameCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Column: employee.FieldNickName,
 		})
 	}
 	if value, ok := euo.mutation.Email(); ok {

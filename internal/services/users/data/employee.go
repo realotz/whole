@@ -21,7 +21,6 @@ func (p entEmployee) BizStruct() *biz.Employee {
 		Avatar:     p.Avatar,
 		Account:    p.Account,
 		Birthday:   p.Birthday,
-		NickName:   p.NickName,
 		Email:      p.Email,
 		Mobile:     p.Mobile,
 		IDCard:     p.IDCard,
@@ -66,6 +65,7 @@ func (ar *employeeRepo) GetEmployeeForAccounts(ctx context.Context, account stri
 	return rv, nil
 }
 
+//获取用户列表
 func (ar *employeeRepo) ListEmployee(ctx context.Context) ([]*biz.Employee, error) {
 	ps, err := ar.data.db.Employee.Query().All(ctx)
 	if err != nil {
@@ -78,6 +78,7 @@ func (ar *employeeRepo) ListEmployee(ctx context.Context) ([]*biz.Employee, erro
 	return rv, nil
 }
 
+// 获取用户信息
 func (ar *employeeRepo) GetEmployee(ctx context.Context, id int64) (*biz.Employee, error) {
 	p, err := ar.data.db.Employee.Get(ctx, id)
 	if err != nil {
@@ -103,12 +104,10 @@ func (ar *employeeRepo) CreateEmployee(ctx context.Context, m *biz.Employee) (*b
 	}
 	p, err = modCreate.
 		SetAccount(m.Account).
-		SetName(m.NickName).
-		SetNickName(m.Name).
+		SetName(m.Name).
 		SetAvatar(m.Avatar).
 		SetEmail(m.Email).
 		SetIDCard(m.IDCard).
-		SetRole(m.Role).
 		SetPassword(m.Password).
 		SetSalt(m.Salt).
 		Save(ctx)
@@ -131,17 +130,11 @@ func (ar *employeeRepo) UpdateEmployee(ctx context.Context, id int64, m *biz.Emp
 	if m.Name != "" && m.Name != p.Name {
 		modUp.SetName(m.Name)
 	}
-	if m.Role != "" && m.Role != p.Role {
-		modUp.SetRole(m.Role)
-	}
 	if m.Account != "" && m.Account != p.Account {
 		modUp.SetAccount(m.Account)
 	}
 	if m.Avatar != "" && m.Avatar != p.Avatar {
 		modUp.SetAvatar(m.Avatar)
-	}
-	if m.NickName != "" && m.NickName != p.NickName {
-		modUp.SetNickName(m.NickName)
 	}
 	if !m.Birthday.IsZero() {
 		modUp.SetBirthday(m.Birthday)
@@ -171,6 +164,17 @@ func (ar *employeeRepo) UpdateEmployee(ctx context.Context, id int64, m *biz.Emp
 	return entEmployee(*p).BizStruct(), err
 }
 
-func (ar *employeeRepo) DeleteEmployee(ctx context.Context, id int64) error {
-	return ar.data.db.Employee.DeleteOneID(id).Exec(ctx)
+func (ar *employeeRepo) DeleteEmployee(ctx context.Context, ids []int64) error {
+	tx, err := ar.data.db.Tx(ctx)
+	if err != nil {
+		return err
+	}
+	for _, id := range ids {
+		err = tx.Employee.DeleteOneID(id).Exec(ctx)
+		if err != nil {
+			_ = tx.Rollback()
+			return err
+		}
+	}
+	return tx.Commit()
 }

@@ -104,20 +104,6 @@ func (cc *CustomerCreate) SetNillableName(s *string) *CustomerCreate {
 	return cc
 }
 
-// SetRole sets the "role" field.
-func (cc *CustomerCreate) SetRole(s string) *CustomerCreate {
-	cc.mutation.SetRole(s)
-	return cc
-}
-
-// SetNillableRole sets the "role" field if the given value is not nil.
-func (cc *CustomerCreate) SetNillableRole(s *string) *CustomerCreate {
-	if s != nil {
-		cc.SetRole(*s)
-	}
-	return cc
-}
-
 // SetNickName sets the "nick_name" field.
 func (cc *CustomerCreate) SetNickName(s string) *CustomerCreate {
 	cc.mutation.SetNickName(s)
@@ -313,10 +299,6 @@ func (cc *CustomerCreate) defaults() {
 		v := customer.DefaultName
 		cc.mutation.SetName(v)
 	}
-	if _, ok := cc.mutation.Role(); !ok {
-		v := customer.DefaultRole
-		cc.mutation.SetRole(v)
-	}
 	if _, ok := cc.mutation.NickName(); !ok {
 		v := customer.DefaultNickName
 		cc.mutation.SetNickName(v)
@@ -457,14 +439,6 @@ func (cc *CustomerCreate) createSpec() (*Customer, *sqlgraph.CreateSpec) {
 			Column: customer.FieldName,
 		})
 		_node.Name = value
-	}
-	if value, ok := cc.mutation.Role(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: customer.FieldRole,
-		})
-		_node.Role = value
 	}
 	if value, ok := cc.mutation.NickName(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{

@@ -36,12 +36,6 @@ type Employee struct {
 	// Name holds the value of the "name" field.
 	// 名称
 	Name string `json:"name,omitempty"`
-	// Role holds the value of the "role" field.
-	// 角色
-	Role string `json:"role,omitempty"`
-	// NickName holds the value of the "nick_name" field.
-	// 昵称
-	NickName string `json:"nick_name,omitempty"`
 	// Email holds the value of the "email" field.
 	// 邮箱
 	Email string `json:"email,omitempty"`
@@ -96,7 +90,7 @@ func (*Employee) scanValues(columns []string) ([]interface{}, error) {
 		switch columns[i] {
 		case employee.FieldID:
 			values[i] = &sql.NullInt64{}
-		case employee.FieldSex, employee.FieldAccount, employee.FieldAvatar, employee.FieldName, employee.FieldRole, employee.FieldNickName, employee.FieldEmail, employee.FieldMobile, employee.FieldIDCard, employee.FieldPassword, employee.FieldSalt, employee.FieldLastIP:
+		case employee.FieldSex, employee.FieldAccount, employee.FieldAvatar, employee.FieldName, employee.FieldEmail, employee.FieldMobile, employee.FieldIDCard, employee.FieldPassword, employee.FieldSalt, employee.FieldLastIP:
 			values[i] = &sql.NullString{}
 		case employee.FieldCreateTime, employee.FieldUpdateTime, employee.FieldBirthday, employee.FieldLastTime:
 			values[i] = &sql.NullTime{}
@@ -164,18 +158,6 @@ func (e *Employee) assignValues(columns []string, values []interface{}) error {
 				return fmt.Errorf("unexpected type %T for field name", values[i])
 			} else if value.Valid {
 				e.Name = value.String
-			}
-		case employee.FieldRole:
-			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field role", values[i])
-			} else if value.Valid {
-				e.Role = value.String
-			}
-		case employee.FieldNickName:
-			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field nick_name", values[i])
-			} else if value.Valid {
-				e.NickName = value.String
 			}
 		case employee.FieldEmail:
 			if value, ok := values[i].(*sql.NullString); !ok {
@@ -272,10 +254,6 @@ func (e *Employee) String() string {
 	builder.WriteString(e.Avatar)
 	builder.WriteString(", name=")
 	builder.WriteString(e.Name)
-	builder.WriteString(", role=")
-	builder.WriteString(e.Role)
-	builder.WriteString(", nick_name=")
-	builder.WriteString(e.NickName)
 	builder.WriteString(", email=")
 	builder.WriteString(e.Email)
 	builder.WriteString(", mobile=")

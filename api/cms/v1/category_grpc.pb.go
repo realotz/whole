@@ -18,11 +18,16 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type CategoryServiceClient interface {
-	List(ctx context.Context, in *CategoryListOption, opts ...grpc.CallOption) (*CategoryList, error)
-	Get(ctx context.Context, in *CategoryGetOption, opts ...grpc.CallOption) (*Category, error)
-	Create(ctx context.Context, in *CategoryGetOption, opts ...grpc.CallOption) (*Category, error)
-	Update(ctx context.Context, in *CategoryUpdateOption, opts ...grpc.CallOption) (*Category, error)
-	Delete(ctx context.Context, in *CategoryDeleteOption, opts ...grpc.CallOption) (*Category, error)
+	// 创建文章类目
+	CreateCategory(ctx context.Context, in *Category, opts ...grpc.CallOption) (*CreateCategoryReply, error)
+	// 更新文章类目
+	UpdateCategory(ctx context.Context, in *Category, opts ...grpc.CallOption) (*UpdateCategoryReply, error)
+	// 批量删除文章类目
+	DeleteCategory(ctx context.Context, in *DeleteCategoryRequest, opts ...grpc.CallOption) (*DeleteCategoryReply, error)
+	// 获取文章类目详情
+	GetCategory(ctx context.Context, in *GetCategoryRequest, opts ...grpc.CallOption) (*Category, error)
+	// 查询文章类目列表
+	ListCategory(ctx context.Context, in *ListCategoryRequest, opts ...grpc.CallOption) (*ListCategoryReply, error)
 }
 
 type categoryServiceClient struct {
@@ -33,45 +38,45 @@ func NewCategoryServiceClient(cc grpc.ClientConnInterface) CategoryServiceClient
 	return &categoryServiceClient{cc}
 }
 
-func (c *categoryServiceClient) List(ctx context.Context, in *CategoryListOption, opts ...grpc.CallOption) (*CategoryList, error) {
-	out := new(CategoryList)
-	err := c.cc.Invoke(ctx, "/cms.v1.CategoryService/List", in, out, opts...)
+func (c *categoryServiceClient) CreateCategory(ctx context.Context, in *Category, opts ...grpc.CallOption) (*CreateCategoryReply, error) {
+	out := new(CreateCategoryReply)
+	err := c.cc.Invoke(ctx, "/api.cms.v1.CategoryService/CreateCategory", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *categoryServiceClient) Get(ctx context.Context, in *CategoryGetOption, opts ...grpc.CallOption) (*Category, error) {
-	out := new(Category)
-	err := c.cc.Invoke(ctx, "/cms.v1.CategoryService/Get", in, out, opts...)
+func (c *categoryServiceClient) UpdateCategory(ctx context.Context, in *Category, opts ...grpc.CallOption) (*UpdateCategoryReply, error) {
+	out := new(UpdateCategoryReply)
+	err := c.cc.Invoke(ctx, "/api.cms.v1.CategoryService/UpdateCategory", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *categoryServiceClient) Create(ctx context.Context, in *CategoryGetOption, opts ...grpc.CallOption) (*Category, error) {
-	out := new(Category)
-	err := c.cc.Invoke(ctx, "/cms.v1.CategoryService/Create", in, out, opts...)
+func (c *categoryServiceClient) DeleteCategory(ctx context.Context, in *DeleteCategoryRequest, opts ...grpc.CallOption) (*DeleteCategoryReply, error) {
+	out := new(DeleteCategoryReply)
+	err := c.cc.Invoke(ctx, "/api.cms.v1.CategoryService/DeleteCategory", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *categoryServiceClient) Update(ctx context.Context, in *CategoryUpdateOption, opts ...grpc.CallOption) (*Category, error) {
+func (c *categoryServiceClient) GetCategory(ctx context.Context, in *GetCategoryRequest, opts ...grpc.CallOption) (*Category, error) {
 	out := new(Category)
-	err := c.cc.Invoke(ctx, "/cms.v1.CategoryService/Update", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/api.cms.v1.CategoryService/GetCategory", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *categoryServiceClient) Delete(ctx context.Context, in *CategoryDeleteOption, opts ...grpc.CallOption) (*Category, error) {
-	out := new(Category)
-	err := c.cc.Invoke(ctx, "/cms.v1.CategoryService/Delete", in, out, opts...)
+func (c *categoryServiceClient) ListCategory(ctx context.Context, in *ListCategoryRequest, opts ...grpc.CallOption) (*ListCategoryReply, error) {
+	out := new(ListCategoryReply)
+	err := c.cc.Invoke(ctx, "/api.cms.v1.CategoryService/ListCategory", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -82,11 +87,16 @@ func (c *categoryServiceClient) Delete(ctx context.Context, in *CategoryDeleteOp
 // All implementations must embed UnimplementedCategoryServiceServer
 // for forward compatibility
 type CategoryServiceServer interface {
-	List(context.Context, *CategoryListOption) (*CategoryList, error)
-	Get(context.Context, *CategoryGetOption) (*Category, error)
-	Create(context.Context, *CategoryGetOption) (*Category, error)
-	Update(context.Context, *CategoryUpdateOption) (*Category, error)
-	Delete(context.Context, *CategoryDeleteOption) (*Category, error)
+	// 创建文章类目
+	CreateCategory(context.Context, *Category) (*CreateCategoryReply, error)
+	// 更新文章类目
+	UpdateCategory(context.Context, *Category) (*UpdateCategoryReply, error)
+	// 批量删除文章类目
+	DeleteCategory(context.Context, *DeleteCategoryRequest) (*DeleteCategoryReply, error)
+	// 获取文章类目详情
+	GetCategory(context.Context, *GetCategoryRequest) (*Category, error)
+	// 查询文章类目列表
+	ListCategory(context.Context, *ListCategoryRequest) (*ListCategoryReply, error)
 	mustEmbedUnimplementedCategoryServiceServer()
 }
 
@@ -94,20 +104,20 @@ type CategoryServiceServer interface {
 type UnimplementedCategoryServiceServer struct {
 }
 
-func (UnimplementedCategoryServiceServer) List(context.Context, *CategoryListOption) (*CategoryList, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method List not implemented")
+func (UnimplementedCategoryServiceServer) CreateCategory(context.Context, *Category) (*CreateCategoryReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateCategory not implemented")
 }
-func (UnimplementedCategoryServiceServer) Get(context.Context, *CategoryGetOption) (*Category, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Get not implemented")
+func (UnimplementedCategoryServiceServer) UpdateCategory(context.Context, *Category) (*UpdateCategoryReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateCategory not implemented")
 }
-func (UnimplementedCategoryServiceServer) Create(context.Context, *CategoryGetOption) (*Category, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Create not implemented")
+func (UnimplementedCategoryServiceServer) DeleteCategory(context.Context, *DeleteCategoryRequest) (*DeleteCategoryReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteCategory not implemented")
 }
-func (UnimplementedCategoryServiceServer) Update(context.Context, *CategoryUpdateOption) (*Category, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Update not implemented")
+func (UnimplementedCategoryServiceServer) GetCategory(context.Context, *GetCategoryRequest) (*Category, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetCategory not implemented")
 }
-func (UnimplementedCategoryServiceServer) Delete(context.Context, *CategoryDeleteOption) (*Category, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Delete not implemented")
+func (UnimplementedCategoryServiceServer) ListCategory(context.Context, *ListCategoryRequest) (*ListCategoryReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListCategory not implemented")
 }
 func (UnimplementedCategoryServiceServer) mustEmbedUnimplementedCategoryServiceServer() {}
 
@@ -122,92 +132,92 @@ func RegisterCategoryServiceServer(s grpc.ServiceRegistrar, srv CategoryServiceS
 	s.RegisterService(&CategoryService_ServiceDesc, srv)
 }
 
-func _CategoryService_List_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CategoryListOption)
+func _CategoryService_CreateCategory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Category)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(CategoryServiceServer).List(ctx, in)
+		return srv.(CategoryServiceServer).CreateCategory(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/cms.v1.CategoryService/List",
+		FullMethod: "/api.cms.v1.CategoryService/CreateCategory",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CategoryServiceServer).List(ctx, req.(*CategoryListOption))
+		return srv.(CategoryServiceServer).CreateCategory(ctx, req.(*Category))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _CategoryService_Get_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CategoryGetOption)
+func _CategoryService_UpdateCategory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Category)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(CategoryServiceServer).Get(ctx, in)
+		return srv.(CategoryServiceServer).UpdateCategory(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/cms.v1.CategoryService/Get",
+		FullMethod: "/api.cms.v1.CategoryService/UpdateCategory",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CategoryServiceServer).Get(ctx, req.(*CategoryGetOption))
+		return srv.(CategoryServiceServer).UpdateCategory(ctx, req.(*Category))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _CategoryService_Create_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CategoryGetOption)
+func _CategoryService_DeleteCategory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteCategoryRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(CategoryServiceServer).Create(ctx, in)
+		return srv.(CategoryServiceServer).DeleteCategory(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/cms.v1.CategoryService/Create",
+		FullMethod: "/api.cms.v1.CategoryService/DeleteCategory",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CategoryServiceServer).Create(ctx, req.(*CategoryGetOption))
+		return srv.(CategoryServiceServer).DeleteCategory(ctx, req.(*DeleteCategoryRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _CategoryService_Update_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CategoryUpdateOption)
+func _CategoryService_GetCategory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetCategoryRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(CategoryServiceServer).Update(ctx, in)
+		return srv.(CategoryServiceServer).GetCategory(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/cms.v1.CategoryService/Update",
+		FullMethod: "/api.cms.v1.CategoryService/GetCategory",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CategoryServiceServer).Update(ctx, req.(*CategoryUpdateOption))
+		return srv.(CategoryServiceServer).GetCategory(ctx, req.(*GetCategoryRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _CategoryService_Delete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CategoryDeleteOption)
+func _CategoryService_ListCategory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListCategoryRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(CategoryServiceServer).Delete(ctx, in)
+		return srv.(CategoryServiceServer).ListCategory(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/cms.v1.CategoryService/Delete",
+		FullMethod: "/api.cms.v1.CategoryService/ListCategory",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CategoryServiceServer).Delete(ctx, req.(*CategoryDeleteOption))
+		return srv.(CategoryServiceServer).ListCategory(ctx, req.(*ListCategoryRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -216,28 +226,28 @@ func _CategoryService_Delete_Handler(srv interface{}, ctx context.Context, dec f
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var CategoryService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "cms.v1.CategoryService",
+	ServiceName: "api.cms.v1.CategoryService",
 	HandlerType: (*CategoryServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "List",
-			Handler:    _CategoryService_List_Handler,
+			MethodName: "CreateCategory",
+			Handler:    _CategoryService_CreateCategory_Handler,
 		},
 		{
-			MethodName: "Get",
-			Handler:    _CategoryService_Get_Handler,
+			MethodName: "UpdateCategory",
+			Handler:    _CategoryService_UpdateCategory_Handler,
 		},
 		{
-			MethodName: "Create",
-			Handler:    _CategoryService_Create_Handler,
+			MethodName: "DeleteCategory",
+			Handler:    _CategoryService_DeleteCategory_Handler,
 		},
 		{
-			MethodName: "Update",
-			Handler:    _CategoryService_Update_Handler,
+			MethodName: "GetCategory",
+			Handler:    _CategoryService_GetCategory_Handler,
 		},
 		{
-			MethodName: "Delete",
-			Handler:    _CategoryService_Delete_Handler,
+			MethodName: "ListCategory",
+			Handler:    _CategoryService_ListCategory_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

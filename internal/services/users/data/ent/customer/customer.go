@@ -28,8 +28,6 @@ const (
 	FieldAvatar = "avatar"
 	// FieldName holds the string denoting the name field in the database.
 	FieldName = "name"
-	// FieldRole holds the string denoting the role field in the database.
-	FieldRole = "role"
 	// FieldNickName holds the string denoting the nick_name field in the database.
 	FieldNickName = "nick_name"
 	// FieldEmail holds the string denoting the email field in the database.
@@ -71,7 +69,6 @@ var Columns = []string{
 	FieldAccount,
 	FieldAvatar,
 	FieldName,
-	FieldRole,
 	FieldNickName,
 	FieldEmail,
 	FieldMobile,
@@ -106,8 +103,6 @@ var (
 	AccountValidator func(string) error
 	// DefaultName holds the default value on creation for the "name" field.
 	DefaultName string
-	// DefaultRole holds the default value on creation for the "role" field.
-	DefaultRole string
 	// DefaultNickName holds the default value on creation for the "nick_name" field.
 	DefaultNickName string
 	// PasswordValidator is a validator for the "password" field. It is called by the builders before save.
