@@ -18,7 +18,7 @@ type Category struct {
 }
 
 type CategoryRepo interface {
-	ListCategory(ctx context.Context, op *pb.ListCategoryRequest) ([]*Category, error)
+	ListCategory(ctx context.Context, op *pb.ListCategoryRequest) ([]*Category, int64, error)
 	GetCategory(ctx context.Context, id int64) (*Category, error)
 	CreateCategory(ctx context.Context, mod *Category) (*Category, error)
 	UpdateCategory(ctx context.Context, id int64, mod *Category) (*Category, error)
@@ -39,7 +39,7 @@ func (uc *CategoryUsecase) Get(ctx context.Context, id int64) (p *Category, err 
 }
 
 //列表
-func (uc *CategoryUsecase) List(ctx context.Context, op *pb.ListCategoryRequest) ([]*Category, error) {
+func (uc *CategoryUsecase) List(ctx context.Context, op *pb.ListCategoryRequest) ([]*Category, int64, error) {
 	return uc.repo.ListCategory(ctx, op)
 }
 

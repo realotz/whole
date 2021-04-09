@@ -6,18 +6,6 @@
 // is compatible with the kratos package it is being compiled against.
 
 declare namespace SystemsV1 {
-	/** FileGetOption */
-	type FileGetOption = {
-		id?:string
-	}
-	/** FileUpdateOption */
-	type FileUpdateOption = {
-		name?:string
-	}
-	/** FileCreateOption */
-	type FileCreateOption = {
-		name?:string
-	}
 	/** FileDeleteOption */
 	type FileDeleteOption = {
 		id?:string
@@ -31,6 +19,18 @@ declare namespace SystemsV1 {
 	}
 	/** FileListOption */
 	type FileListOption = {
+		name?:string
+	}
+	/** FileGetOption */
+	type FileGetOption = {
+		id?:string
+	}
+	/** FileUpdateOption */
+	type FileUpdateOption = {
+		name?:string
+	}
+	/** FileCreateOption */
+	type FileCreateOption = {
 		name?:string
 	}
 }

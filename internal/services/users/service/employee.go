@@ -121,7 +121,7 @@ func (s *EmployeeService) Update(ctx context.Context, req *pb.EmployeeOption) (*
 
 // 删除用户
 func (s *EmployeeService) Delete(ctx context.Context, req *pb.EmployeeDeleteOption) (*pb.NullReply, error) {
-	err := s.member.Delete(ctx, req.Id)
+	err := s.member.Delete(ctx, req.Ids)
 	if err != nil {
 		return nil, err
 	}

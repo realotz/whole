@@ -46,7 +46,14 @@ message GetCategoryRequest {
 
 //列表查询条件
 message ListCategoryRequest {
-
+	//父id查询
+	int64 pid=1;
+	//名称搜索
+	string name=2;
+	//页码
+	uint32 page=10;
+	//分页大小
+	uint32 page_size=11;
 }
 
 //列表查询返回

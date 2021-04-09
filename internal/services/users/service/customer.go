@@ -120,7 +120,7 @@ func (s *CustomerService) Update(ctx context.Context, req *pb.CustomerOption) (*
 
 // 删除用户
 func (s *CustomerService) Delete(ctx context.Context, req *pb.CustomerDeleteOption) (*pb.NullReply, error) {
-	err := s.member.Delete(ctx, req.Id)
+	err := s.member.Delete(ctx, req.Ids)
 	if err != nil {
 		return nil, err
 	}

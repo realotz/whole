@@ -55,7 +55,10 @@ message Get{{.Service}}Request {
 
 //列表查询条件
 message List{{.Service}}Request {
-
+	//页码
+	uint32 page=10;
+	//分页大小
+	uint32 page_size=11;
 }
 
 //列表查询返回

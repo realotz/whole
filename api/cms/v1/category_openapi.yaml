@@ -64,6 +64,22 @@ components:
           type: integer
       type: object
     ApiCmsV1ListCategoryRequest:
+      properties:
+        name:
+          description: 名称搜索
+          type: string
+        page:
+          description: 页码
+          format: int32
+          type: integer
+        page_size:
+          description: 分页大小
+          format: int32
+          type: integer
+        pid:
+          description: 父id查询
+          format: int64
+          type: integer
       type: object
     ApiCmsV1UpdateCategoryReply:
       properties:

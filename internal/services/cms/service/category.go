@@ -67,11 +67,16 @@ func (s *CategoryService) GetCategory(ctx context.Context, req *pb.GetCategoryRe
 
 //查询文章类目列表
 func (s *CategoryService) ListCategory(ctx context.Context, req *pb.ListCategoryRequest) (*pb.ListCategoryReply, error) {
-	ms, err := s.category.List(ctx, req)
+	ms, total, err := s.category.List(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	var resp = &pb.ListCategoryReply{List: make([]*pb.Category, 0, len(ms))}
+	var resp = &pb.ListCategoryReply{
+		List:     make([]*pb.Category, 0, len(ms)),
+		Total:    total,
+		Page:     req.Page,
+		PageSize: req.PageSize,
+	}
 	for _, v := range ms {
 		resp.List = append(resp.List, s.protoMsg(v))
 	}

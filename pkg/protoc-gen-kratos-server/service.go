@@ -22,6 +22,17 @@ func (b *BaseInfo) ImportPath(str string) string {
 	return fmt.Sprintf("\"%s\"", strings.Join(newList, "/"))
 }
 
+func (b *BaseInfo) BaseImportPath(str string) string {
+	strList := strings.Split(fmt.Sprintf("%s/%s", b.basePackage, str), "/")
+	newList := []string{}
+	for _, v := range strList {
+		if v != "" {
+			newList = append(newList, v)
+		}
+	}
+	return fmt.Sprintf("\"%s\"", strings.Join(newList, "/"))
+}
+
 // generateFile generates a _http.pb.go file containing kratos errors definitions.
 func generateFile(gen *protogen.Plugin, file *protogen.File, params map[string]string) *protogen.GeneratedFile {
 	if len(file.Services) == 0 {
@@ -70,6 +81,7 @@ func generateData(gen *protogen.Plugin, file *protogen.File, s *protogen.Service
 	g.P(fmt.Sprintf("pb %s", file.GoImportPath.String()))
 	g.P(info.ImportPath("biz"))
 	g.P(info.ImportPath("data/ent"))
+	g.P(info.BaseImportPath("pkg/utils"))
 	g.P(")")
 	g.P("type ent" + info.serviceNameC + " ent." + info.serviceNameC)
 	g.P("// ent转换biz结构")
@@ -148,14 +160,17 @@ func generateData(gen *protogen.Plugin, file *protogen.File, s *protogen.Service
 	g.P("}")
 	g.P("")
 	g.P("// 列表搜索")
-	g.P("func (ar *" + info.serviceName + "Repo) List" + info.serviceNameC + "(ctx context.Context, op *pb.List" + info.serviceNameC + "Request) ([]*biz." + info.serviceNameC + ", error) {")
+	g.P("func (ar *" + info.serviceName + "Repo) List" + info.serviceNameC + "(ctx context.Context, op *pb.List" + info.serviceNameC + "Request) ([]*biz." + info.serviceNameC + ",int64, error) {")
 	g.P("query := ar.data.db." + info.serviceNameC + ".Query()")
 	g.P("// todo 搜索条件")
-	g.P("ps, err := query.Order(ent.Desc(\"id\")).All(ctx)")
-	g.P("if err != nil {return nil, err}")
+	g.P("query.Order(ent.Desc(\"id\"))")
+	g.P("total, err := query.Count(ctx)")
+	g.P("offset, limit := utils.GetOfficeLimit(&op.Page, &op.PageSize)")
+	g.P("ps, err := query.Offset(offset).Limit(limit).All(ctx)")
+	g.P("if err != nil {return nil,0 , err}")
 	g.P("rv := make([]*biz." + info.serviceNameC + ", 0)")
 	g.P("for _, p := range ps {\nrv = append(rv, ent" + info.serviceNameC + "(*p).BizStruct())\n}")
-	g.P("return rv, nil")
+	g.P("return rv,int64(total), nil")
 	g.P("}")
 }
 
@@ -220,7 +235,7 @@ func generateBiz(gen *protogen.Plugin, file *protogen.File, s *protogen.Service,
 	g.P("}")
 	g.P("")
 	g.P("type " + info.serviceNameC + "Repo interface{")
-	g.P("List" + info.serviceNameC + "(ctx context.Context, op *pb.List" + info.serviceNameC + "Request) ([]*" + info.serviceNameC + ", error)")
+	g.P("List" + info.serviceNameC + "(ctx context.Context, op *pb.List" + info.serviceNameC + "Request) ([]*" + info.serviceNameC + ",int64, error)")
 	g.P("Get" + info.serviceNameC + "(ctx context.Context, id int64) (*" + info.serviceNameC + ", error)")
 	g.P("Create" + info.serviceNameC + "(ctx context.Context, mod *" + info.serviceNameC + ") (*" + info.serviceNameC + ", error)")
 	g.P("Update" + info.serviceNameC + "(ctx context.Context, id int64, mod *" + info.serviceNameC + ") (*" + info.serviceNameC + ", error)")
@@ -239,7 +254,7 @@ func generateBiz(gen *protogen.Plugin, file *protogen.File, s *protogen.Service,
 	g.P("return uc.repo.Get" + info.serviceNameC + "(ctx, id)")
 	g.P("}")
 	g.P("//列表")
-	g.P("func (uc *" + info.serviceNameC + "Usecase) List(ctx context.Context,  op *pb.List" + info.serviceNameC + "Request) ([]*" + info.serviceNameC + ",  error) {")
+	g.P("func (uc *" + info.serviceNameC + "Usecase) List(ctx context.Context,  op *pb.List" + info.serviceNameC + "Request) ([]*" + info.serviceNameC + ",int64,  error) {")
 	g.P("return uc.repo.List" + info.serviceNameC + "(ctx, op)")
 	g.P("}")
 	g.P("//创建")
@@ -322,11 +337,11 @@ func generateService(gen *protogen.Plugin, file *protogen.File, s *protogen.Serv
 			g.P("}")
 			g.P("return s.protoMsg(m), nil")
 		case "List":
-			g.P("ms, err := s." + info.serviceName + "." + ms + "(ctx, req)")
+			g.P("ms,total, err := s." + info.serviceName + "." + ms + "(ctx, req)")
 			g.P("if err != nil {")
 			g.P("return nil, err")
 			g.P("}")
-			g.P("var resp = &pb.List" + info.serviceNameC + "Reply{List: make([]*pb." + info.serviceNameC + ", 0, len(ms))}")
+			g.P("var resp = &pb.List" + info.serviceNameC + "Reply{\nList: make([]*pb." + info.serviceNameC + ", 0, len(ms)),\n Total:total,\n Page:req.Page,\n PageSize:req.PageSize,\n}")
 			g.P("for _, v := range ms {")
 			g.P("resp.List = append(resp.List, s.protoMsg(v))")
 			g.P("}")

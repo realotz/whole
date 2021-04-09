@@ -6,6 +6,7 @@ import (
 	pb "github.com/realotz/whole/api/cms/v1"
 	"github.com/realotz/whole/internal/services/cms/biz"
 	"github.com/realotz/whole/internal/services/cms/data/ent"
+	"github.com/realotz/whole/pkg/utils"
 )
 
 type entCategory ent.Category
@@ -93,16 +94,19 @@ func (ar *categoryRepo) DeleteCategory(ctx context.Context, ids []int64) error {
 }
 
 // 列表搜索
-func (ar *categoryRepo) ListCategory(ctx context.Context, op *pb.ListCategoryRequest) ([]*biz.Category, error) {
+func (ar *categoryRepo) ListCategory(ctx context.Context, op *pb.ListCategoryRequest) ([]*biz.Category, int64, error) {
 	query := ar.data.db.Category.Query()
 	// todo 搜索条件
-	ps, err := query.Order(ent.Desc("id")).All(ctx)
+	query.Order(ent.Desc("id"))
+	total, err := query.Count(ctx)
+	offset, limit := utils.GetOfficeLimit(&op.Page, &op.PageSize)
+	ps, err := query.Offset(offset).Limit(limit).All(ctx)
 	if err != nil {
-		return nil, err
+		return nil, 0, err
 	}
 	rv := make([]*biz.Category, 0)
 	for _, p := range ps {
 		rv = append(rv, entCategory(*p).BizStruct())
 	}
-	return rv, nil
+	return rv, int64(total), nil
 }
