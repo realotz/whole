@@ -32,6 +32,7 @@ func newApp(logger log.Logger, app *server.App) *kratos.App {
 		kratos.Name(Name),
 		kratos.Version(Version),
 		kratos.Metadata(map[string]string{}),
+
 		kratos.Logger(logger),
 		kratos.Server(app.Server()...),
 	)
