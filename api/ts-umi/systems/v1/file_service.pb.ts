@@ -30,7 +30,7 @@ export async function Get(params: SystemsV1.FileGetOption, options?: Options) {
 }
 
 /** Create  /api */
-export async function Create(params: SystemsV1.FileGetOption, options?: Options) {
+export async function Create(params: SystemsV1.FileCreateOption, options?: Options) {
 	return request<SystemsV1.File>(APIService + '/systems/file', {
     	method: 'POST',
     	params: {...params},

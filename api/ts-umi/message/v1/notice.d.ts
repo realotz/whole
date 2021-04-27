@@ -6,6 +6,20 @@
 // is compatible with the kratos package it is being compiled against.
 
 declare namespace NewsV1 {
+	/** NoticeCreateOption */
+	type NoticeCreateOption = {
+		type?:string
+		title?:string
+		content?:string
+		to?:string
+	}
+	/** NoticeList */
+	type NoticeList = {
+		list?:Array<NewsV1.Notice>
+		total?:number
+		page?:number
+		page_size?:number
+	}
 	/** NoticeListOption */
 	type NoticeListOption = {
 		type?:number
@@ -22,20 +36,6 @@ declare namespace NewsV1 {
 		status?:number
 		error_msg?:string
 		birthday?:GoogleProtobuf.Timestamp
-	}
-	/** NoticeCreateOption */
-	type NoticeCreateOption = {
-		type?:string
-		title?:string
-		content?:string
-		to?:string
-	}
-	/** NoticeList */
-	type NoticeList = {
-		list?:Array<NewsV1.Notice>
-		total?:number
-		page?:number
-		page_size?:number
 	}
 }
 

@@ -22,7 +22,7 @@ func (s *FileServiceService) List(ctx context.Context, req *pb.FileListOption) (
 func (s *FileServiceService) Get(ctx context.Context, req *pb.FileGetOption) (*pb.File, error) {
 	return &pb.File{}, nil
 }
-func (s *FileServiceService) Create(ctx context.Context, req *pb.FileGetOption) (*pb.File, error) {
+func (s *FileServiceService) Create(ctx context.Context, req *pb.FileCreateOption) (*pb.File, error) {
 	return &pb.File{}, nil
 }
 func (s *FileServiceService) Update(ctx context.Context, req *pb.FileUpdateOption) (*pb.File, error) {

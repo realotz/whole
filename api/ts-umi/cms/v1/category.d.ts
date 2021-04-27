@@ -5,29 +5,15 @@
 // This is a compile-time assertion to ensure that this generated file
 // is compatible with the kratos package it is being compiled against.
 
+declare namespace GoogleProtobuf {
+	/** Timestamp */
+	type Timestamp = {
+		seconds?:number
+		nanos?:number
+	}
+}
+
 declare namespace ApiCmsV1 {
-	/** Category */
-	type Category = {
-		id?:number
-		name?:string
-		pid?:number
-		icon?:string
-		desc?:string
-		update_time?:GoogleProtobuf.Timestamp
-		create_time?:GoogleProtobuf.Timestamp
-	}
-	/** CreateCategoryReply */
-	type CreateCategoryReply = {
-		data?:ApiCmsV1.Category
-	}
-	/** UpdateCategoryReply */
-	type UpdateCategoryReply = {
-		data?:ApiCmsV1.Category
-	}
-	/** DeleteCategoryRequest */
-	type DeleteCategoryRequest = {
-		ids?:Array<number>
-	}
 	/** DeleteCategoryReply */
 	type DeleteCategoryReply = {
 	}
@@ -49,13 +35,27 @@ declare namespace ApiCmsV1 {
 		page?:number
 		page_size?:number
 	}
-}
-
-declare namespace GoogleProtobuf {
-	/** Timestamp */
-	type Timestamp = {
-		seconds?:number
-		nanos?:number
+	/** Category */
+	type Category = {
+		id?:number
+		name?:string
+		pid?:number
+		icon?:string
+		desc?:string
+		update_time?:GoogleProtobuf.Timestamp
+		create_time?:GoogleProtobuf.Timestamp
+	}
+	/** CreateCategoryReply */
+	type CreateCategoryReply = {
+		data?:ApiCmsV1.Category
+	}
+	/** UpdateCategoryReply */
+	type UpdateCategoryReply = {
+		data?:ApiCmsV1.Category
+	}
+	/** DeleteCategoryRequest */
+	type DeleteCategoryRequest = {
+		ids?:Array<number>
 	}
 }
 

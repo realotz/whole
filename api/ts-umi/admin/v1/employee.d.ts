@@ -6,39 +6,6 @@
 // is compatible with the kratos package it is being compiled against.
 
 declare namespace AdminV1 {
-	/** CaptchaReq */
-	type CaptchaReq = {
-		to?:string
-		captcha?:string
-		challenge?:string
-		tk?:string
-	}
-	/** EmployeeLoginRes */
-	type EmployeeLoginRes = {
-		token?:string
-		role?:string
-		expiration_time?:number
-		employee?:AdminV1.Employee
-	}
-	/** EmployeeListOption */
-	type EmployeeListOption = {
-		name?:string
-		tag?:string
-		email?:string
-		mobile?:string
-		sex?:string
-		role?:string
-		type?:string
-		create_time?:string
-	}
-	/** EmployeeGetOption */
-	type EmployeeGetOption = {
-		id?:number
-	}
-	/** EmployeeDeleteOption */
-	type EmployeeDeleteOption = {
-		ids?:Array<number>
-	}
 	/** EmployeeList */
 	type EmployeeList = {
 		list?:Array<AdminV1.Employee>
@@ -65,12 +32,37 @@ declare namespace AdminV1 {
 		update_time?:GoogleProtobuf.Timestamp
 		avatar?:string
 	}
+	/** CaptchaReq */
+	type CaptchaReq = {
+		to?:string
+		captcha?:string
+		challenge?:string
+		tk?:string
+	}
 	/** EmployeeLogin */
 	type EmployeeLogin = {
 		account?:string
 		password?:string
 		captcha?:string
 		code?:string
+	}
+	/** EmployeeLoginRes */
+	type EmployeeLoginRes = {
+		token?:string
+		role?:string
+		expiration_time?:number
+		employee?:AdminV1.Employee
+	}
+	/** EmployeeListOption */
+	type EmployeeListOption = {
+		name?:string
+		tag?:string
+		email?:string
+		mobile?:string
+		sex?:string
+		role?:string
+		type?:string
+		create_time?:string
 	}
 	/** EmployeeOption */
 	type EmployeeOption = {
@@ -86,6 +78,14 @@ declare namespace AdminV1 {
 		birthday?:GoogleProtobuf.Timestamp
 		id?:number
 		avatar?:string
+	}
+	/** EmployeeDeleteOption */
+	type EmployeeDeleteOption = {
+		ids?:Array<number>
+	}
+	/** EmployeeGetOption */
+	type EmployeeGetOption = {
+		id?:number
 	}
 }
 

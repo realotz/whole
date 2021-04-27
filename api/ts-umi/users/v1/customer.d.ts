@@ -13,22 +13,46 @@ declare namespace UsersV1 {
 		expiration_time?:number
 		customer?:UsersV1.Customer
 	}
-	/** CustomerListOption */
-	type CustomerListOption = {
+	/** CustomerOption */
+	type CustomerOption = {
 		name?:string
-		tag?:string
+		account?:string
+		nick_name?:string
+		role?:string
 		email?:string
 		mobile?:string
-		sex?:string
 		id_card?:string
-		keyword?:string
-		create_time?:string
-		page?:number
-		page_size?:number
+		password?:string
+		sex?:string
+		birthday?:GoogleProtobuf.Timestamp
+		id?:number
+		avatar?:string
 	}
 	/** CustomerList */
 	type CustomerList = {
 		list?:Array<UsersV1.Customer>
+	}
+	/** CaptchaReq */
+	type CaptchaReq = {
+		to?:string
+		captcha?:string
+		challenge?:string
+		tk?:string
+	}
+	/** CustomerLogin */
+	type CustomerLogin = {
+		account?:string
+		password?:string
+		captcha?:string
+		code?:string
+	}
+	/** CustomerGetOption */
+	type CustomerGetOption = {
+		id?:number
+	}
+	/** CustomerDeleteOption */
+	type CustomerDeleteOption = {
+		ids?:Array<number>
 	}
 	/** Customer */
 	type Customer = {
@@ -49,42 +73,18 @@ declare namespace UsersV1 {
 		update_time?:GoogleProtobuf.Timestamp
 		avatar?:string
 	}
-	/** CustomerLogin */
-	type CustomerLogin = {
-		account?:string
-		password?:string
-		captcha?:string
-		code?:string
-	}
-	/** CustomerGetOption */
-	type CustomerGetOption = {
-		id?:number
-	}
-	/** CustomerOption */
-	type CustomerOption = {
+	/** CustomerListOption */
+	type CustomerListOption = {
 		name?:string
-		account?:string
-		nick_name?:string
-		role?:string
+		tag?:string
 		email?:string
 		mobile?:string
-		id_card?:string
-		password?:string
 		sex?:string
-		birthday?:GoogleProtobuf.Timestamp
-		id?:number
-		avatar?:string
-	}
-	/** CustomerDeleteOption */
-	type CustomerDeleteOption = {
-		ids?:Array<number>
-	}
-	/** CaptchaReq */
-	type CaptchaReq = {
-		to?:string
-		captcha?:string
-		challenge?:string
-		tk?:string
+		id_card?:string
+		keyword?:string
+		create_time?:string
+		page?:number
+		page_size?:number
 	}
 }
 

@@ -2,12 +2,17 @@ components:
   schemas:
     SystemsV1File:
       type: object
-    SystemsV1FileDeleteOption:
+    SystemsV1FileCreateOption:
       properties:
-        id:
+        data:
           type: string
+        name:
+          type: string
+        size:
+          format: int64
+          type: integer
       type: object
-    SystemsV1FileGetOption:
+    SystemsV1FileDeleteOption:
       properties:
         id:
           type: string

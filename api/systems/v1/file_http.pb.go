@@ -20,7 +20,7 @@ var _ = mux.NewRouter
 const _ = http1.SupportPackageIsVersion1
 
 type FileServiceHandler interface {
-	Create(context.Context, *FileGetOption) (*File, error)
+	Create(context.Context, *FileCreateOption) (*File, error)
 
 	Delete(context.Context, *FileDeleteOption) (*File, error)
 
@@ -92,14 +92,14 @@ func NewFileServiceHandler(srv FileServiceHandler, opts ...http1.HandleOption) h
 	}).Methods("GET")
 
 	r.HandleFunc("/systems/file", func(w http.ResponseWriter, r *http.Request) {
-		var in FileGetOption
+		var in FileCreateOption
 		if err := h.Decode(r, &in); err != nil {
 			h.Error(w, r, err)
 			return
 		}
 
 		next := func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.Create(ctx, req.(*FileGetOption))
+			return srv.Create(ctx, req.(*FileCreateOption))
 		}
 		if h.Middleware != nil {
 			next = h.Middleware(next)

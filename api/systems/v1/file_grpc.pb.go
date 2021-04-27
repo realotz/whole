@@ -20,7 +20,7 @@ const _ = grpc.SupportPackageIsVersion7
 type FileServiceClient interface {
 	List(ctx context.Context, in *FileListOption, opts ...grpc.CallOption) (*FileList, error)
 	Get(ctx context.Context, in *FileGetOption, opts ...grpc.CallOption) (*File, error)
-	Create(ctx context.Context, in *FileGetOption, opts ...grpc.CallOption) (*File, error)
+	Create(ctx context.Context, in *FileCreateOption, opts ...grpc.CallOption) (*File, error)
 	Update(ctx context.Context, in *FileUpdateOption, opts ...grpc.CallOption) (*File, error)
 	Delete(ctx context.Context, in *FileDeleteOption, opts ...grpc.CallOption) (*File, error)
 }
@@ -51,7 +51,7 @@ func (c *fileServiceClient) Get(ctx context.Context, in *FileGetOption, opts ...
 	return out, nil
 }
 
-func (c *fileServiceClient) Create(ctx context.Context, in *FileGetOption, opts ...grpc.CallOption) (*File, error) {
+func (c *fileServiceClient) Create(ctx context.Context, in *FileCreateOption, opts ...grpc.CallOption) (*File, error) {
 	out := new(File)
 	err := c.cc.Invoke(ctx, "/systems.v1.FileService/Create", in, out, opts...)
 	if err != nil {
@@ -84,7 +84,7 @@ func (c *fileServiceClient) Delete(ctx context.Context, in *FileDeleteOption, op
 type FileServiceServer interface {
 	List(context.Context, *FileListOption) (*FileList, error)
 	Get(context.Context, *FileGetOption) (*File, error)
-	Create(context.Context, *FileGetOption) (*File, error)
+	Create(context.Context, *FileCreateOption) (*File, error)
 	Update(context.Context, *FileUpdateOption) (*File, error)
 	Delete(context.Context, *FileDeleteOption) (*File, error)
 	mustEmbedUnimplementedFileServiceServer()
@@ -100,7 +100,7 @@ func (UnimplementedFileServiceServer) List(context.Context, *FileListOption) (*F
 func (UnimplementedFileServiceServer) Get(context.Context, *FileGetOption) (*File, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Get not implemented")
 }
-func (UnimplementedFileServiceServer) Create(context.Context, *FileGetOption) (*File, error) {
+func (UnimplementedFileServiceServer) Create(context.Context, *FileCreateOption) (*File, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Create not implemented")
 }
 func (UnimplementedFileServiceServer) Update(context.Context, *FileUpdateOption) (*File, error) {
@@ -159,7 +159,7 @@ func _FileService_Get_Handler(srv interface{}, ctx context.Context, dec func(int
 }
 
 func _FileService_Create_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(FileGetOption)
+	in := new(FileCreateOption)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -171,7 +171,7 @@ func _FileService_Create_Handler(srv interface{}, ctx context.Context, dec func(
 		FullMethod: "/systems.v1.FileService/Create",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(FileServiceServer).Create(ctx, req.(*FileGetOption))
+		return srv.(FileServiceServer).Create(ctx, req.(*FileCreateOption))
 	}
 	return interceptor(ctx, in, info, handler)
 }

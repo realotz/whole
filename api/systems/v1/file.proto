@@ -20,7 +20,7 @@ service FileService {
       get: "/systems/file/{id}",
     };
   }
-  rpc Create (FileGetOption) returns (File)  {
+  rpc Create (FileCreateOption) returns (File)  {
     option (google.api.http) = {
       post: "/systems/file",
     };
@@ -51,6 +51,8 @@ message FileUpdateOption {
 
 message FileCreateOption {
   string name = 1;
+  int64 size = 2;
+  bytes data = 3;
 }
 
 message FileDeleteOption {

@@ -26,7 +26,8 @@ type Systems struct {
 
 func NewSystemsApp(hs *http.Server, gs *grpc.Server, m middleware.Middleware, file systemV1.FileServiceServer) *Systems {
 	// 系统system服务组
-	hs.HandlePrefix("/systems/file", systemV1.NewFileServiceHandler(file, http.Middleware(m))) // 文件服务
+	hs.HandlePrefix("/systems/file", systemV1.NewFileServiceHandler(file, http.Middleware(m)))     // 文件服务
+	hs.HandlePrefix("/systems/form", systemV1.NewFileFormServiceHandler(file, http.Middleware(m))) // http form相关服务
 	// grpc
 	// 系统system服务组
 	systemV1.RegisterFileServiceServer(gs, file) // 文件服务
