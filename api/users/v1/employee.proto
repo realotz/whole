@@ -156,6 +156,9 @@ message EmployeeDeleteOption {
 message EmployeeList {
   //用户列表
   repeated Employee list =1;
+  int64 total = 2;
+  uint32 page=3;
+  uint32 page_size=4;
 }
 
 // 用户信息

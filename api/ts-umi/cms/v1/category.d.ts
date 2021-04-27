@@ -6,14 +6,6 @@
 // is compatible with the kratos package it is being compiled against.
 
 declare namespace ApiCmsV1 {
-	/** UpdateCategoryReply */
-	type UpdateCategoryReply = {
-		data?:ApiCmsV1.Category
-	}
-	/** DeleteCategoryRequest */
-	type DeleteCategoryRequest = {
-		ids?:Array<number>
-	}
 	/** DeleteCategoryReply */
 	type DeleteCategoryReply = {
 	}
@@ -48,6 +40,14 @@ declare namespace ApiCmsV1 {
 	/** CreateCategoryReply */
 	type CreateCategoryReply = {
 		data?:ApiCmsV1.Category
+	}
+	/** UpdateCategoryReply */
+	type UpdateCategoryReply = {
+		data?:ApiCmsV1.Category
+	}
+	/** DeleteCategoryRequest */
+	type DeleteCategoryRequest = {
+		ids?:Array<number>
 	}
 }
 

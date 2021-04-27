@@ -1,0 +1,79 @@
+syntax = "proto3";
+
+package news.v1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+option go_package = "github.com/realotz/whole/api/message/v1;v1";
+option java_multiple_files = true;
+option java_package = "whole.api.message.v1";
+option java_outer_classname = "NoticeProtoV1";
+
+//通知服务
+service NoticeService {
+  // 查看发送队列
+  rpc List (NoticeListOption) returns (NoticeList)  {
+    option (google.api.http) = {
+      get: "/users/notice",
+    };
+  }
+  // 发送一个通知
+  rpc Send (NoticeCreateOption) returns (Notice)  {
+    option (google.api.http) = {
+      post: "/users/notice",
+    };
+  }
+}
+
+message NoticeListOption {
+  // 类型 通知类型 1 email 2 短信
+  uint32 type = 1;
+  // 总数
+  int64 total = 8;
+  // 页码
+  uint32 page = 10;
+  // 分页大小
+  uint32 page_size = 11;
+}
+
+message Notice{
+  // 通知类型 1 email 2 短信
+  string type = 1;
+  // 标题
+  string title = 2;
+  // 通知内容
+  string content = 3;
+  // 接受者用户id
+  string to = 4;
+  // 状态 0未发送 9发送成功 10 发送失败
+  uint32 status = 5;
+  // 失败原因
+  string error_msg = 6;
+  // 发送时间
+  google.protobuf.Timestamp birthday = 11;
+}
+
+// 创建通知
+message NoticeCreateOption {
+  // 通知类型 0 普通通知
+  string type = 1;
+  // 标题
+  string title = 3;
+  // 通知内容
+  string content = 4;
+  // 接受者用户id
+  string to = 6;
+}
+
+
+message NoticeList {
+  //列表
+  repeated Notice list = 1;
+  //总数
+  int64 total = 2;
+  //页码
+  uint32 page = 3;
+  //分页
+  uint32 page_size = 4;
+}
+

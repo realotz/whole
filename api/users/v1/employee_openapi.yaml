@@ -74,6 +74,15 @@ components:
           items:
             $ref: '#/components/schemas/UsersV1Employee'
           type: array
+        page:
+          format: int32
+          type: integer
+        page_size:
+          format: int32
+          type: integer
+        total:
+          format: int64
+          type: integer
       type: object
     UsersV1EmployeeLogin:
       properties:

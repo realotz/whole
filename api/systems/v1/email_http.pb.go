@@ -19,34 +19,34 @@ var _ = mux.NewRouter
 
 const _ = http1.SupportPackageIsVersion1
 
-type MessageServiceHandler interface {
-	Delete(context.Context, *MessageDeleteOption) (*Message, error)
+type EmailServiceHandler interface {
+	Create(context.Context, *FileGetOption) (*File, error)
 
-	Get(context.Context, *MessageGetOption) (*Message, error)
+	Delete(context.Context, *FileDeleteOption) (*File, error)
 
-	List(context.Context, *MessageListOption) (*MessageList, error)
+	Get(context.Context, *FileGetOption) (*File, error)
 
-	Read(context.Context, *MessageGetOption) (*Message, error)
+	List(context.Context, *FileListOption) (*FileList, error)
 
-	Send(context.Context, *MessageGetOption) (*Message, error)
+	Update(context.Context, *FileUpdateOption) (*File, error)
 }
 
-func NewMessageServiceHandler(srv MessageServiceHandler, opts ...http1.HandleOption) http.Handler {
+func NewEmailServiceHandler(srv EmailServiceHandler, opts ...http1.HandleOption) http.Handler {
 	h := http1.DefaultHandleOptions()
 	for _, o := range opts {
 		o(&h)
 	}
 	r := mux.NewRouter()
 
-	r.HandleFunc("/users/message", func(w http.ResponseWriter, r *http.Request) {
-		var in MessageListOption
+	r.HandleFunc("/systems/file", func(w http.ResponseWriter, r *http.Request) {
+		var in FileListOption
 		if err := h.Decode(r, &in); err != nil {
 			h.Error(w, r, err)
 			return
 		}
 
 		next := func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.List(ctx, req.(*MessageListOption))
+			return srv.List(ctx, req.(*FileListOption))
 		}
 		if h.Middleware != nil {
 			next = h.Middleware(next)
@@ -56,14 +56,14 @@ func NewMessageServiceHandler(srv MessageServiceHandler, opts ...http1.HandleOpt
 			h.Error(w, r, err)
 			return
 		}
-		reply := out.(*MessageList)
+		reply := out.(*FileList)
 		if err := h.Encode(w, r, reply); err != nil {
 			h.Error(w, r, err)
 		}
 	}).Methods("GET")
 
-	r.HandleFunc("/users/message/{id}", func(w http.ResponseWriter, r *http.Request) {
-		var in MessageGetOption
+	r.HandleFunc("/systems/file/{id}", func(w http.ResponseWriter, r *http.Request) {
+		var in FileGetOption
 		if err := h.Decode(r, &in); err != nil {
 			h.Error(w, r, err)
 			return
@@ -75,7 +75,7 @@ func NewMessageServiceHandler(srv MessageServiceHandler, opts ...http1.HandleOpt
 		}
 
 		next := func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.Get(ctx, req.(*MessageGetOption))
+			return srv.Get(ctx, req.(*FileGetOption))
 		}
 		if h.Middleware != nil {
 			next = h.Middleware(next)
@@ -85,50 +85,21 @@ func NewMessageServiceHandler(srv MessageServiceHandler, opts ...http1.HandleOpt
 			h.Error(w, r, err)
 			return
 		}
-		reply := out.(*Message)
+		reply := out.(*File)
 		if err := h.Encode(w, r, reply); err != nil {
 			h.Error(w, r, err)
 		}
 	}).Methods("GET")
 
-	r.HandleFunc("/users/message/read/{id}", func(w http.ResponseWriter, r *http.Request) {
-		var in MessageGetOption
-		if err := h.Decode(r, &in); err != nil {
-			h.Error(w, r, err)
-			return
-		}
-
-		if err := binding.MapProto(&in, mux.Vars(r)); err != nil {
-			h.Error(w, r, err)
-			return
-		}
-
-		next := func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.Read(ctx, req.(*MessageGetOption))
-		}
-		if h.Middleware != nil {
-			next = h.Middleware(next)
-		}
-		out, err := next(r.Context(), &in)
-		if err != nil {
-			h.Error(w, r, err)
-			return
-		}
-		reply := out.(*Message)
-		if err := h.Encode(w, r, reply); err != nil {
-			h.Error(w, r, err)
-		}
-	}).Methods("GET")
-
-	r.HandleFunc("/users/message", func(w http.ResponseWriter, r *http.Request) {
-		var in MessageGetOption
+	r.HandleFunc("/systems/file", func(w http.ResponseWriter, r *http.Request) {
+		var in FileGetOption
 		if err := h.Decode(r, &in); err != nil {
 			h.Error(w, r, err)
 			return
 		}
 
 		next := func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.Send(ctx, req.(*MessageGetOption))
+			return srv.Create(ctx, req.(*FileGetOption))
 		}
 		if h.Middleware != nil {
 			next = h.Middleware(next)
@@ -138,14 +109,38 @@ func NewMessageServiceHandler(srv MessageServiceHandler, opts ...http1.HandleOpt
 			h.Error(w, r, err)
 			return
 		}
-		reply := out.(*Message)
+		reply := out.(*File)
 		if err := h.Encode(w, r, reply); err != nil {
 			h.Error(w, r, err)
 		}
 	}).Methods("POST")
 
-	r.HandleFunc("/users/message/{id}", func(w http.ResponseWriter, r *http.Request) {
-		var in MessageDeleteOption
+	r.HandleFunc("/systems/file", func(w http.ResponseWriter, r *http.Request) {
+		var in FileUpdateOption
+		if err := h.Decode(r, &in); err != nil {
+			h.Error(w, r, err)
+			return
+		}
+
+		next := func(ctx context.Context, req interface{}) (interface{}, error) {
+			return srv.Update(ctx, req.(*FileUpdateOption))
+		}
+		if h.Middleware != nil {
+			next = h.Middleware(next)
+		}
+		out, err := next(r.Context(), &in)
+		if err != nil {
+			h.Error(w, r, err)
+			return
+		}
+		reply := out.(*File)
+		if err := h.Encode(w, r, reply); err != nil {
+			h.Error(w, r, err)
+		}
+	}).Methods("PUT")
+
+	r.HandleFunc("/systems/file/{id}", func(w http.ResponseWriter, r *http.Request) {
+		var in FileDeleteOption
 		if err := h.Decode(r, &in); err != nil {
 			h.Error(w, r, err)
 			return
@@ -157,7 +152,7 @@ func NewMessageServiceHandler(srv MessageServiceHandler, opts ...http1.HandleOpt
 		}
 
 		next := func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.Delete(ctx, req.(*MessageDeleteOption))
+			return srv.Delete(ctx, req.(*FileDeleteOption))
 		}
 		if h.Middleware != nil {
 			next = h.Middleware(next)
@@ -167,7 +162,7 @@ func NewMessageServiceHandler(srv MessageServiceHandler, opts ...http1.HandleOpt
 			h.Error(w, r, err)
 			return
 		}
-		reply := out.(*Message)
+		reply := out.(*File)
 		if err := h.Encode(w, r, reply); err != nil {
 			h.Error(w, r, err)
 		}

@@ -1,0 +1,100 @@
+syntax = "proto3";
+
+package news.v1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+option go_package = "github.com/realotz/whole/api/message/v1;v1";
+option java_multiple_files = true;
+option java_package = "whole.api.message.v1";
+option java_outer_classname = "MessageProtoV1";
+
+//消息服务
+service MessageService {
+  // 消息列表
+  rpc List (MessageListOption) returns (MessageList)  {
+    option (google.api.http) = {
+      get: "/users/message",
+    };
+  }
+  //标记已都
+  rpc Read (MessageIds) returns (Message)  {
+    option (google.api.http) = {
+      get: "/users/message/read/{id}",
+    };
+  }
+  // 发送一个消息
+  rpc Send (MessageCreateOption) returns (Message)  {
+    option (google.api.http) = {
+      post: "/users/message",
+    };
+  }
+  // 删除消息
+  rpc Delete (MessageDeleteOption) returns (Message)  {
+    option (google.api.http) = {
+      delete: "/users/message/{id}",
+    };
+  }
+}
+
+message MessageListOption {
+  // 类型 消息类型 0 普通通知
+  uint32 type = 1;
+  // 0全部  1已读 2未读
+  uint32 read = 2;
+  // 总数
+  int64 total = 8;
+  // 未读总数
+  int64 unread_total = 9;
+  // 页码
+  uint32 page=10;
+  // 分页大小
+  uint32 page_size=11;
+}
+
+message Message{
+  // 消息类型 0 普通通知
+  string type = 1;
+  // 标题
+  string title = 2;
+  // 消息内容
+  string content = 3;
+  // 接受者用户id
+  string to = 4;
+  // 是否已读 普通通知才有效
+  bool read = 5;
+  // 发送时间
+  google.protobuf.Timestamp birthday = 11;
+}
+
+message MessageIds {
+  int64 id = 1;
+}
+
+// 创建消息
+message MessageCreateOption {
+  // 消息类型 0 普通通知
+  string type = 1;
+  // 标题
+  string title = 3;
+  // 消息内容
+  string content = 4;
+  // 接受者用户id
+  string to = 6;
+}
+
+message MessageDeleteOption {
+  int64 id = 1;
+}
+
+message MessageList {
+  //列表
+  repeated Message list =1;
+  //总数
+  int64 total = 2;
+  //页码
+  uint32 page=3;
+  //分页大学
+  uint32 page_size=4;
+}
+

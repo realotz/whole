@@ -20,7 +20,6 @@ var ProviderSet = wire.NewSet(
 	NewAuthToken,
 	data.ProviderSet,
 	biz.ProviderSet,
-	service.NewMessageService,
 	service.NewEmployeeService,
 	service.NewCustomerService,
 	NewUsersApp,
@@ -36,18 +35,15 @@ type Users struct {
 
 func NewUsersApp(hs *http.Server, gs *grpc.Server, m middleware.Middleware,
 	employee v1.EmployeeServiceServer,
-	message userV1.MessageServiceServer,
 	customer userV1.CustomerServiceServer,
 ) *Users {
 	// 用户user服务组
-	hs.HandlePrefix("/users/message", userV1.NewMessageServiceHandler(message, http.Middleware(m)))    // 消息服务
 	hs.HandlePrefix("/users/employee", v1.NewEmployeeServiceHandler(employee, http.Middleware(m)))     // 员工服务
 	hs.HandlePrefix("/users/customer", userV1.NewCustomerServiceHandler(customer, http.Middleware(m))) // 客户服务
 
 	// grpc
 	// 用户服务
 	v1.RegisterEmployeeServiceServer(gs, employee)     // 员工
-	userV1.RegisterMessageServiceServer(gs, message)   // 消息
 	userV1.RegisterCustomerServiceServer(gs, customer) // 客户
 	return &Users{App: server.NewApp(hs, gs)}
 }

@@ -1,0 +1,106 @@
+components:
+  schemas:
+    GoogleProtobufTimestamp:
+      properties:
+        nanos:
+          description: Non-negative fractions of a second at nanosecond resolution.
+            Negative second values with fractions must still have non-negative nanos
+            values that count forward in time. Must be from 0 to 999,999,999 inclusive.
+          format: int32
+          type: integer
+        seconds:
+          description: Represents seconds of UTC time since Unix epoch 1970-01-01T00:00:00Z.
+            Must be from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59Z inclusive.
+          format: int64
+          type: integer
+      type: object
+    NewsV1Notice:
+      properties:
+        birthday:
+          $ref: '#/components/schemas/GoogleProtobufTimestamp'
+        content:
+          description: 通知内容
+          type: string
+        error_msg:
+          description: 失败原因
+          type: string
+        status:
+          description: 状态 0未发送 9发送成功 10 发送失败
+          format: int32
+          type: integer
+        title:
+          description: 标题
+          type: string
+        to:
+          description: 接受者用户id
+          type: string
+        type:
+          description: 通知类型 1 email 2 短信
+          type: string
+      type: object
+    NewsV1NoticeCreateOption:
+      properties:
+        content:
+          description: 通知内容
+          type: string
+        title:
+          description: 标题
+          type: string
+        to:
+          description: 接受者用户id
+          type: string
+        type:
+          description: 通知类型 0 普通通知
+          type: string
+      type: object
+    NewsV1NoticeList:
+      properties:
+        list:
+          items:
+            $ref: '#/components/schemas/NewsV1Notice'
+          type: array
+        page:
+          description: 页码
+          format: int32
+          type: integer
+        page_size:
+          description: 分页
+          format: int32
+          type: integer
+        total:
+          description: 总数
+          format: int64
+          type: integer
+      type: object
+info:
+  description: news.v1
+  title: news.v1
+  version: "1"
+openapi: 3.0.0
+paths:
+  /users/notice:
+    description: 发送一个通知
+    post:
+      description: 发送一个通知
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewsV1NoticeCreateOption'
+        description: 创建通知
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NewsV1Notice'
+          description: ok
+      summary: 发送一个通知
+      tags:
+      - news.v1.NoticeService
+    summary: Send
+tags:
+- description: 通知服务
+  name: news.v1.NoticeService
+

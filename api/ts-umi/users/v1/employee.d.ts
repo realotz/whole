@@ -6,6 +6,32 @@
 // is compatible with the kratos package it is being compiled against.
 
 declare namespace UsersV1 {
+	/** Employee */
+	type Employee = {
+		id?:number
+		uuid?:string
+		name?:string
+		account?:string
+		nick_name?:string
+		role?:string
+		email?:string
+		mobile?:string
+		id_card?:string
+		sex?:string
+		birthday?:GoogleProtobuf.Timestamp
+		last_ip?:string
+		last_time?:GoogleProtobuf.Timestamp
+		create_time?:GoogleProtobuf.Timestamp
+		update_time?:GoogleProtobuf.Timestamp
+		avatar?:string
+	}
+	/** EmployeeLogin */
+	type EmployeeLogin = {
+		account?:string
+		password?:string
+		captcha?:string
+		code?:string
+	}
 	/** EmployeeLoginRes */
 	type EmployeeLoginRes = {
 		token?:string
@@ -50,32 +76,9 @@ declare namespace UsersV1 {
 	/** EmployeeList */
 	type EmployeeList = {
 		list?:Array<UsersV1.Employee>
-	}
-	/** Employee */
-	type Employee = {
-		id?:number
-		uuid?:string
-		name?:string
-		account?:string
-		nick_name?:string
-		role?:string
-		email?:string
-		mobile?:string
-		id_card?:string
-		sex?:string
-		birthday?:GoogleProtobuf.Timestamp
-		last_ip?:string
-		last_time?:GoogleProtobuf.Timestamp
-		create_time?:GoogleProtobuf.Timestamp
-		update_time?:GoogleProtobuf.Timestamp
-		avatar?:string
-	}
-	/** EmployeeLogin */
-	type EmployeeLogin = {
-		account?:string
-		password?:string
-		captcha?:string
-		code?:string
+		total?:number
+		page?:number
+		page_size?:number
 	}
 }
 

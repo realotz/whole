@@ -62,11 +62,10 @@ func initApp(confServer *conf.Server, confData *conf.Data, userConfig *conf.User
 	employeeRepo := data3.NewEmployeeRepo(data5, logger)
 	employeeUsecase := biz3.NewEmployeeUsecase(employeeRepo, logger)
 	employeeServiceServer := service3.NewEmployeeService(employeeUsecase)
-	messageServiceServer := service3.NewMessageService()
 	customerRepo := data3.NewCustomerRepo(data5, logger)
 	customerUsecase := biz3.NewCustomerUsecase(customerRepo, logger)
 	customerServiceServer := service3.NewCustomerService(customerUsecase)
-	usersUsers := users.NewUsersApp(httpServer, grpcServer, middleware, employeeServiceServer, messageServiceServer, customerServiceServer)
+	usersUsers := users.NewUsersApp(httpServer, grpcServer, middleware, employeeServiceServer, customerServiceServer)
 	app := apps.NewApps(cmsCms, systemsSystems, usersUsers)
 	kratosApp := newApp(logger, app)
 	return kratosApp, nil

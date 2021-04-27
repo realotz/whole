@@ -67,16 +67,26 @@ func (uc *EmployeeUsecase) Create(ctx context.Context, member *Employee) (*Emplo
 		return nil, fmt.Errorf("账号不能为空")
 	}
 	if member.Password == "" {
-		return nil, fmt.Errorf("密码不能为空")
+		member.Password = "Admin!@#321"
 	}
 	member.SetPassword(member.Password)
-	return uc.repo.CreateEmployee(ctx, member)
+	mem, err := uc.repo.CreateEmployee(ctx, member)
+	if err != nil {
+		return nil, err
+	}
+	// todo 发送注册邮件
+	return mem, err
 }
 
 // 更新用户
-func (uc *EmployeeUsecase) Update(ctx context.Context, id int64, member *Employee) (*Employee, error) {
+func (uc *EmployeeUsecase) Update(ctx context.Context, id int64, member *Employee) (mem *Employee, err error) {
 	if member.Password != "" {
 		member.SetPassword(member.Password)
+		defer func() {
+			if err == nil {
+				//todo 发送密码变动邮件
+			}
+		}()
 	}
 	return uc.repo.UpdateEmployee(ctx, id, member)
 }

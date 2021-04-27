@@ -20,12 +20,10 @@ const _ = grpc.SupportPackageIsVersion7
 type MessageServiceClient interface {
 	// 消息列表
 	List(ctx context.Context, in *MessageListOption, opts ...grpc.CallOption) (*MessageList, error)
-	//消息详情
-	Get(ctx context.Context, in *MessageGetOption, opts ...grpc.CallOption) (*Message, error)
 	//标记已都
-	Read(ctx context.Context, in *MessageGetOption, opts ...grpc.CallOption) (*Message, error)
+	Read(ctx context.Context, in *MessageIds, opts ...grpc.CallOption) (*Message, error)
 	// 发送一个消息
-	Send(ctx context.Context, in *MessageGetOption, opts ...grpc.CallOption) (*Message, error)
+	Send(ctx context.Context, in *MessageCreateOption, opts ...grpc.CallOption) (*Message, error)
 	// 删除消息
 	Delete(ctx context.Context, in *MessageDeleteOption, opts ...grpc.CallOption) (*Message, error)
 }
@@ -47,16 +45,7 @@ func (c *messageServiceClient) List(ctx context.Context, in *MessageListOption, 
 	return out, nil
 }
 
-func (c *messageServiceClient) Get(ctx context.Context, in *MessageGetOption, opts ...grpc.CallOption) (*Message, error) {
-	out := new(Message)
-	err := c.cc.Invoke(ctx, "/news.v1.MessageService/Get", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *messageServiceClient) Read(ctx context.Context, in *MessageGetOption, opts ...grpc.CallOption) (*Message, error) {
+func (c *messageServiceClient) Read(ctx context.Context, in *MessageIds, opts ...grpc.CallOption) (*Message, error) {
 	out := new(Message)
 	err := c.cc.Invoke(ctx, "/news.v1.MessageService/Read", in, out, opts...)
 	if err != nil {
@@ -65,7 +54,7 @@ func (c *messageServiceClient) Read(ctx context.Context, in *MessageGetOption, o
 	return out, nil
 }
 
-func (c *messageServiceClient) Send(ctx context.Context, in *MessageGetOption, opts ...grpc.CallOption) (*Message, error) {
+func (c *messageServiceClient) Send(ctx context.Context, in *MessageCreateOption, opts ...grpc.CallOption) (*Message, error) {
 	out := new(Message)
 	err := c.cc.Invoke(ctx, "/news.v1.MessageService/Send", in, out, opts...)
 	if err != nil {
@@ -89,12 +78,10 @@ func (c *messageServiceClient) Delete(ctx context.Context, in *MessageDeleteOpti
 type MessageServiceServer interface {
 	// 消息列表
 	List(context.Context, *MessageListOption) (*MessageList, error)
-	//消息详情
-	Get(context.Context, *MessageGetOption) (*Message, error)
 	//标记已都
-	Read(context.Context, *MessageGetOption) (*Message, error)
+	Read(context.Context, *MessageIds) (*Message, error)
 	// 发送一个消息
-	Send(context.Context, *MessageGetOption) (*Message, error)
+	Send(context.Context, *MessageCreateOption) (*Message, error)
 	// 删除消息
 	Delete(context.Context, *MessageDeleteOption) (*Message, error)
 	mustEmbedUnimplementedMessageServiceServer()
@@ -107,13 +94,10 @@ type UnimplementedMessageServiceServer struct {
 func (UnimplementedMessageServiceServer) List(context.Context, *MessageListOption) (*MessageList, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method List not implemented")
 }
-func (UnimplementedMessageServiceServer) Get(context.Context, *MessageGetOption) (*Message, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Get not implemented")
-}
-func (UnimplementedMessageServiceServer) Read(context.Context, *MessageGetOption) (*Message, error) {
+func (UnimplementedMessageServiceServer) Read(context.Context, *MessageIds) (*Message, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Read not implemented")
 }
-func (UnimplementedMessageServiceServer) Send(context.Context, *MessageGetOption) (*Message, error) {
+func (UnimplementedMessageServiceServer) Send(context.Context, *MessageCreateOption) (*Message, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Send not implemented")
 }
 func (UnimplementedMessageServiceServer) Delete(context.Context, *MessageDeleteOption) (*Message, error) {
@@ -150,26 +134,8 @@ func _MessageService_List_Handler(srv interface{}, ctx context.Context, dec func
 	return interceptor(ctx, in, info, handler)
 }
 
-func _MessageService_Get_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(MessageGetOption)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(MessageServiceServer).Get(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/news.v1.MessageService/Get",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MessageServiceServer).Get(ctx, req.(*MessageGetOption))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _MessageService_Read_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(MessageGetOption)
+	in := new(MessageIds)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -181,13 +147,13 @@ func _MessageService_Read_Handler(srv interface{}, ctx context.Context, dec func
 		FullMethod: "/news.v1.MessageService/Read",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MessageServiceServer).Read(ctx, req.(*MessageGetOption))
+		return srv.(MessageServiceServer).Read(ctx, req.(*MessageIds))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _MessageService_Send_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(MessageGetOption)
+	in := new(MessageCreateOption)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -199,7 +165,7 @@ func _MessageService_Send_Handler(srv interface{}, ctx context.Context, dec func
 		FullMethod: "/news.v1.MessageService/Send",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MessageServiceServer).Send(ctx, req.(*MessageGetOption))
+		return srv.(MessageServiceServer).Send(ctx, req.(*MessageCreateOption))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -234,10 +200,6 @@ var MessageService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _MessageService_List_Handler,
 		},
 		{
-			MethodName: "Get",
-			Handler:    _MessageService_Get_Handler,
-		},
-		{
 			MethodName: "Read",
 			Handler:    _MessageService_Read_Handler,
 		},
@@ -251,5 +213,5 @@ var MessageService_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "api/users/v1/message.proto",
+	Metadata: "api/message/v1/message.proto",
 }

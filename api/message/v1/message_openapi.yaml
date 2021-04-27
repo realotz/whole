@@ -1,0 +1,143 @@
+components:
+  schemas:
+    GoogleProtobufTimestamp:
+      properties:
+        nanos:
+          description: Non-negative fractions of a second at nanosecond resolution.
+            Negative second values with fractions must still have non-negative nanos
+            values that count forward in time. Must be from 0 to 999,999,999 inclusive.
+          format: int32
+          type: integer
+        seconds:
+          description: Represents seconds of UTC time since Unix epoch 1970-01-01T00:00:00Z.
+            Must be from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59Z inclusive.
+          format: int64
+          type: integer
+      type: object
+    NewsV1Message:
+      properties:
+        birthday:
+          $ref: '#/components/schemas/GoogleProtobufTimestamp'
+        content:
+          description: 消息内容
+          type: string
+        read:
+          description: 是否已读 普通通知才有效
+          type: boolean
+        title:
+          description: 标题
+          type: string
+        to:
+          description: 接受者用户id
+          type: string
+        type:
+          description: 消息类型 0 普通通知
+          type: string
+      type: object
+    NewsV1MessageCreateOption:
+      properties:
+        content:
+          description: 消息内容
+          type: string
+        title:
+          description: 标题
+          type: string
+        to:
+          description: 接受者用户id
+          type: string
+        type:
+          description: 消息类型 0 普通通知
+          type: string
+      type: object
+    NewsV1MessageDeleteOption:
+      properties:
+        id:
+          format: int64
+          type: integer
+      type: object
+    NewsV1MessageList:
+      properties:
+        list:
+          items:
+            $ref: '#/components/schemas/NewsV1Message'
+          type: array
+        page:
+          description: 页码
+          format: int32
+          type: integer
+        page_size:
+          description: 分页大学
+          format: int32
+          type: integer
+        total:
+          description: 总数
+          format: int64
+          type: integer
+      type: object
+info:
+  description: news.v1
+  title: news.v1
+  version: "1"
+openapi: 3.0.0
+paths:
+  /users/message:
+    description: 发送一个消息
+    post:
+      description: 发送一个消息
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewsV1MessageCreateOption'
+        description: 创建消息
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NewsV1Message'
+          description: ok
+      summary: 发送一个消息
+      tags:
+      - news.v1.MessageService
+    summary: Send
+  /users/message/{id}:
+    delete:
+      description: 删除消息
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NewsV1Message'
+          description: ok
+      summary: 删除消息
+      tags:
+      - news.v1.MessageService
+    description: 删除消息
+    summary: Delete
+  /users/message/read/{id}:
+    description: 标记已都
+    get:
+      description: 标记已都
+      parameters:
+      - in: query
+        name: id
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NewsV1Message'
+          description: ok
+      summary: 标记已都
+      tags:
+      - news.v1.MessageService
+    summary: Read
+tags:
+- description: 消息服务
+  name: news.v1.MessageService
+

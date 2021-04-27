@@ -5,30 +5,15 @@
 // This is a compile-time assertion to ensure that this generated file
 // is compatible with the kratos package it is being compiled against.
 
+declare namespace GoogleProtobuf {
+	/** Timestamp */
+	type Timestamp = {
+		seconds?:number
+		nanos?:number
+	}
+}
+
 declare namespace UsersV1 {
-	/** CustomerList */
-	type CustomerList = {
-		list?:Array<UsersV1.Customer>
-	}
-	/** Customer */
-	type Customer = {
-		id?:number
-		uuid?:string
-		name?:string
-		account?:string
-		nick_name?:string
-		role?:string
-		email?:string
-		mobile?:string
-		id_card?:string
-		sex?:string
-		birthday?:GoogleProtobuf.Timestamp
-		last_ip?:string
-		last_time?:GoogleProtobuf.Timestamp
-		create_time?:GoogleProtobuf.Timestamp
-		update_time?:GoogleProtobuf.Timestamp
-		avatar?:string
-	}
 	/** CustomerLogin */
 	type CustomerLogin = {
 		account?:string
@@ -79,13 +64,28 @@ declare namespace UsersV1 {
 	type CustomerDeleteOption = {
 		ids?:Array<number>
 	}
-}
-
-declare namespace GoogleProtobuf {
-	/** Timestamp */
-	type Timestamp = {
-		seconds?:number
-		nanos?:number
+	/** CustomerList */
+	type CustomerList = {
+		list?:Array<UsersV1.Customer>
+	}
+	/** Customer */
+	type Customer = {
+		id?:number
+		uuid?:string
+		name?:string
+		account?:string
+		nick_name?:string
+		role?:string
+		email?:string
+		mobile?:string
+		id_card?:string
+		sex?:string
+		birthday?:GoogleProtobuf.Timestamp
+		last_ip?:string
+		last_time?:GoogleProtobuf.Timestamp
+		create_time?:GoogleProtobuf.Timestamp
+		update_time?:GoogleProtobuf.Timestamp
+		avatar?:string
 	}
 }
 
