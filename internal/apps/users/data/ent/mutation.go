@@ -9,12 +9,12 @@ import (
 	"time"
 
 	"github.com/google/uuid"
-	"github.com/realotz/whole/internal/services/users/data/ent/customer"
-	"github.com/realotz/whole/internal/services/users/data/ent/employee"
-	"github.com/realotz/whole/internal/services/users/data/ent/permission"
-	"github.com/realotz/whole/internal/services/users/data/ent/predicate"
-	"github.com/realotz/whole/internal/services/users/data/ent/role"
-	"github.com/realotz/whole/internal/services/users/data/ent/wechat"
+	"github.com/realotz/whole/internal/apps/users/data/ent/customer"
+	"github.com/realotz/whole/internal/apps/users/data/ent/employee"
+	"github.com/realotz/whole/internal/apps/users/data/ent/permission"
+	"github.com/realotz/whole/internal/apps/users/data/ent/predicate"
+	"github.com/realotz/whole/internal/apps/users/data/ent/role"
+	"github.com/realotz/whole/internal/apps/users/data/ent/wechat"
 
 	"entgo.io/ent"
 )

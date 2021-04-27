@@ -8,8 +8,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/realotz/whole/internal/services/cms/data/ent/category"
-	"github.com/realotz/whole/internal/services/cms/data/ent/predicate"
+	"github.com/realotz/whole/internal/apps/cms/data/ent/category"
+	"github.com/realotz/whole/internal/apps/cms/data/ent/predicate"
 
 	"entgo.io/ent"
 )

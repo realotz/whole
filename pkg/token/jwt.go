@@ -2,6 +2,7 @@ package token
 
 import (
 	"crypto/rsa"
+	"errors"
 	"github.com/dgrijalva/jwt-go"
 	"strings"
 	"time"
@@ -36,8 +37,21 @@ func New(privateKeyByte, publicKeyByte []byte) (*Token, error) {
 	}, nil
 }
 
+func NewPublic(publicKeyByte []byte) (*Token, error) {
+	publicKey, err := jwt.ParseRSAPublicKeyFromPEM(publicKeyByte)
+	if err != nil {
+		return nil, err
+	}
+	return &Token{
+		publicKey: publicKey,
+	}, nil
+}
+
 //Decode 解码
 func (srv *Token) Decode(tokenStr string) (*CustomClaims, error) {
+	if srv.publicKey == nil {
+		return nil, errors.New("private key is nill")
+	}
 	tokenStr = strings.ReplaceAll(tokenStr, "Bearer ", "")
 	t, err := jwt.ParseWithClaims(tokenStr, &CustomClaims{}, func(token *jwt.Token) (interface{}, error) {
 		return srv.publicKey, nil
@@ -55,6 +69,9 @@ func (srv *Token) Decode(tokenStr string) (*CustomClaims, error) {
 // Encode 将 User 用户信息加密为 JWT 字符串
 // expireTime := time.Now().Add(time.Hour * 24 * 3).Unix() 三天后过期
 func (srv *Token) Encode(userName string, userId int64, role string, expireTime int64) (string, error) {
+	if srv.privateKey == nil {
+		return "", errors.New("private key is nill")
+	}
 	claims := CustomClaims{
 		userName,
 		userId,

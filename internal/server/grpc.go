@@ -2,6 +2,7 @@ package server
 
 import (
 	"github.com/go-kratos/kratos/v2/middleware"
+	"github.com/go-kratos/kratos/v2/middleware/status"
 	"github.com/go-kratos/kratos/v2/transport/grpc"
 	"github.com/realotz/whole/internal/conf"
 )
@@ -10,6 +11,7 @@ import (
 func NewGRPCServer(c *conf.Server, m middleware.Middleware) *grpc.Server {
 	var opts = []grpc.ServerOption{
 		grpc.Middleware(m),
+		grpc.Middleware(status.Server()),
 	}
 	if c.Grpc.Network != "" {
 		opts = append(opts, grpc.Network(c.Grpc.Network))

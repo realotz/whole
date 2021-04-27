@@ -4,8 +4,8 @@ import (
 	"context"
 	"github.com/go-kratos/kratos/v2/log"
 	pb "github.com/realotz/whole/api/cms/v1"
-	"github.com/realotz/whole/internal/services/cms/biz"
-	"github.com/realotz/whole/internal/services/cms/data/ent"
+	"github.com/realotz/whole/internal/apps/cms/biz"
+	"github.com/realotz/whole/internal/apps/cms/data/ent"
 	"github.com/realotz/whole/pkg/utils"
 )
 

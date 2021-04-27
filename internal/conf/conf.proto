@@ -8,6 +8,7 @@ import "google/protobuf/duration.proto";
 message Bootstrap {
   Server server = 1;
   Data data = 2;
+  UserConfig user_config = 3;
 }
 
 message Server {
@@ -39,11 +40,15 @@ message Data {
     google.protobuf.Duration read_timeout = 6;
     google.protobuf.Duration write_timeout = 7;
   }
+  Database database = 1;
+  Redis redis = 2;
+  bytes jwt_cert = 3;
+}
+
+message UserConfig {
   message Cert {
     bytes key = 1;
     bytes cert = 2;
   }
-  Database database = 1;
-  Redis redis = 2;
-  Cert cert = 3;
+  Cert cert = 1;
 }

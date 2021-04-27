@@ -3,7 +3,7 @@ package service
 import (
 	"context"
 	pb "github.com/realotz/whole/api/cms/v1"
-	"github.com/realotz/whole/internal/services/cms/biz"
+	"github.com/realotz/whole/internal/apps/cms/biz"
 	"google.golang.org/protobuf/types/known/timestamppb"
 )
 

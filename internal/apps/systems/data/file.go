@@ -3,7 +3,7 @@ package data
 import (
 	"context"
 	"github.com/go-kratos/kratos/v2/log"
-	"github.com/realotz/whole/internal/services/systems/biz"
+	"github.com/realotz/whole/internal/apps/systems/biz"
 )
 
 type fileRepo struct {

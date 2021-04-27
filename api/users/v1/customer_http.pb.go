@@ -46,11 +46,11 @@ func NewCustomerServiceHandler(srv CustomerServiceHandler, opts ...http1.HandleO
 
 	r.HandleFunc("/users/customer/login", func(w http.ResponseWriter, r *http.Request) {
 		var in CustomerLogin
-
 		if err := h.Decode(r, &in); err != nil {
 			h.Error(w, r, err)
 			return
 		}
+
 		next := func(ctx context.Context, req interface{}) (interface{}, error) {
 			return srv.Login(ctx, req.(*CustomerLogin))
 		}
@@ -62,18 +62,19 @@ func NewCustomerServiceHandler(srv CustomerServiceHandler, opts ...http1.HandleO
 			h.Error(w, r, err)
 			return
 		}
-		if err := h.Encode(w, r, out); err != nil {
+		reply := out.(*CustomerLoginRes)
+		if err := h.Encode(w, r, reply); err != nil {
 			h.Error(w, r, err)
 		}
 	}).Methods("POST")
 
 	r.HandleFunc("/users/customer/login-code", func(w http.ResponseWriter, r *http.Request) {
 		var in CustomerLogin
-
 		if err := h.Decode(r, &in); err != nil {
 			h.Error(w, r, err)
 			return
 		}
+
 		next := func(ctx context.Context, req interface{}) (interface{}, error) {
 			return srv.LoginForCode(ctx, req.(*CustomerLogin))
 		}
@@ -85,18 +86,19 @@ func NewCustomerServiceHandler(srv CustomerServiceHandler, opts ...http1.HandleO
 			h.Error(w, r, err)
 			return
 		}
-		if err := h.Encode(w, r, out); err != nil {
+		reply := out.(*CustomerLoginRes)
+		if err := h.Encode(w, r, reply); err != nil {
 			h.Error(w, r, err)
 		}
 	}).Methods("POST")
 
 	r.HandleFunc("/users/customer/logout", func(w http.ResponseWriter, r *http.Request) {
 		var in NullReq
-
 		if err := h.Decode(r, &in); err != nil {
 			h.Error(w, r, err)
 			return
 		}
+
 		next := func(ctx context.Context, req interface{}) (interface{}, error) {
 			return srv.Logout(ctx, req.(*NullReq))
 		}
@@ -108,18 +110,19 @@ func NewCustomerServiceHandler(srv CustomerServiceHandler, opts ...http1.HandleO
 			h.Error(w, r, err)
 			return
 		}
-		if err := h.Encode(w, r, out); err != nil {
+		reply := out.(*NullReply)
+		if err := h.Encode(w, r, reply); err != nil {
 			h.Error(w, r, err)
 		}
 	}).Methods("POST")
 
 	r.HandleFunc("/users/customer/info", func(w http.ResponseWriter, r *http.Request) {
 		var in NullReq
-
 		if err := h.Decode(r, &in); err != nil {
 			h.Error(w, r, err)
 			return
 		}
+
 		next := func(ctx context.Context, req interface{}) (interface{}, error) {
 			return srv.UserInfo(ctx, req.(*NullReq))
 		}
@@ -131,18 +134,19 @@ func NewCustomerServiceHandler(srv CustomerServiceHandler, opts ...http1.HandleO
 			h.Error(w, r, err)
 			return
 		}
-		if err := h.Encode(w, r, out); err != nil {
+		reply := out.(*Customer)
+		if err := h.Encode(w, r, reply); err != nil {
 			h.Error(w, r, err)
 		}
 	}).Methods("GET")
 
 	r.HandleFunc("/users/customer/captcha", func(w http.ResponseWriter, r *http.Request) {
 		var in CaptchaReq
-
 		if err := h.Decode(r, &in); err != nil {
 			h.Error(w, r, err)
 			return
 		}
+
 		next := func(ctx context.Context, req interface{}) (interface{}, error) {
 			return srv.Captcha(ctx, req.(*CaptchaReq))
 		}
@@ -154,18 +158,19 @@ func NewCustomerServiceHandler(srv CustomerServiceHandler, opts ...http1.HandleO
 			h.Error(w, r, err)
 			return
 		}
-		if err := h.Encode(w, r, out); err != nil {
+		reply := out.(*NullReply)
+		if err := h.Encode(w, r, reply); err != nil {
 			h.Error(w, r, err)
 		}
 	}).Methods("GET")
 
 	r.HandleFunc("/users/customer", func(w http.ResponseWriter, r *http.Request) {
 		var in CustomerListOption
-
 		if err := h.Decode(r, &in); err != nil {
 			h.Error(w, r, err)
 			return
 		}
+
 		next := func(ctx context.Context, req interface{}) (interface{}, error) {
 			return srv.List(ctx, req.(*CustomerListOption))
 		}
@@ -177,23 +182,24 @@ func NewCustomerServiceHandler(srv CustomerServiceHandler, opts ...http1.HandleO
 			h.Error(w, r, err)
 			return
 		}
-		if err := h.Encode(w, r, out); err != nil {
+		reply := out.(*CustomerList)
+		if err := h.Encode(w, r, reply); err != nil {
 			h.Error(w, r, err)
 		}
 	}).Methods("GET")
 
 	r.HandleFunc("/users/customer/{id}", func(w http.ResponseWriter, r *http.Request) {
 		var in CustomerGetOption
+		if err := h.Decode(r, &in); err != nil {
+			h.Error(w, r, err)
+			return
+		}
 
 		if err := binding.MapProto(&in, mux.Vars(r)); err != nil {
 			h.Error(w, r, err)
 			return
 		}
 
-		if err := h.Decode(r, &in); err != nil {
-			h.Error(w, r, err)
-			return
-		}
 		next := func(ctx context.Context, req interface{}) (interface{}, error) {
 			return srv.Get(ctx, req.(*CustomerGetOption))
 		}
@@ -205,18 +211,19 @@ func NewCustomerServiceHandler(srv CustomerServiceHandler, opts ...http1.HandleO
 			h.Error(w, r, err)
 			return
 		}
-		if err := h.Encode(w, r, out); err != nil {
+		reply := out.(*Customer)
+		if err := h.Encode(w, r, reply); err != nil {
 			h.Error(w, r, err)
 		}
 	}).Methods("GET")
 
 	r.HandleFunc("/users/customer", func(w http.ResponseWriter, r *http.Request) {
 		var in CustomerOption
-
 		if err := h.Decode(r, &in); err != nil {
 			h.Error(w, r, err)
 			return
 		}
+
 		next := func(ctx context.Context, req interface{}) (interface{}, error) {
 			return srv.Update(ctx, req.(*CustomerOption))
 		}
@@ -228,7 +235,8 @@ func NewCustomerServiceHandler(srv CustomerServiceHandler, opts ...http1.HandleO
 			h.Error(w, r, err)
 			return
 		}
-		if err := h.Encode(w, r, out); err != nil {
+		reply := out.(*Customer)
+		if err := h.Encode(w, r, reply); err != nil {
 			h.Error(w, r, err)
 		}
 	}).Methods("PUT")

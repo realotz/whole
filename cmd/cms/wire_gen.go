@@ -21,7 +21,10 @@ import (
 // initApp init kratos application.
 func initApp(confServer *conf.Server, confData *conf.Data, logger log.Logger) (*kratos.App, error) {
 	httpServer := server.NewHTTPServer(confServer)
-	middleware := server.NewMiddleware()
+	middleware, err := server.NewMiddleware(confData)
+	if err != nil {
+		return nil, err
+	}
 	grpcServer := server.NewGRPCServer(confServer, middleware)
 	dataData, err := data.NewData(confData, logger)
 	if err != nil {

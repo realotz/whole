@@ -2,7 +2,7 @@ package service
 
 import (
 	"context"
-	"github.com/realotz/whole/internal/services/systems/biz"
+	"github.com/realotz/whole/internal/apps/systems/biz"
 
 	pb "github.com/realotz/whole/api/systems/v1"
 )

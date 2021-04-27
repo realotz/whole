@@ -7,9 +7,9 @@ import (
 	"github.com/go-redis/redis/v8"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/google/wire"
+	"github.com/realotz/whole/internal/apps/cms/data/ent"
+	"github.com/realotz/whole/internal/apps/cms/data/ent/migrate"
 	"github.com/realotz/whole/internal/conf"
-	"github.com/realotz/whole/internal/services/cms/data/ent"
-	"github.com/realotz/whole/internal/services/cms/data/ent/migrate"
 )
 
 // Data .

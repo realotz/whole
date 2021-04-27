@@ -7,13 +7,13 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/realotz/whole/internal/services/users/data/ent/migrate"
+	"github.com/realotz/whole/internal/apps/users/data/ent/migrate"
 
-	"github.com/realotz/whole/internal/services/users/data/ent/customer"
-	"github.com/realotz/whole/internal/services/users/data/ent/employee"
-	"github.com/realotz/whole/internal/services/users/data/ent/permission"
-	"github.com/realotz/whole/internal/services/users/data/ent/role"
-	"github.com/realotz/whole/internal/services/users/data/ent/wechat"
+	"github.com/realotz/whole/internal/apps/users/data/ent/customer"
+	"github.com/realotz/whole/internal/apps/users/data/ent/employee"
+	"github.com/realotz/whole/internal/apps/users/data/ent/permission"
+	"github.com/realotz/whole/internal/apps/users/data/ent/role"
+	"github.com/realotz/whole/internal/apps/users/data/ent/wechat"
 
 	"entgo.io/ent/dialect"
 	"entgo.io/ent/dialect/sql"

@@ -8,8 +8,8 @@ import (
 	"time"
 
 	"entgo.io/ent/dialect/sql"
-	"github.com/realotz/whole/internal/services/users/data/ent/customer"
-	"github.com/realotz/whole/internal/services/users/data/ent/wechat"
+	"github.com/realotz/whole/internal/apps/users/data/ent/customer"
+	"github.com/realotz/whole/internal/apps/users/data/ent/wechat"
 )
 
 // Wechat is the model entity for the Wechat schema.

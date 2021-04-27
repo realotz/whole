@@ -8,7 +8,7 @@ import (
 	"time"
 
 	"entgo.io/ent/dialect/sql"
-	"github.com/realotz/whole/internal/services/users/data/ent/permission"
+	"github.com/realotz/whole/internal/apps/users/data/ent/permission"
 )
 
 // Permission is the model entity for the Permission schema.

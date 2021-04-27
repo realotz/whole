@@ -6,7 +6,7 @@ import (
 	casbinModel "github.com/casbin/casbin/v2/model"
 	"github.com/casbin/casbin/v2/persist"
 	"github.com/go-kratos/kratos/v2/log"
-	"github.com/realotz/whole/internal/services/users/data/ent/role"
+	"github.com/realotz/whole/internal/apps/users/data/ent/role"
 )
 
 func NewCasbinAdapter(d *Data, logger log.Logger) persist.Adapter {

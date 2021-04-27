@@ -5,8 +5,8 @@ package ent
 import (
 	"time"
 
-	"github.com/realotz/whole/internal/services/systems/data/ent/file"
-	"github.com/realotz/whole/internal/services/systems/data/ent/schema"
+	"github.com/realotz/whole/internal/apps/systems/data/ent/file"
+	"github.com/realotz/whole/internal/apps/systems/data/ent/schema"
 )
 
 // The init function reads all schema descriptors with runtime code

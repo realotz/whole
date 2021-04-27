@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"github.com/go-kratos/kratos/v2/log"
 	pb "github.com/realotz/whole/api/users/v1"
-	"github.com/realotz/whole/internal/services/users/biz"
-	"github.com/realotz/whole/internal/services/users/data/ent"
-	"github.com/realotz/whole/internal/services/users/data/ent/customer"
+	"github.com/realotz/whole/internal/apps/users/biz"
+	"github.com/realotz/whole/internal/apps/users/data/ent"
+	"github.com/realotz/whole/internal/apps/users/data/ent/customer"
 )
 
 type entCustomer ent.Customer

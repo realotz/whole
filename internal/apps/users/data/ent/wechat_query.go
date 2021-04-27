@@ -11,9 +11,9 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
-	"github.com/realotz/whole/internal/services/users/data/ent/customer"
-	"github.com/realotz/whole/internal/services/users/data/ent/predicate"
-	"github.com/realotz/whole/internal/services/users/data/ent/wechat"
+	"github.com/realotz/whole/internal/apps/users/data/ent/customer"
+	"github.com/realotz/whole/internal/apps/users/data/ent/predicate"
+	"github.com/realotz/whole/internal/apps/users/data/ent/wechat"
 )
 
 // WechatQuery is the builder for querying Wechat entities.

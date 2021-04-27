@@ -10,7 +10,7 @@ import (
 
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
-	"github.com/realotz/whole/internal/services/cms/data/ent/category"
+	"github.com/realotz/whole/internal/apps/cms/data/ent/category"
 )
 
 // CategoryCreate is the builder for creating a Category entity.

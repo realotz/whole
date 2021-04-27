@@ -8,7 +8,7 @@ import (
 	"time"
 
 	"entgo.io/ent/dialect/sql"
-	"github.com/realotz/whole/internal/services/users/data/ent/role"
+	"github.com/realotz/whole/internal/apps/users/data/ent/role"
 )
 
 // Role is the model entity for the Role schema.

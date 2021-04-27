@@ -5,7 +5,7 @@ import (
 	"github.com/go-kratos/kratos/v2/errors"
 	"github.com/realotz/whole/api/reason"
 	pb "github.com/realotz/whole/api/users/v1"
-	"github.com/realotz/whole/internal/services/users/biz"
+	"github.com/realotz/whole/internal/apps/users/biz"
 	"github.com/realotz/whole/pkg/token"
 	"google.golang.org/protobuf/types/known/timestamppb"
 )

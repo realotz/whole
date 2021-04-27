@@ -7,9 +7,9 @@ import (
 	"github.com/go-redis/redis/v8"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/google/wire"
+	"github.com/realotz/whole/internal/apps/users/data/ent"
+	"github.com/realotz/whole/internal/apps/users/data/ent/migrate"
 	"github.com/realotz/whole/internal/conf"
-	"github.com/realotz/whole/internal/services/users/data/ent"
-	"github.com/realotz/whole/internal/services/users/data/ent/migrate"
 	"github.com/realotz/whole/pkg/token"
 )
 

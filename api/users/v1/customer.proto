@@ -104,6 +104,9 @@ message CustomerListOption {
   string keyword=7;
   //创建时间筛选
   string create_time = 8;
+
+  uint32 page=10;
+  uint32 page_size=11;
 }
 
 message CustomerGetOption{

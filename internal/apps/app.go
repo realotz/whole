@@ -1,11 +1,11 @@
-package services
+package apps
 
 import (
 	"github.com/google/wire"
+	"github.com/realotz/whole/internal/apps/cms"
+	"github.com/realotz/whole/internal/apps/systems"
+	"github.com/realotz/whole/internal/apps/users"
 	"github.com/realotz/whole/internal/server"
-	"github.com/realotz/whole/internal/services/cms"
-	"github.com/realotz/whole/internal/services/systems"
-	"github.com/realotz/whole/internal/services/users"
 )
 
 // ProviderSet is apps providers.

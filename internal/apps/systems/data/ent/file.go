@@ -8,7 +8,7 @@ import (
 	"time"
 
 	"entgo.io/ent/dialect/sql"
-	"github.com/realotz/whole/internal/services/systems/data/ent/file"
+	"github.com/realotz/whole/internal/apps/systems/data/ent/file"
 )
 
 // File is the model entity for the File schema.

@@ -1,0 +1,8 @@
+syntax = "proto3";
+
+package comm;
+
+option go_package = "github.com/realotz/whole/api/comm;comm";
+
+message NullReq{}
+message NullReply{}

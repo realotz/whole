@@ -11,8 +11,8 @@ import (
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
 	"github.com/google/uuid"
-	"github.com/realotz/whole/internal/services/users/data/ent/customer"
-	"github.com/realotz/whole/internal/services/users/data/ent/wechat"
+	"github.com/realotz/whole/internal/apps/users/data/ent/customer"
+	"github.com/realotz/whole/internal/apps/users/data/ent/wechat"
 )
 
 // CustomerCreate is the builder for creating a Customer entity.

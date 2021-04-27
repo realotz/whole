@@ -50,11 +50,11 @@ func NewEmployeeServiceHandler(srv EmployeeServiceHandler, opts ...http1.HandleO
 
 	r.HandleFunc("/users/employee/login", func(w http.ResponseWriter, r *http.Request) {
 		var in EmployeeLogin
-
 		if err := h.Decode(r, &in); err != nil {
 			h.Error(w, r, err)
 			return
 		}
+
 		next := func(ctx context.Context, req interface{}) (interface{}, error) {
 			return srv.Login(ctx, req.(*EmployeeLogin))
 		}
@@ -66,18 +66,19 @@ func NewEmployeeServiceHandler(srv EmployeeServiceHandler, opts ...http1.HandleO
 			h.Error(w, r, err)
 			return
 		}
-		if err := h.Encode(w, r, out); err != nil {
+		reply := out.(*EmployeeLoginRes)
+		if err := h.Encode(w, r, reply); err != nil {
 			h.Error(w, r, err)
 		}
 	}).Methods("POST")
 
 	r.HandleFunc("/users/employee/login-code", func(w http.ResponseWriter, r *http.Request) {
 		var in EmployeeLogin
-
 		if err := h.Decode(r, &in); err != nil {
 			h.Error(w, r, err)
 			return
 		}
+
 		next := func(ctx context.Context, req interface{}) (interface{}, error) {
 			return srv.LoginForCode(ctx, req.(*EmployeeLogin))
 		}
@@ -89,18 +90,19 @@ func NewEmployeeServiceHandler(srv EmployeeServiceHandler, opts ...http1.HandleO
 			h.Error(w, r, err)
 			return
 		}
-		if err := h.Encode(w, r, out); err != nil {
+		reply := out.(*EmployeeLoginRes)
+		if err := h.Encode(w, r, reply); err != nil {
 			h.Error(w, r, err)
 		}
 	}).Methods("POST")
 
 	r.HandleFunc("/users/employee/logout", func(w http.ResponseWriter, r *http.Request) {
 		var in NullReq
-
 		if err := h.Decode(r, &in); err != nil {
 			h.Error(w, r, err)
 			return
 		}
+
 		next := func(ctx context.Context, req interface{}) (interface{}, error) {
 			return srv.Logout(ctx, req.(*NullReq))
 		}
@@ -112,18 +114,19 @@ func NewEmployeeServiceHandler(srv EmployeeServiceHandler, opts ...http1.HandleO
 			h.Error(w, r, err)
 			return
 		}
-		if err := h.Encode(w, r, out); err != nil {
+		reply := out.(*NullReply)
+		if err := h.Encode(w, r, reply); err != nil {
 			h.Error(w, r, err)
 		}
 	}).Methods("POST")
 
 	r.HandleFunc("/users/employee/info", func(w http.ResponseWriter, r *http.Request) {
 		var in NullReq
-
 		if err := h.Decode(r, &in); err != nil {
 			h.Error(w, r, err)
 			return
 		}
+
 		next := func(ctx context.Context, req interface{}) (interface{}, error) {
 			return srv.UserInfo(ctx, req.(*NullReq))
 		}
@@ -135,18 +138,19 @@ func NewEmployeeServiceHandler(srv EmployeeServiceHandler, opts ...http1.HandleO
 			h.Error(w, r, err)
 			return
 		}
-		if err := h.Encode(w, r, out); err != nil {
+		reply := out.(*Employee)
+		if err := h.Encode(w, r, reply); err != nil {
 			h.Error(w, r, err)
 		}
 	}).Methods("GET")
 
 	r.HandleFunc("/users/employee/captcha", func(w http.ResponseWriter, r *http.Request) {
 		var in CaptchaReq
-
 		if err := h.Decode(r, &in); err != nil {
 			h.Error(w, r, err)
 			return
 		}
+
 		next := func(ctx context.Context, req interface{}) (interface{}, error) {
 			return srv.Captcha(ctx, req.(*CaptchaReq))
 		}
@@ -158,18 +162,19 @@ func NewEmployeeServiceHandler(srv EmployeeServiceHandler, opts ...http1.HandleO
 			h.Error(w, r, err)
 			return
 		}
-		if err := h.Encode(w, r, out); err != nil {
+		reply := out.(*NullReply)
+		if err := h.Encode(w, r, reply); err != nil {
 			h.Error(w, r, err)
 		}
 	}).Methods("GET")
 
 	r.HandleFunc("/users/employee", func(w http.ResponseWriter, r *http.Request) {
 		var in EmployeeListOption
-
 		if err := h.Decode(r, &in); err != nil {
 			h.Error(w, r, err)
 			return
 		}
+
 		next := func(ctx context.Context, req interface{}) (interface{}, error) {
 			return srv.List(ctx, req.(*EmployeeListOption))
 		}
@@ -181,23 +186,24 @@ func NewEmployeeServiceHandler(srv EmployeeServiceHandler, opts ...http1.HandleO
 			h.Error(w, r, err)
 			return
 		}
-		if err := h.Encode(w, r, out); err != nil {
+		reply := out.(*EmployeeList)
+		if err := h.Encode(w, r, reply); err != nil {
 			h.Error(w, r, err)
 		}
 	}).Methods("GET")
 
 	r.HandleFunc("/users/employee/{id}", func(w http.ResponseWriter, r *http.Request) {
 		var in EmployeeGetOption
+		if err := h.Decode(r, &in); err != nil {
+			h.Error(w, r, err)
+			return
+		}
 
 		if err := binding.MapProto(&in, mux.Vars(r)); err != nil {
 			h.Error(w, r, err)
 			return
 		}
 
-		if err := h.Decode(r, &in); err != nil {
-			h.Error(w, r, err)
-			return
-		}
 		next := func(ctx context.Context, req interface{}) (interface{}, error) {
 			return srv.Get(ctx, req.(*EmployeeGetOption))
 		}
@@ -209,18 +215,19 @@ func NewEmployeeServiceHandler(srv EmployeeServiceHandler, opts ...http1.HandleO
 			h.Error(w, r, err)
 			return
 		}
-		if err := h.Encode(w, r, out); err != nil {
+		reply := out.(*Employee)
+		if err := h.Encode(w, r, reply); err != nil {
 			h.Error(w, r, err)
 		}
 	}).Methods("GET")
 
 	r.HandleFunc("/users/employee", func(w http.ResponseWriter, r *http.Request) {
 		var in EmployeeOption
-
 		if err := h.Decode(r, &in); err != nil {
 			h.Error(w, r, err)
 			return
 		}
+
 		next := func(ctx context.Context, req interface{}) (interface{}, error) {
 			return srv.Create(ctx, req.(*EmployeeOption))
 		}
@@ -232,18 +239,19 @@ func NewEmployeeServiceHandler(srv EmployeeServiceHandler, opts ...http1.HandleO
 			h.Error(w, r, err)
 			return
 		}
-		if err := h.Encode(w, r, out); err != nil {
+		reply := out.(*Employee)
+		if err := h.Encode(w, r, reply); err != nil {
 			h.Error(w, r, err)
 		}
 	}).Methods("POST")
 
 	r.HandleFunc("/users/employee", func(w http.ResponseWriter, r *http.Request) {
 		var in EmployeeOption
-
 		if err := h.Decode(r, &in); err != nil {
 			h.Error(w, r, err)
 			return
 		}
+
 		next := func(ctx context.Context, req interface{}) (interface{}, error) {
 			return srv.Update(ctx, req.(*EmployeeOption))
 		}
@@ -255,23 +263,24 @@ func NewEmployeeServiceHandler(srv EmployeeServiceHandler, opts ...http1.HandleO
 			h.Error(w, r, err)
 			return
 		}
-		if err := h.Encode(w, r, out); err != nil {
+		reply := out.(*Employee)
+		if err := h.Encode(w, r, reply); err != nil {
 			h.Error(w, r, err)
 		}
 	}).Methods("PUT")
 
 	r.HandleFunc("/users/employee/{id}", func(w http.ResponseWriter, r *http.Request) {
 		var in EmployeeDeleteOption
+		if err := h.Decode(r, &in); err != nil {
+			h.Error(w, r, err)
+			return
+		}
 
 		if err := binding.MapProto(&in, mux.Vars(r)); err != nil {
 			h.Error(w, r, err)
 			return
 		}
 
-		if err := h.Decode(r, &in); err != nil {
-			h.Error(w, r, err)
-			return
-		}
 		next := func(ctx context.Context, req interface{}) (interface{}, error) {
 			return srv.Delete(ctx, req.(*EmployeeDeleteOption))
 		}
@@ -283,7 +292,8 @@ func NewEmployeeServiceHandler(srv EmployeeServiceHandler, opts ...http1.HandleO
 			h.Error(w, r, err)
 			return
 		}
-		if err := h.Encode(w, r, out); err != nil {
+		reply := out.(*NullReply)
+		if err := h.Encode(w, r, reply); err != nil {
 			h.Error(w, r, err)
 		}
 	}).Methods("DELETE")

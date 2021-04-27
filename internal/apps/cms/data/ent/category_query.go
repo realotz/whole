@@ -11,8 +11,8 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
-	"github.com/realotz/whole/internal/services/cms/data/ent/category"
-	"github.com/realotz/whole/internal/services/cms/data/ent/predicate"
+	"github.com/realotz/whole/internal/apps/cms/data/ent/category"
+	"github.com/realotz/whole/internal/apps/cms/data/ent/predicate"
 )
 
 // CategoryQuery is the builder for querying Category entities.

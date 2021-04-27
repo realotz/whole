@@ -7,9 +7,9 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/realotz/whole/internal/services/systems/data/ent/migrate"
+	"github.com/realotz/whole/internal/apps/systems/data/ent/migrate"
 
-	"github.com/realotz/whole/internal/services/systems/data/ent/file"
+	"github.com/realotz/whole/internal/apps/systems/data/ent/file"
 
 	"entgo.io/ent/dialect"
 	"entgo.io/ent/dialect/sql"

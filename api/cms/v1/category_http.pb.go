@@ -40,11 +40,11 @@ func NewCategoryServiceHandler(srv CategoryServiceHandler, opts ...http1.HandleO
 
 	r.HandleFunc("/api.cms.v1.CategoryService/CreateCategory", func(w http.ResponseWriter, r *http.Request) {
 		var in Category
-
 		if err := h.Decode(r, &in); err != nil {
 			h.Error(w, r, err)
 			return
 		}
+
 		next := func(ctx context.Context, req interface{}) (interface{}, error) {
 			return srv.CreateCategory(ctx, req.(*Category))
 		}
@@ -56,18 +56,19 @@ func NewCategoryServiceHandler(srv CategoryServiceHandler, opts ...http1.HandleO
 			h.Error(w, r, err)
 			return
 		}
-		if err := h.Encode(w, r, out); err != nil {
+		reply := out.(*CreateCategoryReply)
+		if err := h.Encode(w, r, reply); err != nil {
 			h.Error(w, r, err)
 		}
 	}).Methods("POST")
 
 	r.HandleFunc("/api.cms.v1.CategoryService/UpdateCategory", func(w http.ResponseWriter, r *http.Request) {
 		var in Category
-
 		if err := h.Decode(r, &in); err != nil {
 			h.Error(w, r, err)
 			return
 		}
+
 		next := func(ctx context.Context, req interface{}) (interface{}, error) {
 			return srv.UpdateCategory(ctx, req.(*Category))
 		}
@@ -79,18 +80,19 @@ func NewCategoryServiceHandler(srv CategoryServiceHandler, opts ...http1.HandleO
 			h.Error(w, r, err)
 			return
 		}
-		if err := h.Encode(w, r, out); err != nil {
+		reply := out.(*UpdateCategoryReply)
+		if err := h.Encode(w, r, reply); err != nil {
 			h.Error(w, r, err)
 		}
 	}).Methods("POST")
 
 	r.HandleFunc("/api.cms.v1.CategoryService/DeleteCategory", func(w http.ResponseWriter, r *http.Request) {
 		var in DeleteCategoryRequest
-
 		if err := h.Decode(r, &in); err != nil {
 			h.Error(w, r, err)
 			return
 		}
+
 		next := func(ctx context.Context, req interface{}) (interface{}, error) {
 			return srv.DeleteCategory(ctx, req.(*DeleteCategoryRequest))
 		}
@@ -102,18 +104,19 @@ func NewCategoryServiceHandler(srv CategoryServiceHandler, opts ...http1.HandleO
 			h.Error(w, r, err)
 			return
 		}
-		if err := h.Encode(w, r, out); err != nil {
+		reply := out.(*DeleteCategoryReply)
+		if err := h.Encode(w, r, reply); err != nil {
 			h.Error(w, r, err)
 		}
 	}).Methods("POST")
 
 	r.HandleFunc("/api.cms.v1.CategoryService/GetCategory", func(w http.ResponseWriter, r *http.Request) {
 		var in GetCategoryRequest
-
 		if err := h.Decode(r, &in); err != nil {
 			h.Error(w, r, err)
 			return
 		}
+
 		next := func(ctx context.Context, req interface{}) (interface{}, error) {
 			return srv.GetCategory(ctx, req.(*GetCategoryRequest))
 		}
@@ -125,18 +128,19 @@ func NewCategoryServiceHandler(srv CategoryServiceHandler, opts ...http1.HandleO
 			h.Error(w, r, err)
 			return
 		}
-		if err := h.Encode(w, r, out); err != nil {
+		reply := out.(*Category)
+		if err := h.Encode(w, r, reply); err != nil {
 			h.Error(w, r, err)
 		}
 	}).Methods("POST")
 
 	r.HandleFunc("/api.cms.v1.CategoryService/ListCategory", func(w http.ResponseWriter, r *http.Request) {
 		var in ListCategoryRequest
-
 		if err := h.Decode(r, &in); err != nil {
 			h.Error(w, r, err)
 			return
 		}
+
 		next := func(ctx context.Context, req interface{}) (interface{}, error) {
 			return srv.ListCategory(ctx, req.(*ListCategoryRequest))
 		}
@@ -148,7 +152,8 @@ func NewCategoryServiceHandler(srv CategoryServiceHandler, opts ...http1.HandleO
 			h.Error(w, r, err)
 			return
 		}
-		if err := h.Encode(w, r, out); err != nil {
+		reply := out.(*ListCategoryReply)
+		if err := h.Encode(w, r, reply); err != nil {
 			h.Error(w, r, err)
 		}
 	}).Methods("POST")

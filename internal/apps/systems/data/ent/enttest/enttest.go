@@ -5,9 +5,9 @@ package enttest
 import (
 	"context"
 
-	"github.com/realotz/whole/internal/services/systems/data/ent"
+	"github.com/realotz/whole/internal/apps/systems/data/ent"
 	// required by schema hooks.
-	_ "github.com/realotz/whole/internal/services/systems/data/ent/runtime"
+	_ "github.com/realotz/whole/internal/apps/systems/data/ent/runtime"
 
 	"entgo.io/ent/dialect/sql/schema"
 )

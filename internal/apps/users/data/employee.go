@@ -4,9 +4,9 @@ import (
 	"context"
 	"fmt"
 	"github.com/go-kratos/kratos/v2/log"
-	"github.com/realotz/whole/internal/services/users/biz"
-	"github.com/realotz/whole/internal/services/users/data/ent"
-	"github.com/realotz/whole/internal/services/users/data/ent/employee"
+	"github.com/realotz/whole/internal/apps/users/biz"
+	"github.com/realotz/whole/internal/apps/users/data/ent"
+	"github.com/realotz/whole/internal/apps/users/data/ent/employee"
 )
 
 type entEmployee ent.Employee

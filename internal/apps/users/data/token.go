@@ -1,7 +1,7 @@
 package data
 
 import (
-	"github.com/realotz/whole/internal/services/users/biz"
+	"github.com/realotz/whole/internal/apps/users/biz"
 )
 
 func (ar *employeeRepo) CreateToken(employee *biz.Employee, expireTime int64) (string, error) {

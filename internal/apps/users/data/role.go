@@ -2,7 +2,7 @@ package data
 
 import (
 	"github.com/go-kratos/kratos/v2/log"
-	"github.com/realotz/whole/internal/services/users/biz"
+	"github.com/realotz/whole/internal/apps/users/biz"
 )
 
 type roleRepo struct {

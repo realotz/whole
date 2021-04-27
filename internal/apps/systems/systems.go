@@ -6,10 +6,10 @@ import (
 	"github.com/go-kratos/kratos/v2/transport/http"
 	"github.com/google/wire"
 	systemV1 "github.com/realotz/whole/api/systems/v1"
+	"github.com/realotz/whole/internal/apps/systems/biz"
+	"github.com/realotz/whole/internal/apps/systems/data"
+	"github.com/realotz/whole/internal/apps/systems/service"
 	"github.com/realotz/whole/internal/server"
-	"github.com/realotz/whole/internal/services/systems/biz"
-	"github.com/realotz/whole/internal/services/systems/data"
-	"github.com/realotz/whole/internal/services/systems/service"
 )
 
 // ProviderSet is service providers.

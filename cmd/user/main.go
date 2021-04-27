@@ -2,15 +2,14 @@ package main
 
 import (
 	"flag"
-	"github.com/realotz/whole/internal/server"
-	"os"
-
 	"github.com/go-kratos/kratos/v2"
 	"github.com/go-kratos/kratos/v2/config"
 	"github.com/go-kratos/kratos/v2/config/file"
 	"github.com/go-kratos/kratos/v2/log"
+	"github.com/realotz/whole/internal/apps/users"
 	"github.com/realotz/whole/internal/conf"
 	"gopkg.in/yaml.v2"
+	"os"
 )
 
 // go build -ldflags "-X main.Version=x.y.z"
@@ -27,7 +26,7 @@ func init() {
 	flag.StringVar(&flagconf, "conf", "../../configs", "config path, eg: -conf config.yaml")
 }
 
-func newApp(logger log.Logger, app *server.App) *kratos.App {
+func newApp(logger log.Logger, app *users.Users) *kratos.App {
 	return kratos.New(
 		kratos.Name(Name),
 		kratos.Version(Version),

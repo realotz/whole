@@ -9,7 +9,7 @@ import (
 
 	"entgo.io/ent/dialect/sql"
 	"github.com/google/uuid"
-	"github.com/realotz/whole/internal/services/users/data/ent/customer"
+	"github.com/realotz/whole/internal/apps/users/data/ent/customer"
 )
 
 // Customer is the model entity for the Customer schema.

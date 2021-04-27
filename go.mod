@@ -6,14 +6,14 @@ require (
 	entgo.io/ent v0.7.0
 	github.com/casbin/casbin/v2 v2.25.6
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
-	github.com/emicklei/proto v1.9.0
+	github.com/emicklei/proto v1.9.0 // indirect
 	github.com/go-git/go-git/v5 v5.3.0
-	github.com/go-kratos/kratos/cmd/kratos/v2 v2.0.0-20210406074708-afd2a6b19af5
+	github.com/go-kratos/kratos/cmd/kratos/v2 v2.0.0-20210406074708-afd2a6b19af5 // indirect
 	github.com/go-kratos/kratos/v2 v2.0.0-beta3
 	github.com/go-redis/redis/extra/redisotel v0.3.0
 	github.com/go-redis/redis/v8 v8.8.0
 	github.com/go-sql-driver/mysql v1.5.1-0.20200311113236-681ffa848bae
-	github.com/golang/protobuf v1.4.3
+	github.com/golang/protobuf v1.4.3 // indirect
 	github.com/google/uuid v1.2.0
 	github.com/google/wire v0.5.0
 	github.com/gorilla/mux v1.8.0

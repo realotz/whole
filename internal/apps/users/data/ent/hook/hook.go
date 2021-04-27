@@ -6,7 +6,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/realotz/whole/internal/services/users/data/ent"
+	"github.com/realotz/whole/internal/apps/users/data/ent"
 )
 
 // The CustomerFunc type is an adapter to allow the use of ordinary

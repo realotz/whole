@@ -6,7 +6,7 @@ import (
 	"github.com/go-kratos/kratos/v2/config"
 	"github.com/go-kratos/kratos/v2/config/file"
 	"github.com/go-kratos/kratos/v2/log"
-	"github.com/realotz/whole/internal/apps/users"
+	"github.com/realotz/whole/internal/apps/systems"
 	"github.com/realotz/whole/internal/conf"
 	"gopkg.in/yaml.v2"
 	"os"
@@ -26,7 +26,7 @@ func init() {
 	flag.StringVar(&flagconf, "conf", "../../configs", "config path, eg: -conf config.yaml")
 }
 
-func newApp(logger log.Logger, app *users.Users) *kratos.App {
+func newApp(logger log.Logger, app *systems.Systems) *kratos.App {
 	return kratos.New(
 		kratos.Name(Name),
 		kratos.Version(Version),
@@ -56,7 +56,7 @@ func main() {
 		panic(err)
 	}
 
-	app, err := initApp(bc.Server, bc.Data, bc.UserConfig, logger)
+	app, err := initApp(bc.Server, bc.Data, logger)
 	if err != nil {
 		panic(err)
 	}

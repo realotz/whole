@@ -6,7 +6,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/realotz/whole/internal/services/systems/data/ent"
+	"github.com/realotz/whole/internal/apps/systems/data/ent"
 )
 
 // The FileFunc type is an adapter to allow the use of ordinary

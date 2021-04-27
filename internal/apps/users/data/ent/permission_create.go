@@ -10,8 +10,8 @@ import (
 
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
-	"github.com/realotz/whole/internal/services/users/data/ent/permission"
-	"github.com/realotz/whole/internal/services/users/data/ent/role"
+	"github.com/realotz/whole/internal/apps/users/data/ent/permission"
+	"github.com/realotz/whole/internal/apps/users/data/ent/role"
 )
 
 // PermissionCreate is the builder for creating a Permission entity.

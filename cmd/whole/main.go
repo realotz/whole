@@ -32,7 +32,6 @@ func newApp(logger log.Logger, app *server.App) *kratos.App {
 		kratos.Name(Name),
 		kratos.Version(Version),
 		kratos.Metadata(map[string]string{}),
-
 		kratos.Logger(logger),
 		kratos.Server(app.Server()...),
 	)
@@ -58,7 +57,7 @@ func main() {
 		panic(err)
 	}
 
-	app, err := initApp(bc.Server, bc.Data, logger)
+	app, err := initApp(bc.Server, bc.Data, bc.UserConfig, logger)
 	if err != nil {
 		panic(err)
 	}

@@ -40,11 +40,11 @@ func NewMessageServiceHandler(srv MessageServiceHandler, opts ...http1.HandleOpt
 
 	r.HandleFunc("/users/message", func(w http.ResponseWriter, r *http.Request) {
 		var in MessageListOption
-
 		if err := h.Decode(r, &in); err != nil {
 			h.Error(w, r, err)
 			return
 		}
+
 		next := func(ctx context.Context, req interface{}) (interface{}, error) {
 			return srv.List(ctx, req.(*MessageListOption))
 		}
@@ -56,23 +56,24 @@ func NewMessageServiceHandler(srv MessageServiceHandler, opts ...http1.HandleOpt
 			h.Error(w, r, err)
 			return
 		}
-		if err := h.Encode(w, r, out); err != nil {
+		reply := out.(*MessageList)
+		if err := h.Encode(w, r, reply); err != nil {
 			h.Error(w, r, err)
 		}
 	}).Methods("GET")
 
 	r.HandleFunc("/users/message/{id}", func(w http.ResponseWriter, r *http.Request) {
 		var in MessageGetOption
+		if err := h.Decode(r, &in); err != nil {
+			h.Error(w, r, err)
+			return
+		}
 
 		if err := binding.MapProto(&in, mux.Vars(r)); err != nil {
 			h.Error(w, r, err)
 			return
 		}
 
-		if err := h.Decode(r, &in); err != nil {
-			h.Error(w, r, err)
-			return
-		}
 		next := func(ctx context.Context, req interface{}) (interface{}, error) {
 			return srv.Get(ctx, req.(*MessageGetOption))
 		}
@@ -84,23 +85,24 @@ func NewMessageServiceHandler(srv MessageServiceHandler, opts ...http1.HandleOpt
 			h.Error(w, r, err)
 			return
 		}
-		if err := h.Encode(w, r, out); err != nil {
+		reply := out.(*Message)
+		if err := h.Encode(w, r, reply); err != nil {
 			h.Error(w, r, err)
 		}
 	}).Methods("GET")
 
 	r.HandleFunc("/users/message/read/{id}", func(w http.ResponseWriter, r *http.Request) {
 		var in MessageGetOption
+		if err := h.Decode(r, &in); err != nil {
+			h.Error(w, r, err)
+			return
+		}
 
 		if err := binding.MapProto(&in, mux.Vars(r)); err != nil {
 			h.Error(w, r, err)
 			return
 		}
 
-		if err := h.Decode(r, &in); err != nil {
-			h.Error(w, r, err)
-			return
-		}
 		next := func(ctx context.Context, req interface{}) (interface{}, error) {
 			return srv.Read(ctx, req.(*MessageGetOption))
 		}
@@ -112,18 +114,19 @@ func NewMessageServiceHandler(srv MessageServiceHandler, opts ...http1.HandleOpt
 			h.Error(w, r, err)
 			return
 		}
-		if err := h.Encode(w, r, out); err != nil {
+		reply := out.(*Message)
+		if err := h.Encode(w, r, reply); err != nil {
 			h.Error(w, r, err)
 		}
 	}).Methods("GET")
 
 	r.HandleFunc("/users/message", func(w http.ResponseWriter, r *http.Request) {
 		var in MessageGetOption
-
 		if err := h.Decode(r, &in); err != nil {
 			h.Error(w, r, err)
 			return
 		}
+
 		next := func(ctx context.Context, req interface{}) (interface{}, error) {
 			return srv.Send(ctx, req.(*MessageGetOption))
 		}
@@ -135,23 +138,24 @@ func NewMessageServiceHandler(srv MessageServiceHandler, opts ...http1.HandleOpt
 			h.Error(w, r, err)
 			return
 		}
-		if err := h.Encode(w, r, out); err != nil {
+		reply := out.(*Message)
+		if err := h.Encode(w, r, reply); err != nil {
 			h.Error(w, r, err)
 		}
 	}).Methods("POST")
 
 	r.HandleFunc("/users/message/{id}", func(w http.ResponseWriter, r *http.Request) {
 		var in MessageDeleteOption
+		if err := h.Decode(r, &in); err != nil {
+			h.Error(w, r, err)
+			return
+		}
 
 		if err := binding.MapProto(&in, mux.Vars(r)); err != nil {
 			h.Error(w, r, err)
 			return
 		}
 
-		if err := h.Decode(r, &in); err != nil {
-			h.Error(w, r, err)
-			return
-		}
 		next := func(ctx context.Context, req interface{}) (interface{}, error) {
 			return srv.Delete(ctx, req.(*MessageDeleteOption))
 		}
@@ -163,7 +167,8 @@ func NewMessageServiceHandler(srv MessageServiceHandler, opts ...http1.HandleOpt
 			h.Error(w, r, err)
 			return
 		}
-		if err := h.Encode(w, r, out); err != nil {
+		reply := out.(*Message)
+		if err := h.Encode(w, r, reply); err != nil {
 			h.Error(w, r, err)
 		}
 	}).Methods("DELETE")

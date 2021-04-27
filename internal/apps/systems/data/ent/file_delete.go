@@ -9,8 +9,8 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
-	"github.com/realotz/whole/internal/services/systems/data/ent/file"
-	"github.com/realotz/whole/internal/services/systems/data/ent/predicate"
+	"github.com/realotz/whole/internal/apps/systems/data/ent/file"
+	"github.com/realotz/whole/internal/apps/systems/data/ent/predicate"
 )
 
 // FileDelete is the builder for deleting a File entity.

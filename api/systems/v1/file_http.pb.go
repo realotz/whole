@@ -40,11 +40,11 @@ func NewFileServiceHandler(srv FileServiceHandler, opts ...http1.HandleOption) h
 
 	r.HandleFunc("/systems/file", func(w http.ResponseWriter, r *http.Request) {
 		var in FileListOption
-
 		if err := h.Decode(r, &in); err != nil {
 			h.Error(w, r, err)
 			return
 		}
+
 		next := func(ctx context.Context, req interface{}) (interface{}, error) {
 			return srv.List(ctx, req.(*FileListOption))
 		}
@@ -56,23 +56,24 @@ func NewFileServiceHandler(srv FileServiceHandler, opts ...http1.HandleOption) h
 			h.Error(w, r, err)
 			return
 		}
-		if err := h.Encode(w, r, out); err != nil {
+		reply := out.(*FileList)
+		if err := h.Encode(w, r, reply); err != nil {
 			h.Error(w, r, err)
 		}
 	}).Methods("GET")
 
 	r.HandleFunc("/systems/file/{id}", func(w http.ResponseWriter, r *http.Request) {
 		var in FileGetOption
+		if err := h.Decode(r, &in); err != nil {
+			h.Error(w, r, err)
+			return
+		}
 
 		if err := binding.MapProto(&in, mux.Vars(r)); err != nil {
 			h.Error(w, r, err)
 			return
 		}
 
-		if err := h.Decode(r, &in); err != nil {
-			h.Error(w, r, err)
-			return
-		}
 		next := func(ctx context.Context, req interface{}) (interface{}, error) {
 			return srv.Get(ctx, req.(*FileGetOption))
 		}
@@ -84,18 +85,19 @@ func NewFileServiceHandler(srv FileServiceHandler, opts ...http1.HandleOption) h
 			h.Error(w, r, err)
 			return
 		}
-		if err := h.Encode(w, r, out); err != nil {
+		reply := out.(*File)
+		if err := h.Encode(w, r, reply); err != nil {
 			h.Error(w, r, err)
 		}
 	}).Methods("GET")
 
 	r.HandleFunc("/systems/file", func(w http.ResponseWriter, r *http.Request) {
 		var in FileGetOption
-
 		if err := h.Decode(r, &in); err != nil {
 			h.Error(w, r, err)
 			return
 		}
+
 		next := func(ctx context.Context, req interface{}) (interface{}, error) {
 			return srv.Create(ctx, req.(*FileGetOption))
 		}
@@ -107,18 +109,19 @@ func NewFileServiceHandler(srv FileServiceHandler, opts ...http1.HandleOption) h
 			h.Error(w, r, err)
 			return
 		}
-		if err := h.Encode(w, r, out); err != nil {
+		reply := out.(*File)
+		if err := h.Encode(w, r, reply); err != nil {
 			h.Error(w, r, err)
 		}
 	}).Methods("POST")
 
 	r.HandleFunc("/systems/file", func(w http.ResponseWriter, r *http.Request) {
 		var in FileUpdateOption
-
 		if err := h.Decode(r, &in); err != nil {
 			h.Error(w, r, err)
 			return
 		}
+
 		next := func(ctx context.Context, req interface{}) (interface{}, error) {
 			return srv.Update(ctx, req.(*FileUpdateOption))
 		}
@@ -130,23 +133,24 @@ func NewFileServiceHandler(srv FileServiceHandler, opts ...http1.HandleOption) h
 			h.Error(w, r, err)
 			return
 		}
-		if err := h.Encode(w, r, out); err != nil {
+		reply := out.(*File)
+		if err := h.Encode(w, r, reply); err != nil {
 			h.Error(w, r, err)
 		}
 	}).Methods("PUT")
 
 	r.HandleFunc("/systems/file/{id}", func(w http.ResponseWriter, r *http.Request) {
 		var in FileDeleteOption
+		if err := h.Decode(r, &in); err != nil {
+			h.Error(w, r, err)
+			return
+		}
 
 		if err := binding.MapProto(&in, mux.Vars(r)); err != nil {
 			h.Error(w, r, err)
 			return
 		}
 
-		if err := h.Decode(r, &in); err != nil {
-			h.Error(w, r, err)
-			return
-		}
 		next := func(ctx context.Context, req interface{}) (interface{}, error) {
 			return srv.Delete(ctx, req.(*FileDeleteOption))
 		}
@@ -158,7 +162,8 @@ func NewFileServiceHandler(srv FileServiceHandler, opts ...http1.HandleOption) h
 			h.Error(w, r, err)
 			return
 		}
-		if err := h.Encode(w, r, out); err != nil {
+		reply := out.(*File)
+		if err := h.Encode(w, r, reply); err != nil {
 			h.Error(w, r, err)
 		}
 	}).Methods("DELETE")

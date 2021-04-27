@@ -6,7 +6,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/realotz/whole/internal/services/cms/data/ent"
+	"github.com/realotz/whole/internal/apps/cms/data/ent"
 )
 
 // The CategoryFunc type is an adapter to allow the use of ordinary

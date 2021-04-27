@@ -4,25 +4,33 @@ import (
 	"github.com/go-kratos/kratos/v2/middleware"
 	"github.com/go-kratos/kratos/v2/middleware/logging"
 	"github.com/go-kratos/kratos/v2/middleware/recovery"
-	"github.com/go-kratos/kratos/v2/middleware/status"
 	"github.com/go-kratos/kratos/v2/middleware/tracing"
 	"github.com/go-kratos/kratos/v2/transport"
 	"github.com/go-kratos/kratos/v2/transport/grpc"
 	"github.com/go-kratos/kratos/v2/transport/http"
 	"github.com/google/wire"
+	"github.com/realotz/whole/internal/conf"
+	"github.com/realotz/whole/pkg/mid"
+	"github.com/realotz/whole/pkg/token"
 )
 
 // ProviderSet is server providers.
 var ProviderSet = wire.NewSet(NewMiddleware, NewHTTPServer, NewGRPCServer)
 
 // 全局Middleware
-func NewMiddleware() middleware.Middleware {
+func NewMiddleware(c *conf.Data) (middleware.Middleware, error) {
+	// 获取公钥实例
+	jk, err := token.NewPublic(c.JwtCert)
+	if err != nil {
+		return nil, err
+	}
 	return middleware.Chain(
 		recovery.Recovery(),
-		status.Server(),
 		tracing.Server(),
 		logging.Server(),
-	)
+		// jwt tk验证为whole模式下使用，微服务模式下在网关鉴权
+		mid.JwtTokenWithCtx(jk),
+	), nil
 }
 
 type App struct {

@@ -8,10 +8,10 @@ package main
 import (
 	"github.com/go-kratos/kratos/v2"
 	"github.com/go-kratos/kratos/v2/log"
-	"github.com/realotz/whole/internal/apps/users"
-	"github.com/realotz/whole/internal/apps/users/biz"
-	"github.com/realotz/whole/internal/apps/users/data"
-	"github.com/realotz/whole/internal/apps/users/service"
+	"github.com/realotz/whole/internal/apps/systems"
+	"github.com/realotz/whole/internal/apps/systems/biz"
+	"github.com/realotz/whole/internal/apps/systems/data"
+	"github.com/realotz/whole/internal/apps/systems/service"
 	"github.com/realotz/whole/internal/conf"
 	"github.com/realotz/whole/internal/server"
 )
@@ -19,26 +19,21 @@ import (
 // Injectors from wire.go:
 
 // initApp init kratos application.
-func initApp(confServer *conf.Server, confData *conf.Data, userConfig *conf.UserConfig, logger log.Logger) (*kratos.App, error) {
+func initApp(confServer *conf.Server, confData *conf.Data, logger log.Logger) (*kratos.App, error) {
 	httpServer := server.NewHTTPServer(confServer)
-	middleware := server.NewMiddleware()
+	middleware, err := server.NewMiddleware(confData)
+	if err != nil {
+		return nil, err
+	}
 	grpcServer := server.NewGRPCServer(confServer, middleware)
-	token, err := users.NewAuthToken(userConfig)
+	dataData, err := data.NewData(confData, logger)
 	if err != nil {
 		return nil, err
 	}
-	dataData, err := data.NewData(confData, logger, token)
-	if err != nil {
-		return nil, err
-	}
-	employeeRepo := data.NewEmployeeRepo(dataData, logger)
-	employeeUsecase := biz.NewEmployeeUsecase(employeeRepo, logger)
-	employeeServiceServer := service.NewEmployeeService(employeeUsecase)
-	messageServiceServer := service.NewMessageService()
-	customerRepo := data.NewCustomerRepo(dataData, logger)
-	customerUsecase := biz.NewCustomerUsecase(customerRepo, logger)
-	customerServiceServer := service.NewCustomerService(customerUsecase)
-	usersUsers := users.NewUsersApp(httpServer, grpcServer, middleware, employeeServiceServer, messageServiceServer, customerServiceServer)
-	app := newApp(logger, usersUsers)
+	fileRepo := data.NewFileRepo(dataData, logger)
+	fileUsecase := biz.NewFileUsecase(fileRepo, logger)
+	fileServiceServer := service.NewFileServiceService(fileUsecase)
+	systemsSystems := systems.NewSystemsApp(httpServer, grpcServer, middleware, fileServiceServer)
+	app := newApp(logger, systemsSystems)
 	return app, nil
 }
