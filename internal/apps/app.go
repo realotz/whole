@@ -18,6 +18,10 @@ var ProviderSet = wire.NewSet(
 	NewApps,
 )
 
-func NewApps(app *systems.Systems) *server.App {
+func NewApps(app *systems.Systems,
+	_ *admin.Admin,
+	_ *users.Users,
+	_ *cms.Cms,
+) *server.App {
 	return app.App
 }

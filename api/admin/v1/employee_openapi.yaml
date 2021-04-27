@@ -1,6 +1,6 @@
 components:
   schemas:
-    CommEmployee:
+    AdminV1Employee:
       properties:
         account:
           description: 账户
@@ -46,7 +46,7 @@ components:
         uuid:
           type: string
       type: object
-    CommEmployeeDeleteOption:
+    AdminV1EmployeeDeleteOption:
       properties:
         ids:
           items:
@@ -54,11 +54,11 @@ components:
             type: integer
           type: array
       type: object
-    CommEmployeeList:
+    AdminV1EmployeeList:
       properties:
         list:
           items:
-            $ref: '#/components/schemas/CommEmployee'
+            $ref: '#/components/schemas/AdminV1Employee'
           type: array
         page:
           format: int32
@@ -70,7 +70,7 @@ components:
           format: int64
           type: integer
       type: object
-    CommEmployeeLogin:
+    AdminV1EmployeeLogin:
       properties:
         account:
           description: 账户
@@ -85,10 +85,10 @@ components:
           description: 密码
           type: string
       type: object
-    CommEmployeeLoginRes:
+    AdminV1EmployeeLoginRes:
       properties:
         employee:
-          $ref: '#/components/schemas/CommEmployee'
+          $ref: '#/components/schemas/AdminV1Employee'
         expiration_time:
           description: 过期时间 字符串时间戳
           format: int64
@@ -100,7 +100,7 @@ components:
           description: jwt token
           type: string
       type: object
-    CommEmployeeOption:
+    AdminV1EmployeeOption:
       properties:
         account:
           description: 账户
@@ -158,9 +158,9 @@ components:
           type: integer
       type: object
 info:
-  description: comm
-  title: comm
-  version: ""
+  description: admin.v1
+  title: admin.v1
+  version: "1"
 openapi: 3.0.0
 paths:
   /admin/employee:
@@ -171,18 +171,18 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CommEmployeeOption'
+              $ref: '#/components/schemas/AdminV1EmployeeOption'
         required: true
       responses:
         "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CommEmployee'
+                $ref: '#/components/schemas/AdminV1Employee'
           description: ok
       summary: 更新一个账户
       tags:
-      - comm.EmployeeService
+      - admin.v1.EmployeeService
     summary: Update
   /admin/employee/{id}:
     delete:
@@ -196,7 +196,7 @@ paths:
           description: ok
       summary: 删除一个账户
       tags:
-      - comm.EmployeeService
+      - admin.v1.EmployeeService
     description: 删除一个账户
     summary: Delete
   /admin/employee/captcha:
@@ -233,7 +233,7 @@ paths:
           description: ok
       summary: 发送短信/邮箱验证码
       tags:
-      - comm.EmployeeService
+      - admin.v1.EmployeeService
     summary: Captcha
   /admin/employee/info:
     description: 当前登录用户信息
@@ -244,11 +244,11 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CommEmployee'
+                $ref: '#/components/schemas/AdminV1Employee'
           description: ok
       summary: 当前登录用户信息
       tags:
-      - comm.EmployeeService
+      - admin.v1.EmployeeService
     summary: UserInfo
   /admin/employee/login:
     description: 常规账户登录接口
@@ -258,7 +258,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CommEmployeeLogin'
+              $ref: '#/components/schemas/AdminV1EmployeeLogin'
         description: 用户登录
         required: true
       responses:
@@ -266,11 +266,11 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CommEmployeeLoginRes'
+                $ref: '#/components/schemas/AdminV1EmployeeLoginRes'
           description: ok
       summary: 常规账户登录接口
       tags:
-      - comm.EmployeeService
+      - admin.v1.EmployeeService
     summary: Login
   /admin/employee/login-code:
     description: 验证码登录
@@ -280,7 +280,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CommEmployeeLogin'
+              $ref: '#/components/schemas/AdminV1EmployeeLogin'
         description: 用户登录
         required: true
       responses:
@@ -288,11 +288,11 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CommEmployeeLoginRes'
+                $ref: '#/components/schemas/AdminV1EmployeeLoginRes'
           description: ok
       summary: 验证码登录
       tags:
-      - comm.EmployeeService
+      - admin.v1.EmployeeService
     summary: LoginForCode
   /admin/employee/logout:
     description: 登出
@@ -313,9 +313,9 @@ paths:
           description: ok
       summary: 登出
       tags:
-      - comm.EmployeeService
+      - admin.v1.EmployeeService
     summary: Logout
 tags:
 - description: 账户服务
-  name: comm.EmployeeService
+  name: admin.v1.EmployeeService
 

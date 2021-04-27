@@ -51,7 +51,7 @@ func NewEmployeeServiceClient(cc grpc.ClientConnInterface) EmployeeServiceClient
 
 func (c *employeeServiceClient) Login(ctx context.Context, in *EmployeeLogin, opts ...grpc.CallOption) (*EmployeeLoginRes, error) {
 	out := new(EmployeeLoginRes)
-	err := c.cc.Invoke(ctx, "/comm.EmployeeService/Login", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/admin.v1.EmployeeService/Login", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -60,7 +60,7 @@ func (c *employeeServiceClient) Login(ctx context.Context, in *EmployeeLogin, op
 
 func (c *employeeServiceClient) LoginForCode(ctx context.Context, in *EmployeeLogin, opts ...grpc.CallOption) (*EmployeeLoginRes, error) {
 	out := new(EmployeeLoginRes)
-	err := c.cc.Invoke(ctx, "/comm.EmployeeService/LoginForCode", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/admin.v1.EmployeeService/LoginForCode", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -69,7 +69,7 @@ func (c *employeeServiceClient) LoginForCode(ctx context.Context, in *EmployeeLo
 
 func (c *employeeServiceClient) Logout(ctx context.Context, in *comm.NullReq, opts ...grpc.CallOption) (*comm.NullReply, error) {
 	out := new(comm.NullReply)
-	err := c.cc.Invoke(ctx, "/comm.EmployeeService/Logout", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/admin.v1.EmployeeService/Logout", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -78,7 +78,7 @@ func (c *employeeServiceClient) Logout(ctx context.Context, in *comm.NullReq, op
 
 func (c *employeeServiceClient) UserInfo(ctx context.Context, in *comm.NullReq, opts ...grpc.CallOption) (*Employee, error) {
 	out := new(Employee)
-	err := c.cc.Invoke(ctx, "/comm.EmployeeService/UserInfo", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/admin.v1.EmployeeService/UserInfo", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -87,7 +87,7 @@ func (c *employeeServiceClient) UserInfo(ctx context.Context, in *comm.NullReq, 
 
 func (c *employeeServiceClient) Captcha(ctx context.Context, in *CaptchaReq, opts ...grpc.CallOption) (*comm.NullReply, error) {
 	out := new(comm.NullReply)
-	err := c.cc.Invoke(ctx, "/comm.EmployeeService/Captcha", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/admin.v1.EmployeeService/Captcha", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -96,7 +96,7 @@ func (c *employeeServiceClient) Captcha(ctx context.Context, in *CaptchaReq, opt
 
 func (c *employeeServiceClient) List(ctx context.Context, in *EmployeeListOption, opts ...grpc.CallOption) (*EmployeeList, error) {
 	out := new(EmployeeList)
-	err := c.cc.Invoke(ctx, "/comm.EmployeeService/List", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/admin.v1.EmployeeService/List", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -105,7 +105,7 @@ func (c *employeeServiceClient) List(ctx context.Context, in *EmployeeListOption
 
 func (c *employeeServiceClient) Get(ctx context.Context, in *EmployeeGetOption, opts ...grpc.CallOption) (*Employee, error) {
 	out := new(Employee)
-	err := c.cc.Invoke(ctx, "/comm.EmployeeService/Get", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/admin.v1.EmployeeService/Get", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -114,7 +114,7 @@ func (c *employeeServiceClient) Get(ctx context.Context, in *EmployeeGetOption, 
 
 func (c *employeeServiceClient) Create(ctx context.Context, in *EmployeeOption, opts ...grpc.CallOption) (*Employee, error) {
 	out := new(Employee)
-	err := c.cc.Invoke(ctx, "/comm.EmployeeService/Create", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/admin.v1.EmployeeService/Create", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -123,7 +123,7 @@ func (c *employeeServiceClient) Create(ctx context.Context, in *EmployeeOption, 
 
 func (c *employeeServiceClient) Update(ctx context.Context, in *EmployeeOption, opts ...grpc.CallOption) (*Employee, error) {
 	out := new(Employee)
-	err := c.cc.Invoke(ctx, "/comm.EmployeeService/Update", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/admin.v1.EmployeeService/Update", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -132,7 +132,7 @@ func (c *employeeServiceClient) Update(ctx context.Context, in *EmployeeOption, 
 
 func (c *employeeServiceClient) Delete(ctx context.Context, in *EmployeeDeleteOption, opts ...grpc.CallOption) (*comm.NullReply, error) {
 	out := new(comm.NullReply)
-	err := c.cc.Invoke(ctx, "/comm.EmployeeService/Delete", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/admin.v1.EmployeeService/Delete", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -223,7 +223,7 @@ func _EmployeeService_Login_Handler(srv interface{}, ctx context.Context, dec fu
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/comm.EmployeeService/Login",
+		FullMethod: "/admin.v1.EmployeeService/Login",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(EmployeeServiceServer).Login(ctx, req.(*EmployeeLogin))
@@ -241,7 +241,7 @@ func _EmployeeService_LoginForCode_Handler(srv interface{}, ctx context.Context,
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/comm.EmployeeService/LoginForCode",
+		FullMethod: "/admin.v1.EmployeeService/LoginForCode",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(EmployeeServiceServer).LoginForCode(ctx, req.(*EmployeeLogin))
@@ -259,7 +259,7 @@ func _EmployeeService_Logout_Handler(srv interface{}, ctx context.Context, dec f
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/comm.EmployeeService/Logout",
+		FullMethod: "/admin.v1.EmployeeService/Logout",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(EmployeeServiceServer).Logout(ctx, req.(*comm.NullReq))
@@ -277,7 +277,7 @@ func _EmployeeService_UserInfo_Handler(srv interface{}, ctx context.Context, dec
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/comm.EmployeeService/UserInfo",
+		FullMethod: "/admin.v1.EmployeeService/UserInfo",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(EmployeeServiceServer).UserInfo(ctx, req.(*comm.NullReq))
@@ -295,7 +295,7 @@ func _EmployeeService_Captcha_Handler(srv interface{}, ctx context.Context, dec 
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/comm.EmployeeService/Captcha",
+		FullMethod: "/admin.v1.EmployeeService/Captcha",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(EmployeeServiceServer).Captcha(ctx, req.(*CaptchaReq))
@@ -313,7 +313,7 @@ func _EmployeeService_List_Handler(srv interface{}, ctx context.Context, dec fun
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/comm.EmployeeService/List",
+		FullMethod: "/admin.v1.EmployeeService/List",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(EmployeeServiceServer).List(ctx, req.(*EmployeeListOption))
@@ -331,7 +331,7 @@ func _EmployeeService_Get_Handler(srv interface{}, ctx context.Context, dec func
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/comm.EmployeeService/Get",
+		FullMethod: "/admin.v1.EmployeeService/Get",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(EmployeeServiceServer).Get(ctx, req.(*EmployeeGetOption))
@@ -349,7 +349,7 @@ func _EmployeeService_Create_Handler(srv interface{}, ctx context.Context, dec f
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/comm.EmployeeService/Create",
+		FullMethod: "/admin.v1.EmployeeService/Create",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(EmployeeServiceServer).Create(ctx, req.(*EmployeeOption))
@@ -367,7 +367,7 @@ func _EmployeeService_Update_Handler(srv interface{}, ctx context.Context, dec f
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/comm.EmployeeService/Update",
+		FullMethod: "/admin.v1.EmployeeService/Update",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(EmployeeServiceServer).Update(ctx, req.(*EmployeeOption))
@@ -385,7 +385,7 @@ func _EmployeeService_Delete_Handler(srv interface{}, ctx context.Context, dec f
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/comm.EmployeeService/Delete",
+		FullMethod: "/admin.v1.EmployeeService/Delete",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(EmployeeServiceServer).Delete(ctx, req.(*EmployeeDeleteOption))
@@ -397,7 +397,7 @@ func _EmployeeService_Delete_Handler(srv interface{}, ctx context.Context, dec f
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var EmployeeService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "comm.EmployeeService",
+	ServiceName: "admin.v1.EmployeeService",
 	HandlerType: (*EmployeeServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{

@@ -1,13 +1,13 @@
 syntax = "proto3";
 
-package comm;
+package admin.v1;
 
 import "google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
 import "api/comm/base.proto";
 option go_package = "github.com/realotz/whole/api/admin/v1;v1";
 option java_multiple_files = true;
-option java_package = "dev.kratos.api.comm";
+option java_package = "dev.kratos.api.admin";
 option java_outer_classname = "EmployeeProtoV1";
 
 //账户服务

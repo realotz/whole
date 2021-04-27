@@ -12,8 +12,8 @@ type Options = {
 }
 
 /** Login 常规账户登录接口 /api */
-export async function Login(params: Comm.EmployeeLogin, options?: Options) {
-	return request<Comm.EmployeeLoginRes>(APIService + '/admin/employee/login', {
+export async function Login(params: AdminV1.EmployeeLogin, options?: Options) {
+	return request<AdminV1.EmployeeLoginRes>(APIService + '/admin/employee/login', {
     	method: 'POST',
     	params: {...params},
     	...(options || {}),
@@ -21,8 +21,8 @@ export async function Login(params: Comm.EmployeeLogin, options?: Options) {
 }
 
 /** LoginForCode 验证码登录 /api */
-export async function LoginForCode(params: Comm.EmployeeLogin, options?: Options) {
-	return request<Comm.EmployeeLoginRes>(APIService + '/admin/employee/login-code', {
+export async function LoginForCode(params: AdminV1.EmployeeLogin, options?: Options) {
+	return request<AdminV1.EmployeeLoginRes>(APIService + '/admin/employee/login-code', {
     	method: 'POST',
     	params: {...params},
     	...(options || {}),
@@ -30,8 +30,8 @@ export async function LoginForCode(params: Comm.EmployeeLogin, options?: Options
 }
 
 /** Logout 登出 /api */
-export async function Logout(params: Comm.NullReq, options?: Options) {
-	return request<Comm.NullReply>(APIService + '/admin/employee/logout', {
+export async function Logout(params: AdminV1.NullReq, options?: Options) {
+	return request<AdminV1.NullReply>(APIService + '/admin/employee/logout', {
     	method: 'POST',
     	params: {...params},
     	...(options || {}),
@@ -39,8 +39,8 @@ export async function Logout(params: Comm.NullReq, options?: Options) {
 }
 
 /** UserInfo 当前登录用户信息 /api */
-export async function UserInfo(params: Comm.NullReq, options?: Options) {
-	return request<Comm.Employee>(APIService + '/admin/employee/info', {
+export async function UserInfo(params: AdminV1.NullReq, options?: Options) {
+	return request<AdminV1.Employee>(APIService + '/admin/employee/info', {
     	method: 'GET',
     	params: {...params},
     	...(options || {}),
@@ -48,8 +48,8 @@ export async function UserInfo(params: Comm.NullReq, options?: Options) {
 }
 
 /** Captcha 发送短信/邮箱验证码 /api */
-export async function Captcha(params: Comm.CaptchaReq, options?: Options) {
-	return request<Comm.NullReply>(APIService + '/admin/employee/captcha', {
+export async function Captcha(params: AdminV1.CaptchaReq, options?: Options) {
+	return request<AdminV1.NullReply>(APIService + '/admin/employee/captcha', {
     	method: 'GET',
     	params: {...params},
     	...(options || {}),
@@ -57,8 +57,8 @@ export async function Captcha(params: Comm.CaptchaReq, options?: Options) {
 }
 
 /** List 账户列表 /api */
-export async function List(params: Comm.EmployeeListOption, options?: Options) {
-	return request<Comm.EmployeeList>(APIService + '/admin/employee', {
+export async function List(params: AdminV1.EmployeeListOption, options?: Options) {
+	return request<AdminV1.EmployeeList>(APIService + '/admin/employee', {
     	method: 'GET',
     	params: {...params},
     	...(options || {}),
@@ -66,8 +66,8 @@ export async function List(params: Comm.EmployeeListOption, options?: Options) {
 }
 
 /** Get 获取账户信息 /api */
-export async function Get(params: Comm.EmployeeGetOption, options?: Options) {
-	return request<Comm.Employee>(APIService + '/admin/employee/{id}', {
+export async function Get(params: AdminV1.EmployeeGetOption, options?: Options) {
+	return request<AdminV1.Employee>(APIService + '/admin/employee/{id}', {
     	method: 'GET',
     	params: {...params},
     	...(options || {}),
@@ -75,8 +75,8 @@ export async function Get(params: Comm.EmployeeGetOption, options?: Options) {
 }
 
 /** Create 新建一个账户 /api */
-export async function Create(params: Comm.EmployeeOption, options?: Options) {
-	return request<Comm.Employee>(APIService + '/admin/employee', {
+export async function Create(params: AdminV1.EmployeeOption, options?: Options) {
+	return request<AdminV1.Employee>(APIService + '/admin/employee', {
     	method: 'POST',
     	params: {...params},
     	...(options || {}),
@@ -84,8 +84,8 @@ export async function Create(params: Comm.EmployeeOption, options?: Options) {
 }
 
 /** Update 更新一个账户 /api */
-export async function Update(params: Comm.EmployeeOption, options?: Options) {
-	return request<Comm.Employee>(APIService + '/admin/employee', {
+export async function Update(params: AdminV1.EmployeeOption, options?: Options) {
+	return request<AdminV1.Employee>(APIService + '/admin/employee', {
     	method: 'PUT',
     	params: {...params},
     	...(options || {}),
@@ -93,8 +93,8 @@ export async function Update(params: Comm.EmployeeOption, options?: Options) {
 }
 
 /** Delete 删除一个账户 /api */
-export async function Delete(params: Comm.EmployeeDeleteOption, options?: Options) {
-	return request<Comm.NullReply>(APIService + '/admin/employee/{id}', {
+export async function Delete(params: AdminV1.EmployeeDeleteOption, options?: Options) {
+	return request<AdminV1.NullReply>(APIService + '/admin/employee/{id}', {
     	method: 'DELETE',
     	params: {...params},
     	...(options || {}),

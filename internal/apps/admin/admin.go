@@ -17,21 +17,21 @@ var ProviderSet = wire.NewSet(
 	data.ProviderSet,
 	biz.ProviderSet,
 	service.NewEmployeeService,
-	NewadminApp,
+	NewAdminApp,
 )
 
-type admin struct {
+type Admin struct {
 	*server.App
 }
 
-func NewadminApp(hs *http.Server, gs *grpc.Server, m middleware.Middleware,
+func NewAdminApp(hs *http.Server, gs *grpc.Server, m middleware.Middleware,
 	employee v1.EmployeeServiceServer,
-) *admin {
+) *Admin {
 	// 用户user服务组
 	hs.HandlePrefix("/admin/employee", v1.NewEmployeeServiceHandler(employee, http.Middleware(m))) // 员工服务
 
 	// grpc
 	// 用户服务
 	v1.RegisterEmployeeServiceServer(gs, employee) // 员工
-	return &admin{App: server.NewApp(hs, gs)}
+	return &Admin{App: server.NewApp(hs, gs)}
 }

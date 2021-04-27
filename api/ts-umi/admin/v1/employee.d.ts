@@ -5,43 +5,20 @@
 // This is a compile-time assertion to ensure that this generated file
 // is compatible with the kratos package it is being compiled against.
 
-declare namespace Comm {
-	/** EmployeeGetOption */
-	type EmployeeGetOption = {
-		id?:number
-	}
-	/** EmployeeOption */
-	type EmployeeOption = {
-		name?:string
-		account?:string
-		nick_name?:string
-		role?:string
-		email?:string
-		mobile?:string
-		id_card?:string
-		password?:string
-		sex?:string
-		birthday?:GoogleProtobuf.Timestamp
-		id?:number
-		avatar?:string
-	}
-	/** EmployeeDeleteOption */
-	type EmployeeDeleteOption = {
-		ids?:Array<number>
-	}
-	/** EmployeeLogin */
-	type EmployeeLogin = {
-		account?:string
-		password?:string
+declare namespace AdminV1 {
+	/** CaptchaReq */
+	type CaptchaReq = {
+		to?:string
 		captcha?:string
-		code?:string
+		challenge?:string
+		tk?:string
 	}
 	/** EmployeeLoginRes */
 	type EmployeeLoginRes = {
 		token?:string
 		role?:string
 		expiration_time?:number
-		employee?:Comm.Employee
+		employee?:AdminV1.Employee
 	}
 	/** EmployeeListOption */
 	type EmployeeListOption = {
@@ -54,9 +31,17 @@ declare namespace Comm {
 		type?:string
 		create_time?:string
 	}
+	/** EmployeeGetOption */
+	type EmployeeGetOption = {
+		id?:number
+	}
+	/** EmployeeDeleteOption */
+	type EmployeeDeleteOption = {
+		ids?:Array<number>
+	}
 	/** EmployeeList */
 	type EmployeeList = {
-		list?:Array<Comm.Employee>
+		list?:Array<AdminV1.Employee>
 		total?:number
 		page?:number
 		page_size?:number
@@ -80,12 +65,27 @@ declare namespace Comm {
 		update_time?:GoogleProtobuf.Timestamp
 		avatar?:string
 	}
-	/** CaptchaReq */
-	type CaptchaReq = {
-		to?:string
+	/** EmployeeLogin */
+	type EmployeeLogin = {
+		account?:string
+		password?:string
 		captcha?:string
-		challenge?:string
-		tk?:string
+		code?:string
+	}
+	/** EmployeeOption */
+	type EmployeeOption = {
+		name?:string
+		account?:string
+		nick_name?:string
+		role?:string
+		email?:string
+		mobile?:string
+		id_card?:string
+		password?:string
+		sex?:string
+		birthday?:GoogleProtobuf.Timestamp
+		id?:number
+		avatar?:string
 	}
 }
 

@@ -6,20 +6,6 @@
 // is compatible with the kratos package it is being compiled against.
 
 declare namespace ApiCmsV1 {
-	/** ListCategoryRequest */
-	type ListCategoryRequest = {
-		pid?:number
-		name?:string
-		page?:number
-		page_size?:number
-	}
-	/** ListCategoryReply */
-	type ListCategoryReply = {
-		list?:Array<ApiCmsV1.Category>
-		total?:number
-		page?:number
-		page_size?:number
-	}
 	/** Category */
 	type Category = {
 		id?:number
@@ -48,6 +34,20 @@ declare namespace ApiCmsV1 {
 	/** GetCategoryRequest */
 	type GetCategoryRequest = {
 		id?:number
+	}
+	/** ListCategoryRequest */
+	type ListCategoryRequest = {
+		pid?:number
+		name?:string
+		page?:number
+		page_size?:number
+	}
+	/** ListCategoryReply */
+	type ListCategoryReply = {
+		list?:Array<ApiCmsV1.Category>
+		total?:number
+		page?:number
+		page_size?:number
 	}
 }
 

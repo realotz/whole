@@ -6,6 +6,13 @@
 // is compatible with the kratos package it is being compiled against.
 
 declare namespace NewsV1 {
+	/** MessageList */
+	type MessageList = {
+		list?:Array<NewsV1.Message>
+		total?:number
+		page?:number
+		page_size?:number
+	}
 	/** MessageListOption */
 	type MessageListOption = {
 		type?:number
@@ -38,13 +45,6 @@ declare namespace NewsV1 {
 	/** MessageDeleteOption */
 	type MessageDeleteOption = {
 		id?:number
-	}
-	/** MessageList */
-	type MessageList = {
-		list?:Array<NewsV1.Message>
-		total?:number
-		page?:number
-		page_size?:number
 	}
 }
 

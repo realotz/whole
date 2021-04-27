@@ -6,40 +6,6 @@
 // is compatible with the kratos package it is being compiled against.
 
 declare namespace UsersV1 {
-	/** CustomerDeleteOption */
-	type CustomerDeleteOption = {
-		ids?:Array<number>
-	}
-	/** Customer */
-	type Customer = {
-		id?:number
-		uuid?:string
-		name?:string
-		account?:string
-		nick_name?:string
-		role?:string
-		email?:string
-		mobile?:string
-		id_card?:string
-		sex?:string
-		birthday?:GoogleProtobuf.Timestamp
-		last_ip?:string
-		last_time?:GoogleProtobuf.Timestamp
-		create_time?:GoogleProtobuf.Timestamp
-		update_time?:GoogleProtobuf.Timestamp
-		avatar?:string
-	}
-	/** CaptchaReq */
-	type CaptchaReq = {
-		to?:string
-		captcha?:string
-		challenge?:string
-		tk?:string
-	}
-	/** CustomerGetOption */
-	type CustomerGetOption = {
-		id?:number
-	}
 	/** CustomerLoginRes */
 	type CustomerLoginRes = {
 		token?:string
@@ -60,6 +26,40 @@ declare namespace UsersV1 {
 		page?:number
 		page_size?:number
 	}
+	/** CustomerList */
+	type CustomerList = {
+		list?:Array<UsersV1.Customer>
+	}
+	/** Customer */
+	type Customer = {
+		id?:number
+		uuid?:string
+		name?:string
+		account?:string
+		nick_name?:string
+		role?:string
+		email?:string
+		mobile?:string
+		id_card?:string
+		sex?:string
+		birthday?:GoogleProtobuf.Timestamp
+		last_ip?:string
+		last_time?:GoogleProtobuf.Timestamp
+		create_time?:GoogleProtobuf.Timestamp
+		update_time?:GoogleProtobuf.Timestamp
+		avatar?:string
+	}
+	/** CustomerLogin */
+	type CustomerLogin = {
+		account?:string
+		password?:string
+		captcha?:string
+		code?:string
+	}
+	/** CustomerGetOption */
+	type CustomerGetOption = {
+		id?:number
+	}
 	/** CustomerOption */
 	type CustomerOption = {
 		name?:string
@@ -75,16 +75,16 @@ declare namespace UsersV1 {
 		id?:number
 		avatar?:string
 	}
-	/** CustomerList */
-	type CustomerList = {
-		list?:Array<UsersV1.Customer>
+	/** CustomerDeleteOption */
+	type CustomerDeleteOption = {
+		ids?:Array<number>
 	}
-	/** CustomerLogin */
-	type CustomerLogin = {
-		account?:string
-		password?:string
+	/** CaptchaReq */
+	type CaptchaReq = {
+		to?:string
 		captcha?:string
-		code?:string
+		challenge?:string
+		tk?:string
 	}
 }
 
