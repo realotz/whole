@@ -10,9 +10,6 @@ import (
 	"github.com/realotz/whole/internal/apps/users/data/ent/migrate"
 
 	"github.com/realotz/whole/internal/apps/users/data/ent/customer"
-	"github.com/realotz/whole/internal/apps/users/data/ent/employee"
-	"github.com/realotz/whole/internal/apps/users/data/ent/permission"
-	"github.com/realotz/whole/internal/apps/users/data/ent/role"
 	"github.com/realotz/whole/internal/apps/users/data/ent/wechat"
 
 	"entgo.io/ent/dialect"
@@ -27,12 +24,6 @@ type Client struct {
 	Schema *migrate.Schema
 	// Customer is the client for interacting with the Customer builders.
 	Customer *CustomerClient
-	// Employee is the client for interacting with the Employee builders.
-	Employee *EmployeeClient
-	// Permission is the client for interacting with the Permission builders.
-	Permission *PermissionClient
-	// Role is the client for interacting with the Role builders.
-	Role *RoleClient
 	// Wechat is the client for interacting with the Wechat builders.
 	Wechat *WechatClient
 }
@@ -49,9 +40,6 @@ func NewClient(opts ...Option) *Client {
 func (c *Client) init() {
 	c.Schema = migrate.NewSchema(c.driver)
 	c.Customer = NewCustomerClient(c.config)
-	c.Employee = NewEmployeeClient(c.config)
-	c.Permission = NewPermissionClient(c.config)
-	c.Role = NewRoleClient(c.config)
 	c.Wechat = NewWechatClient(c.config)
 }
 
@@ -84,13 +72,10 @@ func (c *Client) Tx(ctx context.Context) (*Tx, error) {
 	cfg := c.config
 	cfg.driver = tx
 	return &Tx{
-		ctx:        ctx,
-		config:     cfg,
-		Customer:   NewCustomerClient(cfg),
-		Employee:   NewEmployeeClient(cfg),
-		Permission: NewPermissionClient(cfg),
-		Role:       NewRoleClient(cfg),
-		Wechat:     NewWechatClient(cfg),
+		ctx:      ctx,
+		config:   cfg,
+		Customer: NewCustomerClient(cfg),
+		Wechat:   NewWechatClient(cfg),
 	}, nil
 }
 
@@ -108,12 +93,9 @@ func (c *Client) BeginTx(ctx context.Context, opts *sql.TxOptions) (*Tx, error) 
 	cfg := c.config
 	cfg.driver = &txDriver{tx: tx, drv: c.driver}
 	return &Tx{
-		config:     cfg,
-		Customer:   NewCustomerClient(cfg),
-		Employee:   NewEmployeeClient(cfg),
-		Permission: NewPermissionClient(cfg),
-		Role:       NewRoleClient(cfg),
-		Wechat:     NewWechatClient(cfg),
+		config:   cfg,
+		Customer: NewCustomerClient(cfg),
+		Wechat:   NewWechatClient(cfg),
 	}, nil
 }
 
@@ -144,9 +126,6 @@ func (c *Client) Close() error {
 // In order to add hooks to a specific client, call: `client.Node.Use(...)`.
 func (c *Client) Use(hooks ...Hook) {
 	c.Customer.Use(hooks...)
-	c.Employee.Use(hooks...)
-	c.Permission.Use(hooks...)
-	c.Role.Use(hooks...)
 	c.Wechat.Use(hooks...)
 }
 
@@ -252,334 +231,6 @@ func (c *CustomerClient) QueryWechats(cu *Customer) *WechatQuery {
 // Hooks returns the client hooks.
 func (c *CustomerClient) Hooks() []Hook {
 	return c.hooks.Customer
-}
-
-// EmployeeClient is a client for the Employee schema.
-type EmployeeClient struct {
-	config
-}
-
-// NewEmployeeClient returns a client for the Employee from the given config.
-func NewEmployeeClient(c config) *EmployeeClient {
-	return &EmployeeClient{config: c}
-}
-
-// Use adds a list of mutation hooks to the hooks stack.
-// A call to `Use(f, g, h)` equals to `employee.Hooks(f(g(h())))`.
-func (c *EmployeeClient) Use(hooks ...Hook) {
-	c.hooks.Employee = append(c.hooks.Employee, hooks...)
-}
-
-// Create returns a create builder for Employee.
-func (c *EmployeeClient) Create() *EmployeeCreate {
-	mutation := newEmployeeMutation(c.config, OpCreate)
-	return &EmployeeCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
-}
-
-// CreateBulk returns a builder for creating a bulk of Employee entities.
-func (c *EmployeeClient) CreateBulk(builders ...*EmployeeCreate) *EmployeeCreateBulk {
-	return &EmployeeCreateBulk{config: c.config, builders: builders}
-}
-
-// Update returns an update builder for Employee.
-func (c *EmployeeClient) Update() *EmployeeUpdate {
-	mutation := newEmployeeMutation(c.config, OpUpdate)
-	return &EmployeeUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
-}
-
-// UpdateOne returns an update builder for the given entity.
-func (c *EmployeeClient) UpdateOne(e *Employee) *EmployeeUpdateOne {
-	mutation := newEmployeeMutation(c.config, OpUpdateOne, withEmployee(e))
-	return &EmployeeUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
-}
-
-// UpdateOneID returns an update builder for the given id.
-func (c *EmployeeClient) UpdateOneID(id int64) *EmployeeUpdateOne {
-	mutation := newEmployeeMutation(c.config, OpUpdateOne, withEmployeeID(id))
-	return &EmployeeUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
-}
-
-// Delete returns a delete builder for Employee.
-func (c *EmployeeClient) Delete() *EmployeeDelete {
-	mutation := newEmployeeMutation(c.config, OpDelete)
-	return &EmployeeDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
-}
-
-// DeleteOne returns a delete builder for the given entity.
-func (c *EmployeeClient) DeleteOne(e *Employee) *EmployeeDeleteOne {
-	return c.DeleteOneID(e.ID)
-}
-
-// DeleteOneID returns a delete builder for the given id.
-func (c *EmployeeClient) DeleteOneID(id int64) *EmployeeDeleteOne {
-	builder := c.Delete().Where(employee.ID(id))
-	builder.mutation.id = &id
-	builder.mutation.op = OpDeleteOne
-	return &EmployeeDeleteOne{builder}
-}
-
-// Query returns a query builder for Employee.
-func (c *EmployeeClient) Query() *EmployeeQuery {
-	return &EmployeeQuery{config: c.config}
-}
-
-// Get returns a Employee entity by its id.
-func (c *EmployeeClient) Get(ctx context.Context, id int64) (*Employee, error) {
-	return c.Query().Where(employee.ID(id)).Only(ctx)
-}
-
-// GetX is like Get, but panics if an error occurs.
-func (c *EmployeeClient) GetX(ctx context.Context, id int64) *Employee {
-	obj, err := c.Get(ctx, id)
-	if err != nil {
-		panic(err)
-	}
-	return obj
-}
-
-// QueryRoles queries the roles edge of a Employee.
-func (c *EmployeeClient) QueryRoles(e *Employee) *RoleQuery {
-	query := &RoleQuery{config: c.config}
-	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
-		id := e.ID
-		step := sqlgraph.NewStep(
-			sqlgraph.From(employee.Table, employee.FieldID, id),
-			sqlgraph.To(role.Table, role.FieldID),
-			sqlgraph.Edge(sqlgraph.M2M, false, employee.RolesTable, employee.RolesPrimaryKey...),
-		)
-		fromV = sqlgraph.Neighbors(e.driver.Dialect(), step)
-		return fromV, nil
-	}
-	return query
-}
-
-// Hooks returns the client hooks.
-func (c *EmployeeClient) Hooks() []Hook {
-	return c.hooks.Employee
-}
-
-// PermissionClient is a client for the Permission schema.
-type PermissionClient struct {
-	config
-}
-
-// NewPermissionClient returns a client for the Permission from the given config.
-func NewPermissionClient(c config) *PermissionClient {
-	return &PermissionClient{config: c}
-}
-
-// Use adds a list of mutation hooks to the hooks stack.
-// A call to `Use(f, g, h)` equals to `permission.Hooks(f(g(h())))`.
-func (c *PermissionClient) Use(hooks ...Hook) {
-	c.hooks.Permission = append(c.hooks.Permission, hooks...)
-}
-
-// Create returns a create builder for Permission.
-func (c *PermissionClient) Create() *PermissionCreate {
-	mutation := newPermissionMutation(c.config, OpCreate)
-	return &PermissionCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
-}
-
-// CreateBulk returns a builder for creating a bulk of Permission entities.
-func (c *PermissionClient) CreateBulk(builders ...*PermissionCreate) *PermissionCreateBulk {
-	return &PermissionCreateBulk{config: c.config, builders: builders}
-}
-
-// Update returns an update builder for Permission.
-func (c *PermissionClient) Update() *PermissionUpdate {
-	mutation := newPermissionMutation(c.config, OpUpdate)
-	return &PermissionUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
-}
-
-// UpdateOne returns an update builder for the given entity.
-func (c *PermissionClient) UpdateOne(pe *Permission) *PermissionUpdateOne {
-	mutation := newPermissionMutation(c.config, OpUpdateOne, withPermission(pe))
-	return &PermissionUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
-}
-
-// UpdateOneID returns an update builder for the given id.
-func (c *PermissionClient) UpdateOneID(id int64) *PermissionUpdateOne {
-	mutation := newPermissionMutation(c.config, OpUpdateOne, withPermissionID(id))
-	return &PermissionUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
-}
-
-// Delete returns a delete builder for Permission.
-func (c *PermissionClient) Delete() *PermissionDelete {
-	mutation := newPermissionMutation(c.config, OpDelete)
-	return &PermissionDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
-}
-
-// DeleteOne returns a delete builder for the given entity.
-func (c *PermissionClient) DeleteOne(pe *Permission) *PermissionDeleteOne {
-	return c.DeleteOneID(pe.ID)
-}
-
-// DeleteOneID returns a delete builder for the given id.
-func (c *PermissionClient) DeleteOneID(id int64) *PermissionDeleteOne {
-	builder := c.Delete().Where(permission.ID(id))
-	builder.mutation.id = &id
-	builder.mutation.op = OpDeleteOne
-	return &PermissionDeleteOne{builder}
-}
-
-// Query returns a query builder for Permission.
-func (c *PermissionClient) Query() *PermissionQuery {
-	return &PermissionQuery{config: c.config}
-}
-
-// Get returns a Permission entity by its id.
-func (c *PermissionClient) Get(ctx context.Context, id int64) (*Permission, error) {
-	return c.Query().Where(permission.ID(id)).Only(ctx)
-}
-
-// GetX is like Get, but panics if an error occurs.
-func (c *PermissionClient) GetX(ctx context.Context, id int64) *Permission {
-	obj, err := c.Get(ctx, id)
-	if err != nil {
-		panic(err)
-	}
-	return obj
-}
-
-// QueryRoles queries the roles edge of a Permission.
-func (c *PermissionClient) QueryRoles(pe *Permission) *RoleQuery {
-	query := &RoleQuery{config: c.config}
-	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
-		id := pe.ID
-		step := sqlgraph.NewStep(
-			sqlgraph.From(permission.Table, permission.FieldID, id),
-			sqlgraph.To(role.Table, role.FieldID),
-			sqlgraph.Edge(sqlgraph.M2M, true, permission.RolesTable, permission.RolesPrimaryKey...),
-		)
-		fromV = sqlgraph.Neighbors(pe.driver.Dialect(), step)
-		return fromV, nil
-	}
-	return query
-}
-
-// Hooks returns the client hooks.
-func (c *PermissionClient) Hooks() []Hook {
-	return c.hooks.Permission
-}
-
-// RoleClient is a client for the Role schema.
-type RoleClient struct {
-	config
-}
-
-// NewRoleClient returns a client for the Role from the given config.
-func NewRoleClient(c config) *RoleClient {
-	return &RoleClient{config: c}
-}
-
-// Use adds a list of mutation hooks to the hooks stack.
-// A call to `Use(f, g, h)` equals to `role.Hooks(f(g(h())))`.
-func (c *RoleClient) Use(hooks ...Hook) {
-	c.hooks.Role = append(c.hooks.Role, hooks...)
-}
-
-// Create returns a create builder for Role.
-func (c *RoleClient) Create() *RoleCreate {
-	mutation := newRoleMutation(c.config, OpCreate)
-	return &RoleCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
-}
-
-// CreateBulk returns a builder for creating a bulk of Role entities.
-func (c *RoleClient) CreateBulk(builders ...*RoleCreate) *RoleCreateBulk {
-	return &RoleCreateBulk{config: c.config, builders: builders}
-}
-
-// Update returns an update builder for Role.
-func (c *RoleClient) Update() *RoleUpdate {
-	mutation := newRoleMutation(c.config, OpUpdate)
-	return &RoleUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
-}
-
-// UpdateOne returns an update builder for the given entity.
-func (c *RoleClient) UpdateOne(r *Role) *RoleUpdateOne {
-	mutation := newRoleMutation(c.config, OpUpdateOne, withRole(r))
-	return &RoleUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
-}
-
-// UpdateOneID returns an update builder for the given id.
-func (c *RoleClient) UpdateOneID(id int64) *RoleUpdateOne {
-	mutation := newRoleMutation(c.config, OpUpdateOne, withRoleID(id))
-	return &RoleUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
-}
-
-// Delete returns a delete builder for Role.
-func (c *RoleClient) Delete() *RoleDelete {
-	mutation := newRoleMutation(c.config, OpDelete)
-	return &RoleDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
-}
-
-// DeleteOne returns a delete builder for the given entity.
-func (c *RoleClient) DeleteOne(r *Role) *RoleDeleteOne {
-	return c.DeleteOneID(r.ID)
-}
-
-// DeleteOneID returns a delete builder for the given id.
-func (c *RoleClient) DeleteOneID(id int64) *RoleDeleteOne {
-	builder := c.Delete().Where(role.ID(id))
-	builder.mutation.id = &id
-	builder.mutation.op = OpDeleteOne
-	return &RoleDeleteOne{builder}
-}
-
-// Query returns a query builder for Role.
-func (c *RoleClient) Query() *RoleQuery {
-	return &RoleQuery{config: c.config}
-}
-
-// Get returns a Role entity by its id.
-func (c *RoleClient) Get(ctx context.Context, id int64) (*Role, error) {
-	return c.Query().Where(role.ID(id)).Only(ctx)
-}
-
-// GetX is like Get, but panics if an error occurs.
-func (c *RoleClient) GetX(ctx context.Context, id int64) *Role {
-	obj, err := c.Get(ctx, id)
-	if err != nil {
-		panic(err)
-	}
-	return obj
-}
-
-// QueryPermissions queries the permissions edge of a Role.
-func (c *RoleClient) QueryPermissions(r *Role) *PermissionQuery {
-	query := &PermissionQuery{config: c.config}
-	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
-		id := r.ID
-		step := sqlgraph.NewStep(
-			sqlgraph.From(role.Table, role.FieldID, id),
-			sqlgraph.To(permission.Table, permission.FieldID),
-			sqlgraph.Edge(sqlgraph.M2M, false, role.PermissionsTable, role.PermissionsPrimaryKey...),
-		)
-		fromV = sqlgraph.Neighbors(r.driver.Dialect(), step)
-		return fromV, nil
-	}
-	return query
-}
-
-// QueryEmployees queries the employees edge of a Role.
-func (c *RoleClient) QueryEmployees(r *Role) *EmployeeQuery {
-	query := &EmployeeQuery{config: c.config}
-	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
-		id := r.ID
-		step := sqlgraph.NewStep(
-			sqlgraph.From(role.Table, role.FieldID, id),
-			sqlgraph.To(employee.Table, employee.FieldID),
-			sqlgraph.Edge(sqlgraph.M2M, true, role.EmployeesTable, role.EmployeesPrimaryKey...),
-		)
-		fromV = sqlgraph.Neighbors(r.driver.Dialect(), step)
-		return fromV, nil
-	}
-	return query
-}
-
-// Hooks returns the client hooks.
-func (c *RoleClient) Hooks() []Hook {
-	return c.hooks.Role
 }
 
 // WechatClient is a client for the Wechat schema.

@@ -3,6 +3,7 @@ package service
 import (
 	"context"
 	"github.com/go-kratos/kratos/v2/errors"
+	coomPb "github.com/realotz/whole/api/comm"
 	"github.com/realotz/whole/api/reason"
 	pb "github.com/realotz/whole/api/users/v1"
 	"github.com/realotz/whole/internal/apps/users/biz"
@@ -25,16 +26,16 @@ func (c CustomerService) LoginForCode(ctx context.Context, login *pb.CustomerLog
 	panic("implement me")
 }
 
-func (c CustomerService) Logout(ctx context.Context, req *pb.NullReq) (*pb.NullReply, error) {
+func (c CustomerService) Logout(ctx context.Context, req *coomPb.NullReq) (*coomPb.NullReply, error) {
 	panic("implement me")
 }
 
-func (c CustomerService) Captcha(ctx context.Context, req *pb.CaptchaReq) (*pb.NullReply, error) {
+func (c CustomerService) Captcha(ctx context.Context, req *pb.CaptchaReq) (*coomPb.NullReply, error) {
 	panic("implement me")
 }
 
 // 获取当前登录用户id
-func (s *CustomerService) UserInfo(ctx context.Context, req *pb.NullReq) (*pb.Customer, error) {
+func (s *CustomerService) UserInfo(ctx context.Context, req *coomPb.NullReq) (*pb.Customer, error) {
 	userInfo := token.FormLoginContext(ctx)
 	if userInfo == nil {
 		return nil, errors.Unauthorized(reason.NotLogin, "未登录")
@@ -119,12 +120,12 @@ func (s *CustomerService) Update(ctx context.Context, req *pb.CustomerOption) (*
 }
 
 // 删除用户
-func (s *CustomerService) Delete(ctx context.Context, req *pb.CustomerDeleteOption) (*pb.NullReply, error) {
+func (s *CustomerService) Delete(ctx context.Context, req *pb.CustomerDeleteOption) (*coomPb.NullReply, error) {
 	err := s.member.Delete(ctx, req.Ids)
 	if err != nil {
 		return nil, err
 	}
-	return &pb.NullReply{}, nil
+	return &coomPb.NullReply{}, nil
 }
 
 // biz转换pb

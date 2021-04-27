@@ -14,12 +14,6 @@ type Tx struct {
 	config
 	// Customer is the client for interacting with the Customer builders.
 	Customer *CustomerClient
-	// Employee is the client for interacting with the Employee builders.
-	Employee *EmployeeClient
-	// Permission is the client for interacting with the Permission builders.
-	Permission *PermissionClient
-	// Role is the client for interacting with the Role builders.
-	Role *RoleClient
 	// Wechat is the client for interacting with the Wechat builders.
 	Wechat *WechatClient
 
@@ -158,9 +152,6 @@ func (tx *Tx) Client() *Client {
 
 func (tx *Tx) init() {
 	tx.Customer = NewCustomerClient(tx.config)
-	tx.Employee = NewEmployeeClient(tx.config)
-	tx.Permission = NewPermissionClient(tx.config)
-	tx.Role = NewRoleClient(tx.config)
 	tx.Wechat = NewWechatClient(tx.config)
 }
 

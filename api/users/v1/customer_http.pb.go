@@ -7,6 +7,7 @@ import (
 	http1 "github.com/go-kratos/kratos/v2/transport/http"
 	binding "github.com/go-kratos/kratos/v2/transport/http/binding"
 	mux "github.com/gorilla/mux"
+	comm "github.com/realotz/whole/api/comm"
 	http "net/http"
 )
 
@@ -20,7 +21,7 @@ var _ = mux.NewRouter
 const _ = http1.SupportPackageIsVersion1
 
 type CustomerServiceHandler interface {
-	Captcha(context.Context, *CaptchaReq) (*NullReply, error)
+	Captcha(context.Context, *CaptchaReq) (*comm.NullReply, error)
 
 	Get(context.Context, *CustomerGetOption) (*Customer, error)
 
@@ -30,11 +31,11 @@ type CustomerServiceHandler interface {
 
 	LoginForCode(context.Context, *CustomerLogin) (*CustomerLoginRes, error)
 
-	Logout(context.Context, *NullReq) (*NullReply, error)
+	Logout(context.Context, *comm.NullReq) (*comm.NullReply, error)
 
 	Update(context.Context, *CustomerOption) (*Customer, error)
 
-	UserInfo(context.Context, *NullReq) (*Customer, error)
+	UserInfo(context.Context, *comm.NullReq) (*Customer, error)
 }
 
 func NewCustomerServiceHandler(srv CustomerServiceHandler, opts ...http1.HandleOption) http.Handler {
@@ -93,14 +94,14 @@ func NewCustomerServiceHandler(srv CustomerServiceHandler, opts ...http1.HandleO
 	}).Methods("POST")
 
 	r.HandleFunc("/users/customer/logout", func(w http.ResponseWriter, r *http.Request) {
-		var in NullReq
+		var in comm.NullReq
 		if err := h.Decode(r, &in); err != nil {
 			h.Error(w, r, err)
 			return
 		}
 
 		next := func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.Logout(ctx, req.(*NullReq))
+			return srv.Logout(ctx, req.(*comm.NullReq))
 		}
 		if h.Middleware != nil {
 			next = h.Middleware(next)
@@ -110,21 +111,21 @@ func NewCustomerServiceHandler(srv CustomerServiceHandler, opts ...http1.HandleO
 			h.Error(w, r, err)
 			return
 		}
-		reply := out.(*NullReply)
+		reply := out.(*comm.NullReply)
 		if err := h.Encode(w, r, reply); err != nil {
 			h.Error(w, r, err)
 		}
 	}).Methods("POST")
 
 	r.HandleFunc("/users/customer/info", func(w http.ResponseWriter, r *http.Request) {
-		var in NullReq
+		var in comm.NullReq
 		if err := h.Decode(r, &in); err != nil {
 			h.Error(w, r, err)
 			return
 		}
 
 		next := func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.UserInfo(ctx, req.(*NullReq))
+			return srv.UserInfo(ctx, req.(*comm.NullReq))
 		}
 		if h.Middleware != nil {
 			next = h.Middleware(next)
@@ -158,7 +159,7 @@ func NewCustomerServiceHandler(srv CustomerServiceHandler, opts ...http1.HandleO
 			h.Error(w, r, err)
 			return
 		}
-		reply := out.(*NullReply)
+		reply := out.(*comm.NullReply)
 		if err := h.Encode(w, r, reply); err != nil {
 			h.Error(w, r, err)
 		}

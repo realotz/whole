@@ -24,11 +24,8 @@ type config struct {
 
 // hooks per client, for fast access.
 type hooks struct {
-	Customer   []ent.Hook
-	Employee   []ent.Hook
-	Permission []ent.Hook
-	Role       []ent.Hook
-	Wechat     []ent.Hook
+	Customer []ent.Hook
+	Wechat   []ent.Hook
 }
 
 // Options applies the options on the config object.

@@ -7,9 +7,6 @@ import (
 
 	"github.com/google/uuid"
 	"github.com/realotz/whole/internal/apps/users/data/ent/customer"
-	"github.com/realotz/whole/internal/apps/users/data/ent/employee"
-	"github.com/realotz/whole/internal/apps/users/data/ent/permission"
-	"github.com/realotz/whole/internal/apps/users/data/ent/role"
 	"github.com/realotz/whole/internal/apps/users/data/ent/schema"
 	"github.com/realotz/whole/internal/apps/users/data/ent/wechat"
 )
@@ -57,91 +54,6 @@ func init() {
 	customerDescSalt := customerFields[12].Descriptor()
 	// customer.SaltValidator is a validator for the "salt" field. It is called by the builders before save.
 	customer.SaltValidator = customerDescSalt.Validators[0].(func(string) error)
-	employeeMixin := schema.Employee{}.Mixin()
-	employeeMixinFields0 := employeeMixin[0].Fields()
-	_ = employeeMixinFields0
-	employeeFields := schema.Employee{}.Fields()
-	_ = employeeFields
-	// employeeDescCreateTime is the schema descriptor for create_time field.
-	employeeDescCreateTime := employeeMixinFields0[0].Descriptor()
-	// employee.DefaultCreateTime holds the default value on creation for the create_time field.
-	employee.DefaultCreateTime = employeeDescCreateTime.Default.(func() time.Time)
-	// employeeDescUpdateTime is the schema descriptor for update_time field.
-	employeeDescUpdateTime := employeeMixinFields0[1].Descriptor()
-	// employee.DefaultUpdateTime holds the default value on creation for the update_time field.
-	employee.DefaultUpdateTime = employeeDescUpdateTime.Default.(func() time.Time)
-	// employee.UpdateDefaultUpdateTime holds the default value on update for the update_time field.
-	employee.UpdateDefaultUpdateTime = employeeDescUpdateTime.UpdateDefault.(func() time.Time)
-	// employeeDescUUID is the schema descriptor for uuid field.
-	employeeDescUUID := employeeFields[2].Descriptor()
-	// employee.DefaultUUID holds the default value on creation for the uuid field.
-	employee.DefaultUUID = employeeDescUUID.Default.(func() uuid.UUID)
-	// employeeDescAccount is the schema descriptor for account field.
-	employeeDescAccount := employeeFields[3].Descriptor()
-	// employee.AccountValidator is a validator for the "account" field. It is called by the builders before save.
-	employee.AccountValidator = employeeDescAccount.Validators[0].(func(string) error)
-	// employeeDescName is the schema descriptor for name field.
-	employeeDescName := employeeFields[5].Descriptor()
-	// employee.DefaultName holds the default value on creation for the name field.
-	employee.DefaultName = employeeDescName.Default.(string)
-	// employeeDescPassword is the schema descriptor for password field.
-	employeeDescPassword := employeeFields[10].Descriptor()
-	// employee.PasswordValidator is a validator for the "password" field. It is called by the builders before save.
-	employee.PasswordValidator = employeeDescPassword.Validators[0].(func(string) error)
-	// employeeDescSalt is the schema descriptor for salt field.
-	employeeDescSalt := employeeFields[11].Descriptor()
-	// employee.SaltValidator is a validator for the "salt" field. It is called by the builders before save.
-	employee.SaltValidator = employeeDescSalt.Validators[0].(func(string) error)
-	permissionMixin := schema.Permission{}.Mixin()
-	permissionMixinFields0 := permissionMixin[0].Fields()
-	_ = permissionMixinFields0
-	permissionFields := schema.Permission{}.Fields()
-	_ = permissionFields
-	// permissionDescCreateTime is the schema descriptor for create_time field.
-	permissionDescCreateTime := permissionMixinFields0[0].Descriptor()
-	// permission.DefaultCreateTime holds the default value on creation for the create_time field.
-	permission.DefaultCreateTime = permissionDescCreateTime.Default.(func() time.Time)
-	// permissionDescUpdateTime is the schema descriptor for update_time field.
-	permissionDescUpdateTime := permissionMixinFields0[1].Descriptor()
-	// permission.DefaultUpdateTime holds the default value on creation for the update_time field.
-	permission.DefaultUpdateTime = permissionDescUpdateTime.Default.(func() time.Time)
-	// permission.UpdateDefaultUpdateTime holds the default value on update for the update_time field.
-	permission.UpdateDefaultUpdateTime = permissionDescUpdateTime.UpdateDefault.(func() time.Time)
-	// permissionDescName is the schema descriptor for name field.
-	permissionDescName := permissionFields[1].Descriptor()
-	// permission.NameValidator is a validator for the "name" field. It is called by the builders before save.
-	permission.NameValidator = permissionDescName.Validators[0].(func(string) error)
-	// permissionDescService is the schema descriptor for service field.
-	permissionDescService := permissionFields[2].Descriptor()
-	// permission.ServiceValidator is a validator for the "service" field. It is called by the builders before save.
-	permission.ServiceValidator = permissionDescService.Validators[0].(func(string) error)
-	// permissionDescPath is the schema descriptor for path field.
-	permissionDescPath := permissionFields[3].Descriptor()
-	// permission.PathValidator is a validator for the "path" field. It is called by the builders before save.
-	permission.PathValidator = permissionDescPath.Validators[0].(func(string) error)
-	// permissionDescAction is the schema descriptor for action field.
-	permissionDescAction := permissionFields[4].Descriptor()
-	// permission.ActionValidator is a validator for the "action" field. It is called by the builders before save.
-	permission.ActionValidator = permissionDescAction.Validators[0].(func(string) error)
-	roleMixin := schema.Role{}.Mixin()
-	roleMixinFields0 := roleMixin[0].Fields()
-	_ = roleMixinFields0
-	roleFields := schema.Role{}.Fields()
-	_ = roleFields
-	// roleDescCreateTime is the schema descriptor for create_time field.
-	roleDescCreateTime := roleMixinFields0[0].Descriptor()
-	// role.DefaultCreateTime holds the default value on creation for the create_time field.
-	role.DefaultCreateTime = roleDescCreateTime.Default.(func() time.Time)
-	// roleDescUpdateTime is the schema descriptor for update_time field.
-	roleDescUpdateTime := roleMixinFields0[1].Descriptor()
-	// role.DefaultUpdateTime holds the default value on creation for the update_time field.
-	role.DefaultUpdateTime = roleDescUpdateTime.Default.(func() time.Time)
-	// role.UpdateDefaultUpdateTime holds the default value on update for the update_time field.
-	role.UpdateDefaultUpdateTime = roleDescUpdateTime.UpdateDefault.(func() time.Time)
-	// roleDescName is the schema descriptor for name field.
-	roleDescName := roleFields[1].Descriptor()
-	// role.NameValidator is a validator for the "name" field. It is called by the builders before save.
-	role.NameValidator = roleDescName.Validators[0].(func(string) error)
 	wechatMixin := schema.Wechat{}.Mixin()
 	wechatMixinFields0 := wechatMixin[0].Fields()
 	_ = wechatMixinFields0

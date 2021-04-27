@@ -5,21 +5,40 @@
 // This is a compile-time assertion to ensure that this generated file
 // is compatible with the kratos package it is being compiled against.
 
-declare namespace GoogleProtobuf {
-	/** Timestamp */
-	type Timestamp = {
-		seconds?:number
-		nanos?:number
-	}
-}
-
 declare namespace UsersV1 {
-	/** CustomerLogin */
-	type CustomerLogin = {
+	/** CustomerDeleteOption */
+	type CustomerDeleteOption = {
+		ids?:Array<number>
+	}
+	/** Customer */
+	type Customer = {
+		id?:number
+		uuid?:string
+		name?:string
 		account?:string
-		password?:string
+		nick_name?:string
+		role?:string
+		email?:string
+		mobile?:string
+		id_card?:string
+		sex?:string
+		birthday?:GoogleProtobuf.Timestamp
+		last_ip?:string
+		last_time?:GoogleProtobuf.Timestamp
+		create_time?:GoogleProtobuf.Timestamp
+		update_time?:GoogleProtobuf.Timestamp
+		avatar?:string
+	}
+	/** CaptchaReq */
+	type CaptchaReq = {
+		to?:string
 		captcha?:string
-		code?:string
+		challenge?:string
+		tk?:string
+	}
+	/** CustomerGetOption */
+	type CustomerGetOption = {
+		id?:number
 	}
 	/** CustomerLoginRes */
 	type CustomerLoginRes = {
@@ -41,10 +60,6 @@ declare namespace UsersV1 {
 		page?:number
 		page_size?:number
 	}
-	/** CustomerGetOption */
-	type CustomerGetOption = {
-		id?:number
-	}
 	/** CustomerOption */
 	type CustomerOption = {
 		name?:string
@@ -60,32 +75,24 @@ declare namespace UsersV1 {
 		id?:number
 		avatar?:string
 	}
-	/** CustomerDeleteOption */
-	type CustomerDeleteOption = {
-		ids?:Array<number>
-	}
 	/** CustomerList */
 	type CustomerList = {
 		list?:Array<UsersV1.Customer>
 	}
-	/** Customer */
-	type Customer = {
-		id?:number
-		uuid?:string
-		name?:string
+	/** CustomerLogin */
+	type CustomerLogin = {
 		account?:string
-		nick_name?:string
-		role?:string
-		email?:string
-		mobile?:string
-		id_card?:string
-		sex?:string
-		birthday?:GoogleProtobuf.Timestamp
-		last_ip?:string
-		last_time?:GoogleProtobuf.Timestamp
-		create_time?:GoogleProtobuf.Timestamp
-		update_time?:GoogleProtobuf.Timestamp
-		avatar?:string
+		password?:string
+		captcha?:string
+		code?:string
+	}
+}
+
+declare namespace GoogleProtobuf {
+	/** Timestamp */
+	type Timestamp = {
+		seconds?:number
+		nanos?:number
 	}
 }
 

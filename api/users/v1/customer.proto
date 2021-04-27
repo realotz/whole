@@ -4,7 +4,7 @@ package users.v1;
 
 import "google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
-import "api/users/v1/user.proto";
+import "api/comm/base.proto";
 option go_package = "github.com/realotz/whole/api/users/v1;v1";
 option java_multiple_files = true;
 option java_package = "dev.kratos.api.users.v1";
@@ -25,19 +25,19 @@ service CustomerService {
     };
   }
   //登出
-  rpc Logout (users.v1.NullReq) returns (users.v1.NullReply)  {
+  rpc Logout (comm.NullReq) returns (comm.NullReply)  {
     option (google.api.http) = {
       post: "/users/customer/logout",
     };
   }
   //当前登录用户信息
-  rpc UserInfo (users.v1.NullReq) returns (Customer)  {
+  rpc UserInfo (comm.NullReq) returns (Customer)  {
     option (google.api.http) = {
       get: "/users/customer/info",
     };
   }
   //发送短信/邮箱验证码
-  rpc Captcha(users.v1.CaptchaReq)returns(users.v1.NullReply){
+  rpc Captcha(CaptchaReq)returns(comm.NullReply){
     option (google.api.http) = {
       get: "/users/customer/captcha",
     };
@@ -183,3 +183,14 @@ message Customer{
   string avatar=17;
 }
 
+//短信验证码
+message CaptchaReq{
+  //接收对象 email
+  string to=1;
+  //本地验证码
+  string captcha=2;
+  //极验预留
+  string challenge=3;
+  //极验预留
+  string tk=4;
+}

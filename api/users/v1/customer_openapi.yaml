@@ -1,5 +1,9 @@
 components:
   schemas:
+    CommNullReply:
+      type: object
+    CommNullReq:
+      type: object
     GoogleProtobufTimestamp:
       properties:
         nanos:
@@ -136,10 +140,6 @@ components:
           description: 性别
           type: string
       type: object
-    UsersV1NullReply:
-      type: object
-    UsersV1NullReq:
-      type: object
 info:
   description: users.v1
   title: users.v1
@@ -217,7 +217,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UsersV1NullReply'
+                $ref: '#/components/schemas/CommNullReply'
           description: ok
       summary: 发送短信/邮箱验证码
       tags:
@@ -290,14 +290,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UsersV1NullReq'
+              $ref: '#/components/schemas/CommNullReq'
         required: true
       responses:
         "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UsersV1NullReply'
+                $ref: '#/components/schemas/CommNullReply'
           description: ok
       summary: 登出
       tags:

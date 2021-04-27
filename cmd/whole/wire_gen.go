@@ -9,18 +9,10 @@ import (
 	"github.com/go-kratos/kratos/v2"
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/realotz/whole/internal/apps"
-	"github.com/realotz/whole/internal/apps/cms"
-	"github.com/realotz/whole/internal/apps/cms/biz"
-	"github.com/realotz/whole/internal/apps/cms/data"
-	"github.com/realotz/whole/internal/apps/cms/service"
 	"github.com/realotz/whole/internal/apps/systems"
-	biz2 "github.com/realotz/whole/internal/apps/systems/biz"
-	data2 "github.com/realotz/whole/internal/apps/systems/data"
-	service2 "github.com/realotz/whole/internal/apps/systems/service"
-	"github.com/realotz/whole/internal/apps/users"
-	biz3 "github.com/realotz/whole/internal/apps/users/biz"
-	data3 "github.com/realotz/whole/internal/apps/users/data"
-	service3 "github.com/realotz/whole/internal/apps/users/service"
+	"github.com/realotz/whole/internal/apps/systems/biz"
+	"github.com/realotz/whole/internal/apps/systems/data"
+	"github.com/realotz/whole/internal/apps/systems/service"
 	"github.com/realotz/whole/internal/conf"
 	"github.com/realotz/whole/internal/server"
 )
@@ -39,34 +31,11 @@ func initApp(confServer *conf.Server, confData *conf.Data, userConfig *conf.User
 	if err != nil {
 		return nil, err
 	}
-	categoryRepo := data.NewCategoryRepo(dataData, logger)
-	categoryUsecase := biz.NewCategoryUsecase(categoryRepo, logger)
-	categoryServiceServer := service.NewCategoryService(categoryUsecase)
-	cmsCms := cms.NewCmsApp(httpServer, grpcServer, middleware, categoryServiceServer)
-	data4, err := data2.NewData(confData, logger)
-	if err != nil {
-		return nil, err
-	}
-	fileRepo := data2.NewFileRepo(data4, logger)
-	fileUsecase := biz2.NewFileUsecase(fileRepo, logger)
-	fileServiceServer := service2.NewFileServiceService(fileUsecase)
+	fileRepo := data.NewFileRepo(dataData, logger)
+	fileUsecase := biz.NewFileUsecase(fileRepo, logger)
+	fileServiceServer := service.NewFileServiceService(fileUsecase)
 	systemsSystems := systems.NewSystemsApp(httpServer, grpcServer, middleware, fileServiceServer)
-	token, err := users.NewAuthToken(userConfig)
-	if err != nil {
-		return nil, err
-	}
-	data5, err := data3.NewData(confData, logger, token)
-	if err != nil {
-		return nil, err
-	}
-	employeeRepo := data3.NewEmployeeRepo(data5, logger)
-	employeeUsecase := biz3.NewEmployeeUsecase(employeeRepo, logger)
-	employeeServiceServer := service3.NewEmployeeService(employeeUsecase)
-	customerRepo := data3.NewCustomerRepo(data5, logger)
-	customerUsecase := biz3.NewCustomerUsecase(customerRepo, logger)
-	customerServiceServer := service3.NewCustomerService(customerUsecase)
-	usersUsers := users.NewUsersApp(httpServer, grpcServer, middleware, employeeServiceServer, customerServiceServer)
-	app := apps.NewApps(cmsCms, systemsSystems, usersUsers)
+	app := apps.NewApps(systemsSystems)
 	kratosApp := newApp(logger, app)
 	return kratosApp, nil
 }

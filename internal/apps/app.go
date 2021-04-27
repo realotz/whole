@@ -2,6 +2,7 @@ package apps
 
 import (
 	"github.com/google/wire"
+	"github.com/realotz/whole/internal/apps/admin"
 	"github.com/realotz/whole/internal/apps/cms"
 	"github.com/realotz/whole/internal/apps/systems"
 	"github.com/realotz/whole/internal/apps/users"
@@ -13,12 +14,10 @@ var ProviderSet = wire.NewSet(
 	cms.ProviderSet,
 	systems.ProviderSet,
 	users.ProviderSet,
+	admin.ProviderSet,
 	NewApps,
 )
 
-func NewApps(app *cms.Cms,
-	_ *systems.Systems,
-	_ *users.Users,
-) *server.App {
+func NewApps(app *systems.Systems) *server.App {
 	return app.App
 }

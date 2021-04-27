@@ -9,14 +9,5 @@ import (
 // Customer is the predicate function for customer builders.
 type Customer func(*sql.Selector)
 
-// Employee is the predicate function for employee builders.
-type Employee func(*sql.Selector)
-
-// Permission is the predicate function for permission builders.
-type Permission func(*sql.Selector)
-
-// Role is the predicate function for role builders.
-type Role func(*sql.Selector)
-
 // Wechat is the predicate function for wechat builders.
 type Wechat func(*sql.Selector)

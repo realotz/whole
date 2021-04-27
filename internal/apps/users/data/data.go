@@ -22,14 +22,17 @@ type Data struct {
 
 var ProviderSet = wire.NewSet(
 	NewData,
-	NewCasbinAdapter,
-	NewEmployeeRepo,
 	NewCustomerRepo,
 )
 
 // NewData .
-func NewData(c *conf.Data, logger log.Logger, tk *token.Token) (*Data, error) {
+func NewData(c *conf.Data, logger log.Logger, uc *conf.UserConfig) (*Data, error) {
 	logHelper := log.NewHelper("data", logger)
+	tk, err := token.New(uc.Cert.Key, uc.Cert.Cert)
+	if err != nil {
+		logHelper.Errorf("failed create jwt ", err)
+		return nil, err
+	}
 	client, err := ent.Open(
 		c.Database.Driver,
 		c.Database.Source,

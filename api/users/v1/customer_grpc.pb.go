@@ -4,6 +4,7 @@ package v1
 
 import (
 	context "context"
+	comm "github.com/realotz/whole/api/comm"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
@@ -23,11 +24,11 @@ type CustomerServiceClient interface {
 	//验证码登录
 	LoginForCode(ctx context.Context, in *CustomerLogin, opts ...grpc.CallOption) (*CustomerLoginRes, error)
 	//登出
-	Logout(ctx context.Context, in *NullReq, opts ...grpc.CallOption) (*NullReply, error)
+	Logout(ctx context.Context, in *comm.NullReq, opts ...grpc.CallOption) (*comm.NullReply, error)
 	//当前登录用户信息
-	UserInfo(ctx context.Context, in *NullReq, opts ...grpc.CallOption) (*Customer, error)
+	UserInfo(ctx context.Context, in *comm.NullReq, opts ...grpc.CallOption) (*Customer, error)
 	//发送短信/邮箱验证码
-	Captcha(ctx context.Context, in *CaptchaReq, opts ...grpc.CallOption) (*NullReply, error)
+	Captcha(ctx context.Context, in *CaptchaReq, opts ...grpc.CallOption) (*comm.NullReply, error)
 	//账户列表
 	List(ctx context.Context, in *CustomerListOption, opts ...grpc.CallOption) (*CustomerList, error)
 	//获取账户信息
@@ -62,8 +63,8 @@ func (c *customerServiceClient) LoginForCode(ctx context.Context, in *CustomerLo
 	return out, nil
 }
 
-func (c *customerServiceClient) Logout(ctx context.Context, in *NullReq, opts ...grpc.CallOption) (*NullReply, error) {
-	out := new(NullReply)
+func (c *customerServiceClient) Logout(ctx context.Context, in *comm.NullReq, opts ...grpc.CallOption) (*comm.NullReply, error) {
+	out := new(comm.NullReply)
 	err := c.cc.Invoke(ctx, "/users.v1.CustomerService/Logout", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -71,7 +72,7 @@ func (c *customerServiceClient) Logout(ctx context.Context, in *NullReq, opts ..
 	return out, nil
 }
 
-func (c *customerServiceClient) UserInfo(ctx context.Context, in *NullReq, opts ...grpc.CallOption) (*Customer, error) {
+func (c *customerServiceClient) UserInfo(ctx context.Context, in *comm.NullReq, opts ...grpc.CallOption) (*Customer, error) {
 	out := new(Customer)
 	err := c.cc.Invoke(ctx, "/users.v1.CustomerService/UserInfo", in, out, opts...)
 	if err != nil {
@@ -80,8 +81,8 @@ func (c *customerServiceClient) UserInfo(ctx context.Context, in *NullReq, opts 
 	return out, nil
 }
 
-func (c *customerServiceClient) Captcha(ctx context.Context, in *CaptchaReq, opts ...grpc.CallOption) (*NullReply, error) {
-	out := new(NullReply)
+func (c *customerServiceClient) Captcha(ctx context.Context, in *CaptchaReq, opts ...grpc.CallOption) (*comm.NullReply, error) {
+	out := new(comm.NullReply)
 	err := c.cc.Invoke(ctx, "/users.v1.CustomerService/Captcha", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -125,11 +126,11 @@ type CustomerServiceServer interface {
 	//验证码登录
 	LoginForCode(context.Context, *CustomerLogin) (*CustomerLoginRes, error)
 	//登出
-	Logout(context.Context, *NullReq) (*NullReply, error)
+	Logout(context.Context, *comm.NullReq) (*comm.NullReply, error)
 	//当前登录用户信息
-	UserInfo(context.Context, *NullReq) (*Customer, error)
+	UserInfo(context.Context, *comm.NullReq) (*Customer, error)
 	//发送短信/邮箱验证码
-	Captcha(context.Context, *CaptchaReq) (*NullReply, error)
+	Captcha(context.Context, *CaptchaReq) (*comm.NullReply, error)
 	//账户列表
 	List(context.Context, *CustomerListOption) (*CustomerList, error)
 	//获取账户信息
@@ -149,13 +150,13 @@ func (UnimplementedCustomerServiceServer) Login(context.Context, *CustomerLogin)
 func (UnimplementedCustomerServiceServer) LoginForCode(context.Context, *CustomerLogin) (*CustomerLoginRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method LoginForCode not implemented")
 }
-func (UnimplementedCustomerServiceServer) Logout(context.Context, *NullReq) (*NullReply, error) {
+func (UnimplementedCustomerServiceServer) Logout(context.Context, *comm.NullReq) (*comm.NullReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Logout not implemented")
 }
-func (UnimplementedCustomerServiceServer) UserInfo(context.Context, *NullReq) (*Customer, error) {
+func (UnimplementedCustomerServiceServer) UserInfo(context.Context, *comm.NullReq) (*Customer, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UserInfo not implemented")
 }
-func (UnimplementedCustomerServiceServer) Captcha(context.Context, *CaptchaReq) (*NullReply, error) {
+func (UnimplementedCustomerServiceServer) Captcha(context.Context, *CaptchaReq) (*comm.NullReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Captcha not implemented")
 }
 func (UnimplementedCustomerServiceServer) List(context.Context, *CustomerListOption) (*CustomerList, error) {
@@ -217,7 +218,7 @@ func _CustomerService_LoginForCode_Handler(srv interface{}, ctx context.Context,
 }
 
 func _CustomerService_Logout_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(NullReq)
+	in := new(comm.NullReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -229,13 +230,13 @@ func _CustomerService_Logout_Handler(srv interface{}, ctx context.Context, dec f
 		FullMethod: "/users.v1.CustomerService/Logout",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CustomerServiceServer).Logout(ctx, req.(*NullReq))
+		return srv.(CustomerServiceServer).Logout(ctx, req.(*comm.NullReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _CustomerService_UserInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(NullReq)
+	in := new(comm.NullReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -247,7 +248,7 @@ func _CustomerService_UserInfo_Handler(srv interface{}, ctx context.Context, dec
 		FullMethod: "/users.v1.CustomerService/UserInfo",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CustomerServiceServer).UserInfo(ctx, req.(*NullReq))
+		return srv.(CustomerServiceServer).UserInfo(ctx, req.(*comm.NullReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
