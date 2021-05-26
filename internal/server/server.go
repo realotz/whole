@@ -1,6 +1,7 @@
 package server
 
 import (
+	"github.com/go-kratos/kratos/v2/log"
 	"github.com/go-kratos/kratos/v2/middleware"
 	"github.com/go-kratos/kratos/v2/middleware/logging"
 	"github.com/go-kratos/kratos/v2/middleware/recovery"
@@ -18,7 +19,7 @@ import (
 var ProviderSet = wire.NewSet(NewMiddleware, NewHTTPServer, NewGRPCServer)
 
 // 全局Middleware
-func NewMiddleware(c *conf.Data) (middleware.Middleware, error) {
+func NewMiddleware(c *conf.Data, logger log.Logger) (middleware.Middleware, error) {
 	// 获取公钥实例
 	jk, err := token.NewPublic(c.JwtCert)
 	if err != nil {
@@ -27,7 +28,7 @@ func NewMiddleware(c *conf.Data) (middleware.Middleware, error) {
 	return middleware.Chain(
 		recovery.Recovery(),
 		tracing.Server(),
-		logging.Server(),
+		logging.Server(logger),
 		// jwt tk验证为whole模式下使用，微服务模式下在网关鉴权
 		mid.JwtTokenWithCtx(jk),
 	), nil

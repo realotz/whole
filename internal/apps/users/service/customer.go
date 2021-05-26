@@ -14,12 +14,14 @@ import (
 func NewCustomerService(member *biz.CustomerUsecase) pb.CustomerServiceServer {
 	return &CustomerService{
 		member: member,
+		domain: "Customer",
 	}
 }
 
 type CustomerService struct {
 	pb.UnimplementedCustomerServiceServer
 	member *biz.CustomerUsecase
+	domain string
 }
 
 func (c CustomerService) LoginForCode(ctx context.Context, login *pb.CustomerLogin) (*pb.CustomerLoginRes, error) {
@@ -38,7 +40,7 @@ func (c CustomerService) Captcha(ctx context.Context, req *pb.CaptchaReq) (*coom
 func (s *CustomerService) UserInfo(ctx context.Context, req *coomPb.NullReq) (*pb.Customer, error) {
 	userInfo := token.FormLoginContext(ctx)
 	if userInfo == nil {
-		return nil, errors.Unauthorized(reason.NotLogin, "未登录")
+		return nil, errors.Unauthorized(s.domain, reason.NotLogin, "未登录")
 	}
 	m, err := s.member.Get(ctx, userInfo.UserID)
 	if err != nil {
@@ -51,7 +53,7 @@ func (s *CustomerService) UserInfo(ctx context.Context, req *coomPb.NullReq) (*p
 func (s *CustomerService) Login(ctx context.Context, req *pb.CustomerLogin) (*pb.CustomerLoginRes, error) {
 	tk, etime, mb, err := s.member.Login(ctx, req.Account, req.Password)
 	if err != nil {
-		return nil, errors.Unauthorized(reason.LoginError, err.Error())
+		return nil, errors.Unauthorized(s.domain, reason.LoginError, err.Error())
 	}
 	return &pb.CustomerLoginRes{
 		Token:          tk,

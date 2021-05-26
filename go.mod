@@ -8,8 +8,7 @@ require (
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/emicklei/proto v1.9.0 // indirect
 	github.com/go-git/go-git/v5 v5.3.0
-	github.com/go-kratos/kratos/cmd/kratos/v2 v2.0.0-20210406074708-afd2a6b19af5 // indirect
-	github.com/go-kratos/kratos/v2 v2.0.0-beta3
+	github.com/go-kratos/kratos/v2 v2.0.0-beta4
 	github.com/go-redis/redis/extra/redisotel v0.3.0
 	github.com/go-redis/redis/v8 v8.8.0
 	github.com/go-sql-driver/mysql v1.5.1-0.20200311113236-681ffa848bae

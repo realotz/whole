@@ -14,11 +14,13 @@ import (
 type EmployeeService struct {
 	pb.UnimplementedEmployeeServiceServer
 	member *biz.EmployeeUsecase
+	domain string
 }
 
 func NewEmployeeService(member *biz.EmployeeUsecase) pb.EmployeeServiceServer {
 	return &EmployeeService{
 		member: member,
+		domain: "Employee",
 	}
 }
 
@@ -41,7 +43,7 @@ func (s *EmployeeService) Captcha(ctx context.Context, req *pb.CaptchaReq) (*com
 func (s *EmployeeService) UserInfo(ctx context.Context, req *commPb.NullReq) (*pb.Employee, error) {
 	userInfo := token.FormLoginContext(ctx)
 	if userInfo == nil {
-		return nil, errors.Unauthorized(reason.NotLogin, "未登录")
+		return nil, errors.Unauthorized(s.domain, reason.NotLogin, "未登录")
 	}
 	m, err := s.member.Get(ctx, userInfo.UserID)
 	if err != nil {
@@ -54,7 +56,7 @@ func (s *EmployeeService) UserInfo(ctx context.Context, req *commPb.NullReq) (*p
 func (s *EmployeeService) Login(ctx context.Context, req *pb.EmployeeLogin) (*pb.EmployeeLoginRes, error) {
 	tk, etime, mb, err := s.member.Login(ctx, req.Account, req.Password)
 	if err != nil {
-		return nil, errors.Unauthorized(reason.LoginError, err.Error())
+		return nil, errors.Unauthorized(s.domain, reason.LoginError, err.Error())
 	}
 	return &pb.EmployeeLoginRes{
 		Token:          tk,
