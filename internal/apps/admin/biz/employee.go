@@ -9,10 +9,12 @@ import (
 	"fmt"
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/google/uuid"
+	pb "github.com/realotz/whole/api/admin/v1"
 	"github.com/realotz/whole/pkg/utils"
 	"time"
 )
 
+// 用户biz结构
 type Employee struct {
 	Sex     string `json:"sex,omitempty"`
 	Name    string `json:"name,omitempty"`
@@ -34,7 +36,7 @@ type Employee struct {
 }
 
 type EmployeeRepo interface {
-	ListEmployee(ctx context.Context) ([]*Employee, error)
+	ListEmployee(ctx context.Context, opt *pb.EmployeeListOption) ([]*Employee, int64, error)
 	GetEmployee(ctx context.Context, id int64) (*Employee, error)
 	CreateEmployee(ctx context.Context, article *Employee) (*Employee, error)
 	UpdateEmployee(ctx context.Context, id int64, article *Employee) (*Employee, error)
@@ -53,10 +55,12 @@ func NewEmployeeUsecase(repo EmployeeRepo, logger log.Logger) *EmployeeUsecase {
 	return &EmployeeUsecase{repo: repo, log: log.NewHelper("biz/member", logger)}
 }
 
-func (uc *EmployeeUsecase) List(ctx context.Context) (ps []*Employee, err error) {
-	return uc.repo.ListEmployee(ctx)
+// 查询列表
+func (uc *EmployeeUsecase) List(ctx context.Context, opt *pb.EmployeeListOption) (ps []*Employee, total int64, err error) {
+	return uc.repo.ListEmployee(ctx, opt)
 }
 
+// 根据主键查询
 func (uc *EmployeeUsecase) Get(ctx context.Context, id int64) (p *Employee, err error) {
 	return uc.repo.GetEmployee(ctx, id)
 }

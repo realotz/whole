@@ -56,6 +56,15 @@ export async function Captcha(params: AdminV1.CaptchaReq, options?: Options) {
 	});
 }
 
+/** CaptchaImg 图片验证码 /api */
+export async function CaptchaImg(params: AdminV1.CaptchaImgReq, options?: Options) {
+	return request<AdminV1.CaptchaImgReply>(APIService + '/admin/employee/captcha-img', {
+    	method: 'POST',
+    	params: {...params},
+    	...(options || {}),
+	});
+}
+
 /** List 账户列表 /api */
 export async function List(params: AdminV1.EmployeeListOption, options?: Options) {
 	return request<AdminV1.EmployeeList>(APIService + '/admin/employee', {

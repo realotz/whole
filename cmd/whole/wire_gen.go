@@ -53,7 +53,7 @@ func initApp(confServer *conf.Server, confData *conf.Data, userConfig *conf.User
 	}
 	employeeRepo := data2.NewEmployeeRepo(data5, logger)
 	employeeUsecase := biz2.NewEmployeeUsecase(employeeRepo, logger)
-	employeeServiceServer := service2.NewEmployeeService(employeeUsecase)
+	employeeServiceServer := service2.NewEmployeeService(employeeUsecase, confData)
 	adminAdmin := admin.NewAdminApp(httpServer, grpcServer, middleware, employeeServiceServer)
 	data6, err := data3.NewData(confData, logger, userConfig)
 	if err != nil {

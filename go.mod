@@ -16,6 +16,7 @@ require (
 	github.com/google/uuid v1.2.0
 	github.com/google/wire v0.5.0
 	github.com/gorilla/mux v1.8.0
+	github.com/mojocn/base64Captcha v1.3.4 // indirect
 	github.com/spf13/cobra v1.1.3
 	golang.org/x/mod v0.4.0
 	google.golang.org/genproto v0.0.0-20210212180131-e7f2df4ecc2d

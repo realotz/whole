@@ -2,25 +2,41 @@ package service
 
 import (
 	"context"
+	"fmt"
 	"github.com/go-kratos/kratos/v2/errors"
+	"github.com/go-redis/redis/v8"
+	"github.com/mojocn/base64Captcha"
 	pb "github.com/realotz/whole/api/admin/v1"
 	commPb "github.com/realotz/whole/api/comm"
 	"github.com/realotz/whole/api/reason"
 	"github.com/realotz/whole/internal/apps/admin/biz"
+	"github.com/realotz/whole/internal/conf"
+	"github.com/realotz/whole/pkg/captcha"
 	"github.com/realotz/whole/pkg/token"
+	"github.com/realotz/whole/pkg/utils"
 	"google.golang.org/protobuf/types/known/timestamppb"
+	"math/rand"
 )
 
 type EmployeeService struct {
 	pb.UnimplementedEmployeeServiceServer
 	member *biz.EmployeeUsecase
 	domain string
+	store  *captcha.RedisStore
 }
 
-func NewEmployeeService(member *biz.EmployeeUsecase) pb.EmployeeServiceServer {
+func NewEmployeeService(member *biz.EmployeeUsecase, c *conf.Data) pb.EmployeeServiceServer {
 	return &EmployeeService{
 		member: member,
 		domain: "Employee",
+		store: captcha.NewRedisStore(redis.NewClient(&redis.Options{
+			Addr:         c.Redis.Addr,
+			Password:     c.Redis.Password,
+			DB:           int(c.Redis.Db),
+			DialTimeout:  c.Redis.DialTimeout.AsDuration(),
+			WriteTimeout: c.Redis.WriteTimeout.AsDuration(),
+			ReadTimeout:  c.Redis.ReadTimeout.AsDuration(),
+		})),
 	}
 }
 
@@ -36,7 +52,37 @@ func (s *EmployeeService) Logout(ctx context.Context, req *commPb.NullReq) (*com
 
 //发送验证码
 func (s *EmployeeService) Captcha(ctx context.Context, req *pb.CaptchaReq) (*commPb.NullReply, error) {
+	if req.Captcha == "" {
+		return nil, errors.Unauthorized(s.domain, reason.LoginError, "验证码不能为空")
+	}
+	if req.To == "" {
+		return nil, errors.Unauthorized(s.domain, reason.LoginError, "接收者不能为空")
+	}
+	if !s.store.Verify(req.CaptchaId, req.Captcha, true) {
+		return nil, errors.Unauthorized(s.domain, reason.LoginError, "验证码错误")
+	}
+	code := fmt.Sprint(rand.Intn(9999) + 1000)
+	s.store.Set("captcha:"+req.To, code)
+	if utils.CheckEmail(code) {
+		// todo 发送邮箱
+	} else if utils.CheckMobile(code) {
+		// todo 发送短信
+	}
 	panic("implement me")
+}
+
+//生成图片验证码
+func (s *EmployeeService) CaptchaImg(_ context.Context, req *pb.CaptchaImgReq) (*pb.CaptchaImgReply, error) {
+	driver := base64Captcha.NewDriverDigit(int(req.ImgHeight), int(req.ImgWidth), 6, 0.7, 80)
+	cp := base64Captcha.NewCaptcha(driver, base64Captcha.DefaultMemStore)
+	if id, b64s, err := cp.Generate(); err != nil {
+		return nil, errors.Unauthorized(s.domain, "验证码获取失败", err.Error())
+	} else {
+		return &pb.CaptchaImgReply{
+			CaptchaId: id,
+			ImgBytes:  b64s,
+		}, nil
+	}
 }
 
 // 获取当前登录用户id
@@ -54,6 +100,15 @@ func (s *EmployeeService) UserInfo(ctx context.Context, req *commPb.NullReq) (*p
 
 // 登录
 func (s *EmployeeService) Login(ctx context.Context, req *pb.EmployeeLogin) (*pb.EmployeeLoginRes, error) {
+	if req.Password == "" || req.Account == "" {
+		return nil, errors.Unauthorized(s.domain, reason.LoginError, "账号密码不能为空")
+	}
+	if req.Captcha == "" {
+		return nil, errors.Unauthorized(s.domain, reason.LoginError, "验证码不能为空")
+	}
+	if !s.store.Verify(req.CaptchaId, req.Captcha, true) {
+		return nil, errors.Unauthorized(s.domain, reason.LoginError, "验证码错误")
+	}
 	tk, etime, mb, err := s.member.Login(ctx, req.Account, req.Password)
 	if err != nil {
 		return nil, errors.Unauthorized(s.domain, reason.LoginError, err.Error())
@@ -67,11 +122,11 @@ func (s *EmployeeService) Login(ctx context.Context, req *pb.EmployeeLogin) (*pb
 
 //用户列表
 func (s *EmployeeService) List(ctx context.Context, req *pb.EmployeeListOption) (*pb.EmployeeList, error) {
-	ms, err := s.member.List(ctx)
+	ms, total, err := s.member.List(ctx, req)
 	if err != nil {
 		return nil, err
 	}
-	var resp = &pb.EmployeeList{List: make([]*pb.Employee, 0, len(ms))}
+	var resp = &pb.EmployeeList{List: make([]*pb.Employee, 0, len(ms)), Total: total}
 	for _, v := range ms {
 		resp.List = append(resp.List, s.protoMsg(v))
 	}

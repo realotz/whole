@@ -29,6 +29,8 @@ type EmployeeServiceClient interface {
 	UserInfo(ctx context.Context, in *comm.NullReq, opts ...grpc.CallOption) (*Employee, error)
 	//发送短信/邮箱验证码
 	Captcha(ctx context.Context, in *CaptchaReq, opts ...grpc.CallOption) (*comm.NullReply, error)
+	//图片验证码
+	CaptchaImg(ctx context.Context, in *CaptchaImgReq, opts ...grpc.CallOption) (*CaptchaImgReply, error)
 	//账户列表
 	List(ctx context.Context, in *EmployeeListOption, opts ...grpc.CallOption) (*EmployeeList, error)
 	//获取账户信息
@@ -94,6 +96,15 @@ func (c *employeeServiceClient) Captcha(ctx context.Context, in *CaptchaReq, opt
 	return out, nil
 }
 
+func (c *employeeServiceClient) CaptchaImg(ctx context.Context, in *CaptchaImgReq, opts ...grpc.CallOption) (*CaptchaImgReply, error) {
+	out := new(CaptchaImgReply)
+	err := c.cc.Invoke(ctx, "/admin.v1.EmployeeService/CaptchaImg", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *employeeServiceClient) List(ctx context.Context, in *EmployeeListOption, opts ...grpc.CallOption) (*EmployeeList, error) {
 	out := new(EmployeeList)
 	err := c.cc.Invoke(ctx, "/admin.v1.EmployeeService/List", in, out, opts...)
@@ -153,6 +164,8 @@ type EmployeeServiceServer interface {
 	UserInfo(context.Context, *comm.NullReq) (*Employee, error)
 	//发送短信/邮箱验证码
 	Captcha(context.Context, *CaptchaReq) (*comm.NullReply, error)
+	//图片验证码
+	CaptchaImg(context.Context, *CaptchaImgReq) (*CaptchaImgReply, error)
 	//账户列表
 	List(context.Context, *EmployeeListOption) (*EmployeeList, error)
 	//获取账户信息
@@ -184,6 +197,9 @@ func (UnimplementedEmployeeServiceServer) UserInfo(context.Context, *comm.NullRe
 }
 func (UnimplementedEmployeeServiceServer) Captcha(context.Context, *CaptchaReq) (*comm.NullReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Captcha not implemented")
+}
+func (UnimplementedEmployeeServiceServer) CaptchaImg(context.Context, *CaptchaImgReq) (*CaptchaImgReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CaptchaImg not implemented")
 }
 func (UnimplementedEmployeeServiceServer) List(context.Context, *EmployeeListOption) (*EmployeeList, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method List not implemented")
@@ -299,6 +315,24 @@ func _EmployeeService_Captcha_Handler(srv interface{}, ctx context.Context, dec 
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(EmployeeServiceServer).Captcha(ctx, req.(*CaptchaReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _EmployeeService_CaptchaImg_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CaptchaImgReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(EmployeeServiceServer).CaptchaImg(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/admin.v1.EmployeeService/CaptchaImg",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(EmployeeServiceServer).CaptchaImg(ctx, req.(*CaptchaImgReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -419,6 +453,10 @@ var EmployeeService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Captcha",
 			Handler:    _EmployeeService_Captcha_Handler,
+		},
+		{
+			MethodName: "CaptchaImg",
+			Handler:    _EmployeeService_CaptchaImg_Handler,
 		},
 		{
 			MethodName: "List",

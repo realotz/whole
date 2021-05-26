@@ -6,15 +6,10 @@
 // is compatible with the kratos package it is being compiled against.
 
 declare namespace UsersV1 {
-	/** CustomerLoginRes */
-	type CustomerLoginRes = {
-		token?:string
-		role?:string
-		expiration_time?:number
-		customer?:UsersV1.Customer
-	}
-	/** CustomerOption */
-	type CustomerOption = {
+	/** Customer */
+	type Customer = {
+		id?:number
+		uuid?:string
 		name?:string
 		account?:string
 		nick_name?:string
@@ -22,15 +17,13 @@ declare namespace UsersV1 {
 		email?:string
 		mobile?:string
 		id_card?:string
-		password?:string
 		sex?:string
 		birthday?:GoogleProtobuf.Timestamp
-		id?:number
+		last_ip?:string
+		last_time?:GoogleProtobuf.Timestamp
+		create_time?:GoogleProtobuf.Timestamp
+		update_time?:GoogleProtobuf.Timestamp
 		avatar?:string
-	}
-	/** CustomerList */
-	type CustomerList = {
-		list?:Array<UsersV1.Customer>
 	}
 	/** CaptchaReq */
 	type CaptchaReq = {
@@ -54,24 +47,16 @@ declare namespace UsersV1 {
 	type CustomerDeleteOption = {
 		ids?:Array<number>
 	}
-	/** Customer */
-	type Customer = {
-		id?:number
-		uuid?:string
-		name?:string
-		account?:string
-		nick_name?:string
+	/** CustomerList */
+	type CustomerList = {
+		list?:Array<UsersV1.Customer>
+	}
+	/** CustomerLoginRes */
+	type CustomerLoginRes = {
+		token?:string
 		role?:string
-		email?:string
-		mobile?:string
-		id_card?:string
-		sex?:string
-		birthday?:GoogleProtobuf.Timestamp
-		last_ip?:string
-		last_time?:GoogleProtobuf.Timestamp
-		create_time?:GoogleProtobuf.Timestamp
-		update_time?:GoogleProtobuf.Timestamp
-		avatar?:string
+		expiration_time?:number
+		customer?:UsersV1.Customer
 	}
 	/** CustomerListOption */
 	type CustomerListOption = {
@@ -85,6 +70,21 @@ declare namespace UsersV1 {
 		create_time?:string
 		page?:number
 		page_size?:number
+	}
+	/** CustomerOption */
+	type CustomerOption = {
+		name?:string
+		account?:string
+		nick_name?:string
+		role?:string
+		email?:string
+		mobile?:string
+		id_card?:string
+		password?:string
+		sex?:string
+		birthday?:GoogleProtobuf.Timestamp
+		id?:number
+		avatar?:string
 	}
 }
 

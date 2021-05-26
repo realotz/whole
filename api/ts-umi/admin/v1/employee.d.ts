@@ -6,12 +6,24 @@
 // is compatible with the kratos package it is being compiled against.
 
 declare namespace AdminV1 {
-	/** EmployeeList */
-	type EmployeeList = {
-		list?:Array<AdminV1.Employee>
-		total?:number
-		page?:number
-		page_size?:number
+	/** EmployeeLoginRes */
+	type EmployeeLoginRes = {
+		token?:string
+		role?:string
+		expiration_time?:number
+		employee?:AdminV1.Employee
+	}
+	/** EmployeeListOption */
+	type EmployeeListOption = {
+		name?:string
+		tag?:string
+		email?:string
+		mobile?:string
+		sex?:string
+		role?:number
+		type?:string
+		create_time?:string
+		meta?:Comm.ListOption
 	}
 	/** Employee */
 	type Employee = {
@@ -36,33 +48,31 @@ declare namespace AdminV1 {
 	type CaptchaReq = {
 		to?:string
 		captcha?:string
+		captcha_id?:string
 		challenge?:string
 		tk?:string
+	}
+	/** CaptchaImgReq */
+	type CaptchaImgReq = {
+		img_height?:number
+		img_width?:number
+	}
+	/** CaptchaImgReply */
+	type CaptchaImgReply = {
+		captcha_id?:string
+		img_bytes?:string
 	}
 	/** EmployeeLogin */
 	type EmployeeLogin = {
 		account?:string
 		password?:string
 		captcha?:string
+		captcha_id?:string
 		code?:string
 	}
-	/** EmployeeLoginRes */
-	type EmployeeLoginRes = {
-		token?:string
-		role?:string
-		expiration_time?:number
-		employee?:AdminV1.Employee
-	}
-	/** EmployeeListOption */
-	type EmployeeListOption = {
-		name?:string
-		tag?:string
-		email?:string
-		mobile?:string
-		sex?:string
-		role?:string
-		type?:string
-		create_time?:string
+	/** EmployeeGetOption */
+	type EmployeeGetOption = {
+		id?:number
 	}
 	/** EmployeeOption */
 	type EmployeeOption = {
@@ -83,9 +93,20 @@ declare namespace AdminV1 {
 	type EmployeeDeleteOption = {
 		ids?:Array<number>
 	}
-	/** EmployeeGetOption */
-	type EmployeeGetOption = {
-		id?:number
+	/** EmployeeList */
+	type EmployeeList = {
+		list?:Array<AdminV1.Employee>
+		total?:number
+		page?:number
+		page_size?:number
+	}
+}
+
+declare namespace Comm {
+	/** ListOption */
+	type ListOption = {
+		page?:number
+		page_size?:number
 	}
 }
 

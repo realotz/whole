@@ -23,6 +23,8 @@ const _ = http1.SupportPackageIsVersion1
 type EmployeeServiceHandler interface {
 	Captcha(context.Context, *CaptchaReq) (*comm.NullReply, error)
 
+	CaptchaImg(context.Context, *CaptchaImgReq) (*CaptchaImgReply, error)
+
 	Create(context.Context, *EmployeeOption) (*Employee, error)
 
 	Delete(context.Context, *EmployeeDeleteOption) (*comm.NullReply, error)
@@ -168,6 +170,30 @@ func NewEmployeeServiceHandler(srv EmployeeServiceHandler, opts ...http1.HandleO
 			h.Error(w, r, err)
 		}
 	}).Methods("GET")
+
+	r.HandleFunc("/admin/employee/captcha-img", func(w http.ResponseWriter, r *http.Request) {
+		var in CaptchaImgReq
+		if err := h.Decode(r, &in); err != nil {
+			h.Error(w, r, err)
+			return
+		}
+
+		next := func(ctx context.Context, req interface{}) (interface{}, error) {
+			return srv.CaptchaImg(ctx, req.(*CaptchaImgReq))
+		}
+		if h.Middleware != nil {
+			next = h.Middleware(next)
+		}
+		out, err := next(r.Context(), &in)
+		if err != nil {
+			h.Error(w, r, err)
+			return
+		}
+		reply := out.(*CaptchaImgReply)
+		if err := h.Encode(w, r, reply); err != nil {
+			h.Error(w, r, err)
+		}
+	}).Methods("POST")
 
 	r.HandleFunc("/admin/employee", func(w http.ResponseWriter, r *http.Request) {
 		var in EmployeeListOption

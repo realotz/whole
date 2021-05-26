@@ -42,6 +42,12 @@ service EmployeeService {
       get: "/admin/employee/captcha",
     };
   }
+  //图片验证码
+  rpc CaptchaImg (CaptchaImgReq) returns (CaptchaImgReply)  {
+    option (google.api.http) = {
+      post: "/admin/employee/captcha-img",
+    };
+  }
   //账户列表
   rpc List (EmployeeListOption) returns (EmployeeList)  {
     option (google.api.http) = {
@@ -83,8 +89,10 @@ message EmployeeLogin{
   string password = 2;
   // 验证码
   string captcha = 3;
+  // 验证码id
+  string captcha_id = 4;
   // 短信、邮箱 验证码
-  string code = 4;
+  string code = 5;
 }
 
 //登录返回
@@ -111,15 +119,16 @@ message EmployeeListOption {
   //性别筛选
   string sex = 5;
   //角色筛选
-  string role = 6;
+  int64 role = 6;
   //用户类型筛选
   string type = 7;
   //创建时间筛选
   string create_time = 8;
+  comm.ListOption meta = 100;
 }
 
 message EmployeeGetOption{
-  int64 id=1;
+  int64 id = 1;
 }
 
 message EmployeeOption {
@@ -146,7 +155,7 @@ message EmployeeOption {
   // id
   int64 id = 12;
   // 头像
-  string avatar=13;
+  string avatar = 13;
 }
 
 message EmployeeDeleteOption {
@@ -155,10 +164,10 @@ message EmployeeDeleteOption {
 
 message EmployeeList {
   //用户列表
-  repeated Employee list =1;
+  repeated Employee list = 1;
   int64 total = 2;
-  uint32 page=3;
-  uint32 page_size=4;
+  uint32 page = 3;
+  uint32 page_size = 4;
 }
 
 // 用户信息
@@ -192,18 +201,31 @@ message Employee{
   //更新时间
   google.protobuf.Timestamp update_time = 16;
   //头像
-  string avatar=17;
+  string avatar = 17;
 }
 
 
 //短信验证码
 message CaptchaReq{
   //接收对象 email
-  string to=1;
+  string to = 1;
   //本地验证码
-  string captcha=2;
-  //极验预留
-  string challenge=3;
-  //极验预留
-  string tk=4;
+  string captcha = 2;
+  //本地验证码
+  string captcha_id = 3;
+  //极验
+  string challenge = 4;
+  //极验
+  string tk = 5;
 }
+
+message CaptchaImgReq{
+  uint32 img_height = 1;
+  uint32 img_width = 2;
+}
+
+message CaptchaImgReply{
+  string captcha_id = 2;
+  string img_bytes = 1;
+}
+

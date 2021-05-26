@@ -6,3 +6,8 @@ option go_package = "github.com/realotz/whole/api/comm;comm";
 
 message NullReq{}
 message NullReply{}
+
+message ListOption{
+  uint32 page = 1;
+  uint32 page_size = 2;
+}

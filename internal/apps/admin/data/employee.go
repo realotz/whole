@@ -4,9 +4,12 @@ import (
 	"context"
 	"fmt"
 	"github.com/go-kratos/kratos/v2/log"
+	pb "github.com/realotz/whole/api/admin/v1"
 	"github.com/realotz/whole/internal/apps/admin/biz"
 	"github.com/realotz/whole/internal/apps/admin/data/ent"
 	"github.com/realotz/whole/internal/apps/admin/data/ent/employee"
+	"github.com/realotz/whole/internal/apps/admin/data/ent/role"
+	"github.com/realotz/whole/pkg/utils"
 )
 
 type entEmployee ent.Employee
@@ -66,16 +69,48 @@ func (ar *employeeRepo) GetEmployeeForAccounts(ctx context.Context, account stri
 }
 
 //获取用户列表
-func (ar *employeeRepo) ListEmployee(ctx context.Context) ([]*biz.Employee, error) {
-	ps, err := ar.data.db.Employee.Query().All(ctx)
+func (ar *employeeRepo) ListEmployee(ctx context.Context, op *pb.EmployeeListOption) ([]*biz.Employee, int64, error) {
+	query := ar.data.db.Employee.Query()
+	//性别查询
+	if op.Sex != "" {
+		if err := employee.SexValidator(employee.Sex(op.Sex)); err != nil {
+			return nil, 0, err
+		}
+		query.Where(employee.SexEQ(employee.Sex(op.Sex)))
+	}
+	// 电子邮件
+	if op.Email != "" {
+		query.Where(employee.EmailEQ(op.Email))
+	}
+	// 手机号
+	if op.Mobile != "" {
+		query.Where(employee.MobileEQ(op.Mobile))
+	}
+	// 角色
+	if op.Role != 0 {
+		query.Where(employee.HasRolesWith(role.IDEQ(op.Role)))
+	}
+	// 名字
+	if op.Name != "" {
+		query.Where(employee.Or(
+			employee.NameContains("%" + op.Name + "%"),
+		))
+	}
+	query.Order(ent.Desc("id"))
+	total, err := query.Count(ctx)
+	if op.Meta != nil {
+		offset, limit := utils.GetOfficeLimit(&op.Meta.Page, &op.Meta.PageSize)
+		query.Offset(offset).Limit(limit)
+	}
+	ps, err := query.All(ctx)
 	if err != nil {
-		return nil, err
+		return nil, 0, err
 	}
 	rv := make([]*biz.Employee, 0)
 	for _, p := range ps {
 		rv = append(rv, entEmployee(*p).BizStruct())
 	}
-	return rv, nil
+	return rv, int64(total), nil
 }
 
 // 获取用户信息

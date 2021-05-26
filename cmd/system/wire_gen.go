@@ -21,7 +21,7 @@ import (
 // initApp init kratos application.
 func initApp(confServer *conf.Server, confData *conf.Data, logger log.Logger) (*kratos.App, error) {
 	httpServer := server.NewHTTPServer(confServer)
-	middleware, err := server.NewMiddleware(confData)
+	middleware, err := server.NewMiddleware(confData, logger)
 	if err != nil {
 		return nil, err
 	}

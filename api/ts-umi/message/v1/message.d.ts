@@ -6,10 +6,6 @@
 // is compatible with the kratos package it is being compiled against.
 
 declare namespace NewsV1 {
-	/** MessageIds */
-	type MessageIds = {
-		id?:number
-	}
 	/** MessageCreateOption */
 	type MessageCreateOption = {
 		type?:string
@@ -45,6 +41,10 @@ declare namespace NewsV1 {
 		to?:string
 		read?:boolean
 		birthday?:GoogleProtobuf.Timestamp
+	}
+	/** MessageIds */
+	type MessageIds = {
+		id?:number
 	}
 }
 

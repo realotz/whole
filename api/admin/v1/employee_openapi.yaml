@@ -1,5 +1,21 @@
 components:
   schemas:
+    AdminV1CaptchaImgReply:
+      properties:
+        captcha_id:
+          type: string
+        img_bytes:
+          type: string
+      type: object
+    AdminV1CaptchaImgReq:
+      properties:
+        img_height:
+          format: int32
+          type: integer
+        img_width:
+          format: int32
+          type: integer
+      type: object
     AdminV1Employee:
       properties:
         account:
@@ -77,6 +93,9 @@ components:
           type: string
         captcha:
           description: 验证码
+          type: string
+        captcha_id:
+          description: 验证码id
           type: string
         code:
           description: 短信、邮箱 验证码
@@ -214,12 +233,17 @@ paths:
         name: captcha
         schema:
           type: string
-      - description: 极验预留
+      - description: 本地验证码
+        in: query
+        name: captchaId
+        schema:
+          type: string
+      - description: 极验
         in: query
         name: challenge
         schema:
           type: string
-      - description: 极验预留
+      - description: 极验
         in: query
         name: tk
         schema:
@@ -235,6 +259,27 @@ paths:
       tags:
       - admin.v1.EmployeeService
     summary: Captcha
+  /admin/employee/captcha-img:
+    description: 图片验证码
+    post:
+      description: 图片验证码
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdminV1CaptchaImgReq'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminV1CaptchaImgReply'
+          description: ok
+      summary: 图片验证码
+      tags:
+      - admin.v1.EmployeeService
+    summary: CaptchaImg
   /admin/employee/info:
     description: 当前登录用户信息
     get:
