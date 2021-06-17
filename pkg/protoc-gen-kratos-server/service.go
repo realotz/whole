@@ -100,7 +100,7 @@ func generateData(gen *protogen.Plugin, file *protogen.File, s *protogen.Service
 	g.P("}}")
 	g.P("type " + info.serviceName + "Repo struct {\n\tdata *Data \n\t log  *log.Helper\n}")
 	g.P("func New" + info.serviceNameC + "Repo(data *Data, logger log.Logger) biz." + info.serviceNameC + "Repo {")
-	g.P("return &" + info.serviceName + "Repo{data: data,log:  log.NewHelper(\"" + info.serviceName + "_repo\", logger),}}")
+	g.P("return &" + info.serviceName + "Repo{data: data,log:  log.NewHelper(logger),}}")
 
 	g.P("//查询")
 	g.P("func (ar *" + info.serviceName + "Repo) Get" + info.serviceNameC + "(ctx context.Context, id int64) (*biz." + info.serviceNameC + ", error) {")
@@ -190,15 +190,16 @@ func generateEntSchema(gen *protogen.Plugin, file *protogen.File, s *protogen.Se
 	g.P("func (" + info.serviceNameC + ") Fields() []ent.Field { return []ent.Field{")
 	if objmsg != nil {
 		for _, f := range objmsg.Fields {
-			t := Capitalize(FieldType(f.Desc))
+			t, s := EntFieldType(f.Desc)
+			t = Capitalize(t)
 			if t == "Time.Time" {
 				t = "Time"
 			}
 			if string(f.Desc.Name()) != "update_time" && string(f.Desc.Name()) != "create_time" {
 				if string(f.Desc.Name()) != "id" {
-					g.P("field." + t + "(\"" + string(f.Desc.Name()) + "\").Optional().Comment(\"" + commentDesc(f.Comments) + "\"),")
+					g.P("field." + t + "(\"" + string(f.Desc.Name()) + "\" " + s + ").Optional().Comment(\"" + commentDesc(f.Comments) + "\"),")
 				} else {
-					g.P("field." + t + "(\"" + string(f.Desc.Name()) + "\").Comment(\"" + commentDesc(f.Comments) + "\"),")
+					g.P("field." + t + "(\"" + string(f.Desc.Name()) + "\"" + s + ").Comment(\"" + commentDesc(f.Comments) + "\"),")
 				}
 			}
 		}
@@ -246,7 +247,7 @@ func generateBiz(gen *protogen.Plugin, file *protogen.File, s *protogen.Service,
 	g.P("log  *log.Helper")
 	g.P("}")
 	g.P("func New" + info.serviceNameC + "Usecase(repo " + info.serviceNameC + "Repo, logger log.Logger) *" + info.serviceNameC + "Usecase {")
-	g.P("return &" + info.serviceNameC + "Usecase{repo: repo, log: log.NewHelper(\"biz/" + info.serviceName + "\", logger)}")
+	g.P("return &" + info.serviceNameC + "Usecase{repo: repo, log: log.NewHelper(logger)}")
 	g.P("}")
 	g.P("")
 	g.P("//查询")
@@ -417,4 +418,20 @@ func FieldType(desc protoreflect.FieldDescriptor) string {
 		return string(desc.Message().Parent().Name()) + string(desc.Message().Name())
 	}
 	return KindToType(desc.Kind())
+}
+
+func EntFieldType(desc protoreflect.FieldDescriptor) (string, string) {
+	if desc.IsMap() {
+		return "JSON", fmt.Sprintf(",map[%s][%s]", KindToType(desc.MapKey().Kind()), KindToType(desc.MapValue().Kind()))
+	}
+	if desc.IsList() {
+		return "JSON", fmt.Sprintf(",[]%s{}", KindToType(desc.Kind()))
+	}
+	if desc.Kind() == protoreflect.MessageKind {
+		if string(desc.Message().Name()) == "Timestamp" {
+			return "time.Time", ""
+		}
+		return string(desc.Message().Parent().Name()) + string(desc.Message().Name()), ""
+	}
+	return KindToType(desc.Kind()), ""
 }

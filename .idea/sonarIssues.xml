@@ -3,7 +3,102 @@
   <component name="issues">
     <option name="index">
       <map>
+        <entry key="$PROJECT_DIR$/../../git.hxecloud.com/cloudwonder-portal/app/api/meals.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../git.hxecloud.com/cloudwonder-portal/app/api/orders.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../git.hxecloud.com/cloudwonder-portal/app/api/products.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../git.hxecloud.com/cloudwonder-portal/app/api/users.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../git.hxecloud.com/cloudwonder-portal/app/def/def_orders.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../git.hxecloud.com/cloudwonder-portal/app/def/def_product.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../git.hxecloud.com/cloudwonder-portal/app/def/def_users.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../git.hxecloud.com/cloudwonder-portal/app/domain/deliver/info.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../git.hxecloud.com/cloudwonder-portal/app/domain/deliver/job_step.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../git.hxecloud.com/cloudwonder-portal/app/domain/meals.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../git.hxecloud.com/cloudwonder-portal/app/domain/node_pools.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../git.hxecloud.com/cloudwonder-portal/app/domain/orders.go">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/../../git.hxecloud.com/cloudwonder-portal/app/domain/receipts.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../git.hxecloud.com/cloudwonder-portal/app/domain/verify_codes_email.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../git.hxecloud.com/cloudwonder-portal/app/model/delivery_msgs.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../git.hxecloud.com/cloudwonder-portal/app/model/meals.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../git.hxecloud.com/cloudwonder-portal/app/model/node_pools.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../git.hxecloud.com/cloudwonder-portal/app/model/orders.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../git.hxecloud.com/cloudwonder-portal/app/model/products.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../git.hxecloud.com/cloudwonder-portal/conf/app.ini">
           <value>
             <set />
           </value>
@@ -13,12 +108,137 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/../../git.hxecloud.com/portal-admin-backend/app/api/access.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../git.hxecloud.com/portal-admin-backend/app/api/advertises.go">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/../../git.hxecloud.com/portal-admin-backend/app/api/customer.go">
           <value>
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/../../git.hxecloud.com/portal-admin-backend/app/api/delivering.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../git.hxecloud.com/portal-admin-backend/app/api/homepage.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../git.hxecloud.com/portal-admin-backend/app/api/logs.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../git.hxecloud.com/portal-admin-backend/app/api/meals.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../git.hxecloud.com/portal-admin-backend/app/api/msgs.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../git.hxecloud.com/portal-admin-backend/app/api/node_pools.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../git.hxecloud.com/portal-admin-backend/app/api/orders.go">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/../../git.hxecloud.com/portal-admin-backend/app/api/receipts.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../git.hxecloud.com/portal-admin-backend/app/api/users.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../git.hxecloud.com/portal-admin-backend/app/def/def_meal.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../git.hxecloud.com/portal-admin-backend/app/def/def_node_pools.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../git.hxecloud.com/portal-admin-backend/app/def/def_product.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../git.hxecloud.com/portal-admin-backend/app/def/def_referer.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../git.hxecloud.com/portal-admin-backend/app/def/def_users.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../git.hxecloud.com/portal-admin-backend/app/domain/meals.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../git.hxecloud.com/portal-admin-backend/app/domain/referrers.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../git.hxecloud.com/portal-admin-backend/app/domain/users.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../git.hxecloud.com/portal-admin-backend/app/model/meals.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../git.hxecloud.com/portal-admin-backend/app/model/referrers.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../git.hxecloud.com/portal-admin-backend/app/model/referrers_test.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../git.hxecloud.com/portal-admin-backend/app/model/users.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../git.hxecloud.com/portal-admin-backend/conf/app.ini">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../git.hxecloud.com/portal-admin-backend/main.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../git.hxecloud.com/portal-admin-backend/pkg/minio/minio.go">
           <value>
             <set />
           </value>
@@ -29,6 +249,411 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/../../git.hxecloud.com/portal-admin-backend/router/router.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../gitlab.tengyuebest.cn/service/book/.gitlab-ci.yml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../gitlab.tengyuebest.cn/service/book/api/v1/book.pb.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../gitlab.tengyuebest.cn/service/book/api/v1/book.proto">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../gitlab.tengyuebest.cn/service/book/api/v1/book_grpc.pb.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../gitlab.tengyuebest.cn/service/book/api/v1/book_openapi.yaml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../gitlab.tengyuebest.cn/service/book/api/v2/book.proto">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../gitlab.tengyuebest.cn/service/book/api/v2/book_group.pb.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../gitlab.tengyuebest.cn/service/book/api/v2/book_group.proto">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../gitlab.tengyuebest.cn/service/book/api/v2/book_group_grpc.pb.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../gitlab.tengyuebest.cn/service/book/api/v2/book_group_openapi.yaml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../gitlab.tengyuebest.cn/service/book/api/v2/book_v2.proto">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../gitlab.tengyuebest.cn/service/book/api/v2/book_v2_grpc.pb.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../gitlab.tengyuebest.cn/service/book/api/v2/unit.pb.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../gitlab.tengyuebest.cn/service/book/api/v2/unit.proto">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../gitlab.tengyuebest.cn/service/book/cmd/server/main.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../gitlab.tengyuebest.cn/service/book/cmd/server/wire.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../gitlab.tengyuebest.cn/service/book/cmd/server/wire_gen.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../gitlab.tengyuebest.cn/service/book/dev-kubefile">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../gitlab.tengyuebest.cn/service/book/go.mod">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../gitlab.tengyuebest.cn/service/book/internal/dao/d_book.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../gitlab.tengyuebest.cn/service/book/internal/dao/d_book_group.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../gitlab.tengyuebest.cn/service/book/internal/dao/d_pricipal.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../gitlab.tengyuebest.cn/service/book/internal/dao/d_unit.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../gitlab.tengyuebest.cn/service/book/internal/dao/scope/find.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../gitlab.tengyuebest.cn/service/book/internal/dao/scope/where.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../gitlab.tengyuebest.cn/service/book/internal/dao/student_tests.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../gitlab.tengyuebest.cn/service/book/internal/model/areastudent.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../gitlab.tengyuebest.cn/service/book/internal/model/arena.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../gitlab.tengyuebest.cn/service/book/internal/model/book/book.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../gitlab.tengyuebest.cn/service/book/internal/model/book_assessment.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../gitlab.tengyuebest.cn/service/book/internal/model/book_bind.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../gitlab.tengyuebest.cn/service/book/internal/model/book_grammar.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../gitlab.tengyuebest.cn/service/book/internal/model/book_group.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../gitlab.tengyuebest.cn/service/book/internal/model/book_read.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../gitlab.tengyuebest.cn/service/book/internal/model/book_speaking.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../gitlab.tengyuebest.cn/service/book/internal/model/book_structure.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../gitlab.tengyuebest.cn/service/book/internal/model/book_tests.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../gitlab.tengyuebest.cn/service/book/internal/model/book_text.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../gitlab.tengyuebest.cn/service/book/internal/model/new_book.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../gitlab.tengyuebest.cn/service/book/internal/model/out_book.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../gitlab.tengyuebest.cn/service/book/internal/model/principal.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../gitlab.tengyuebest.cn/service/book/internal/model/principal_book.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../gitlab.tengyuebest.cn/service/book/internal/model/read_grammar.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../gitlab.tengyuebest.cn/service/book/internal/model/student_book_text.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../gitlab.tengyuebest.cn/service/book/internal/model/study/student_test_assessment.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../gitlab.tengyuebest.cn/service/book/internal/model/study/student_test_tests.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../gitlab.tengyuebest.cn/service/book/internal/model/unit.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../gitlab.tengyuebest.cn/service/book/internal/model/unit_assessment.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../gitlab.tengyuebest.cn/service/book/internal/model/unit_read.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../gitlab.tengyuebest.cn/service/book/internal/model/unit_speaking.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../gitlab.tengyuebest.cn/service/book/internal/server/grpc.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../gitlab.tengyuebest.cn/service/book/internal/server/http.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../gitlab.tengyuebest.cn/service/book/internal/server/server.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../gitlab.tengyuebest.cn/service/book/internal/service/book.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../gitlab.tengyuebest.cn/service/book/internal/service/book_group.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../gitlab.tengyuebest.cn/service/book/internal/service/service.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../gitlab.tengyuebest.cn/service/book/internal/service/test.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../gitlab.tengyuebest.cn/service/book/internal/service/unit.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../gitlab.tengyuebest.cn/service/book/internal/service/v1/book.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../gitlab.tengyuebest.cn/service/book/internal/service/v1/book_group.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../gitlab.tengyuebest.cn/service/book/internal/service/v1/service.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../gitlab.tengyuebest.cn/service/book/internal/service/v1/test.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../gitlab.tengyuebest.cn/service/book/internal/service/v1/unit.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../gitlab.tengyuebest.cn/service/book/internal/service/v2/book.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../gitlab.tengyuebest.cn/service/book/internal/service/v2/book_group.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../gitlab.tengyuebest.cn/service/book/internal/service/v2/serivce.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../gitlab.tengyuebest.cn/service/book/internal/service/v2/service.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../gitlab.tengyuebest.cn/service/book/internal/service/v2/unit.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../gitlab.tengyuebest.cn/service/common/go.mod">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../gitlab.tengyuebest.cn/service/common/v2/encode/encode.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../gitlab.tengyuebest.cn/service/common/v2/go.mod">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../gitlab.tengyuebest.cn/service/haoji-srv/internal/dao/dao.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../gitlab.tengyuebest.cn/service/haoji-srv/internal/model/book/book.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../gitlab.tengyuebest.cn/service/haoji-srv/internal/model/outbook/book.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../gitlab.tengyuebest.cn/service/haoji-srv/internal/service/book.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../gitlab.tengyuebest.cn/service/haoji-srv/internal/service/book_test.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../gitlab.tengyuebest.cn/service/haoji-srv/transfer/1.json">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../gitlab.tengyuebest.cn/service/haoji-srv/transfer/2.json">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../gitlab.tengyuebest.cn/service/haoji-srv/transfer/3.json">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../gitlab.tengyuebest.cn/service/haoji-srv/transfer/main.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../gitlab.tengyuebest.cn/service/wxchat/go.mod">
           <value>
             <set />
           </value>
@@ -119,6 +744,111 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/pkg/captcha/redis_store.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/pkg/protoc-gen-kratos-server/service.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../ymei/Makefile">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../ymei/api/goods/v1/goods.proto">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../ymei/api/order/v1/order.proto">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../ymei/api/order/v1/order.swagger.json">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../ymei/api/order/v1/order_http.pb.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../ymei/api/user/v1/user.proto">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../ymei/internal/biz/biz.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../ymei/internal/biz/goods.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../ymei/internal/data/data.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../ymei/internal/data/ent/schema/goods.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../ymei/internal/data/ent/schema/order.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../ymei/internal/data/ent/schema/user.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../ymei/internal/data/goods.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../ymei/internal/data/order.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../ymei/internal/server/grpc.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../ymei/internal/server/http.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../ymei/internal/service/order.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../ymei/internal/service/service.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../ymei/internal/service/user.go">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../ymei/pkg/utils/context.go">
           <value>
             <set />
           </value>
